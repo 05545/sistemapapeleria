@@ -50,3 +50,9 @@ public class Cliente {
         cliente.detenerConexion();
     }
 }
+
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */

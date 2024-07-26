@@ -115,3 +115,9 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
+
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */

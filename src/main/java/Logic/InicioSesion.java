@@ -41,3 +41,9 @@ public class InicioSesion {
         return rol;
     }
 }
+
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */

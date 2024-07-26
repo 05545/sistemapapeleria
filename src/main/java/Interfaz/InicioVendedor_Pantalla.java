@@ -31,3 +31,8 @@ public class InicioVendedor_Pantalla extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */

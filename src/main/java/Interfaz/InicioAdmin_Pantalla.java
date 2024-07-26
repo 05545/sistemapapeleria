@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Interfaz;
 
 import Logic.*;
 
-/**
- *
- * @author rodrigo
- */
 
 public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
@@ -72,3 +64,8 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     // End of variables declaration//GEN-END:variables
 }
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */

@@ -66,3 +66,9 @@ public class Servidor {
         servidor.start(12345); // Puerto 
     }
 }
+
+
+/**
+ *
+ * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ */
