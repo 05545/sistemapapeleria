@@ -101,6 +101,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             this.dispose();
 
             iniAdmin.setVisible(true);
+            
         } else if ("Vendedor".equals(rolUsuario)) {
             System.out.println("Vendedor ha iniciado sesión");
         }

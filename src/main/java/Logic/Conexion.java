@@ -12,8 +12,7 @@ public class Conexion {
     private final String usuario = "newuser";
     private final String contrasena = "password";
 
-    public Conexion() {
-        
+    public Conexion() {        
     }
 
     public Connection abrirConexion() {

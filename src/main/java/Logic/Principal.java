@@ -10,3 +10,4 @@ public class Principal {
         iniSesion.setLocationRelativeTo(null);
     }
 }
+

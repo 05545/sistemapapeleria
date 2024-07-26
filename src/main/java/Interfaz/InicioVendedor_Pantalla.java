@@ -30,3 +30,4 @@ public class InicioVendedor_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     // End of variables declaration//GEN-END:variables
 }
+

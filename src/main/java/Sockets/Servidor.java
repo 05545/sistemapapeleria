@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.*;
 
 public class Servidor {
+    
     private ServerSocket servidorSocket;
 
     public void start(int puerto) {

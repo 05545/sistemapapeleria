@@ -38,7 +38,6 @@ public class InicioSesion {
                 e.printStackTrace();
             }
         }
-
         return rol;
     }
 }

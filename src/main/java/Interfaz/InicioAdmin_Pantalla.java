@@ -10,6 +10,7 @@ import Logic.*;
  *
  * @author rodrigo
  */
+
 public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
     private Conexion conexion;

@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.*;
 
 public class Cliente {
+    
     private Socket clienteSocket;
     private PrintWriter salida;
     private BufferedReader entrada;
