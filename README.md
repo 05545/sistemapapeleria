@@ -37,9 +37,9 @@ El objetivo del proyecto es crear un sistema de punto de venta para la gestión 
     InicioSesion; //Clase con dos nombres
     Conexion; //Clase con un nombre.
     ```
--  Para los JLabel, Jframe o JPanel usar el prefijo de "GUI_" seguido de un nombre descriptivo del elemento que se debe asignar en esa parte, considerando el paquete de recursos dispobible. Por ejemplo:
+-  Para los JLabel, Jframe o JPanel usar el prefijo de "JL_" para Labels, "JF_" para los frames y "JP_" para los paneles, etc. Seguido de un nombre descriptivo del elemento que se debe asignar en esa parte, considerando el paquete de recursos dispobible. Por ejemplo:
     ```java
-    GUI_ImagenInicioAdmin; 
+    JL_ImagenInicioAdmin; 
     ```
 
 ## Convenciones de interfaz
