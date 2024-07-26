@@ -2,8 +2,6 @@ package Interfaz;
 
 public class InicioVendedor_Pantalla extends javax.swing.JFrame {
 
-    public String hola;
-
     public InicioVendedor_Pantalla() {
         initComponents();
     }

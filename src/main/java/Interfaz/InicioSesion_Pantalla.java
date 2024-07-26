@@ -10,7 +10,6 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     private InicioSesion inicioSesion;
     private Conexion conexion;
     private Cliente cliente;
-    public String hola;
 
     public InicioSesion_Pantalla() {
         initComponents();
