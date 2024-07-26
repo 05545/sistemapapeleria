@@ -1,4 +1,4 @@
-//No modificar
+//No modificar clase
 
 package Logic;
 
