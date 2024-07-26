@@ -6,6 +6,8 @@ import Logic.*;
 public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
     private Conexion conexion;
+    public String hola;
+    
     public InicioAdmin_Pantalla(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);

@@ -10,6 +10,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     private InicioSesion inicioSesion;
     private Conexion conexion;
     private Cliente cliente;
+    public String hola;
 
     public InicioSesion_Pantalla() {
         initComponents();
@@ -95,13 +96,13 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
         if ("Administrador".equals(rolUsuario)) {
             InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion); //Recibe a conexion como instancia para evitar abrir nuevas y que las consultas se ejecuten
-            
+
             this.dispose();
             this.setVisible(false);
             this.dispose();
 
             iniAdmin.setVisible(true);
-            
+
         } else if ("Vendedor".equals(rolUsuario)) {
             System.out.println("Vendedor ha iniciado sesión");
         }
