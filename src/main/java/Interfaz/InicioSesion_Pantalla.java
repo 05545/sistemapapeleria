@@ -126,7 +126,8 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         String rolUsuario = inicioSesion.obtenerRol(usuario, contrasena);
 
         if ("Administrador".equals(rolUsuario)) {
-            InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion);
+            InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion); //Recibe a conexion como instancia para evitar abrir nuevas y que las consultas se ejecuten
+            
             this.dispose();
             this.setVisible(false);
             this.dispose();
