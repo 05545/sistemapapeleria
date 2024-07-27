@@ -65,7 +65,12 @@ los sistemas operativos, se toman las siguientes consideraciones:
 
 > Si se hacen varias operaciones de las anteriores, el commit debe llevar todos los detalles de los cambios. Por ejemplo si se elimina una clase y se actualiza otra, y se agregan en un mismo commit, se genera: deleted "Clase1.java", updated "CLase2.java"
 
-
+## Consultas SQL
+- Cada consulta que se haga debe tener una sintáxis exacta, es decir, respetar mayusculas y minusculas en el nombre de:
+  1. Base de datos
+  2. Tablas
+  3. Campos
+  4. Funciones, procedimientos almacenados y disparadores.
 
 
 
