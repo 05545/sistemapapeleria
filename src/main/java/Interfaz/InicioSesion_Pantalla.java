@@ -41,6 +41,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         JL_Contrasena = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
+        Pantalla_InicioSesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,6 +72,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 154, 160, -1));
+        getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -110,6 +112,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Contrasena;
     private javax.swing.JLabel JL_Usuario;
+    private javax.swing.JLabel Pantalla_InicioSesion;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
