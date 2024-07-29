@@ -70,5 +70,9 @@ public class Servidor {
 
 /**
  *
- * Hecho por: Rodrigo Sosa Romero, Ernesto García Nolazco, Rosaisela Perez Morales y Elisabeth Maravillas
+ * Hecho por: 
+ * Rodrigo Sosa Romero
+ * Ernesto García Nolazco
+ * Rosaisela Perez Morales
+ * Elizabeth Maravillas Tzompantzi
  */
