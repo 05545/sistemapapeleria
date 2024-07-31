@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Interfaz;
+package Interfaz.ventas;
 
 import javax.swing.JFrame;
 
@@ -10,14 +10,14 @@ import javax.swing.JFrame;
  *
  * @author ERNESTO GARCIA
  */
-public class inventario_venta extends javax.swing.JFrame {
+public class Ventas_Ven extends javax.swing.JFrame {
 
     /**
-     * Creates new form inventario_venta
+     * Creates new form Ventas_Ven
      */
-    public inventario_venta() {
+    public Ventas_Ven() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -36,29 +36,29 @@ public class inventario_venta extends javax.swing.JFrame {
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
+        JL_sesion = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         JL_producto = new javax.swing.JLabel();
         txtproducto = new javax.swing.JTextField();
         JL_cantidad = new javax.swing.JLabel();
         spcantidad = new javax.swing.JSpinner();
         JL_precioUnitario = new javax.swing.JLabel();
         txtprecioUnitario = new javax.swing.JTextField();
-        btnregistra = new javax.swing.JButton();
+        JL_subTotal = new javax.swing.JLabel();
+        txtsubTotal = new javax.swing.JTextField();
+        JL_Total = new javax.swing.JLabel();
+        txttotal = new javax.swing.JTextField();
+        btnprocesar = new javax.swing.JButton();
         btnlimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbbusqueda = new javax.swing.JTable();
+        tbventas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txttipo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtconsulta = new javax.swing.JTextField();
-        btneliminar = new javax.swing.JButton();
-        btneditar = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        JL_fondoVentas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("JF_Inventario");
+        setTitle("JFventas");
+        setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -78,13 +78,13 @@ public class inventario_venta extends javax.swing.JFrame {
         btnCuenta.setText("Cuenta");
         getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 90, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 170, -1));
+        JL_sesion.setForeground(new java.awt.Color(51, 51, 51));
+        JL_sesion.setText("Cerra sesion");
+        getContentPane().add(JL_sesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 990, 150, 60));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Registro de producto");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Ventas");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 69, -1));
 
         JL_producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_producto.setText("Producto");
@@ -95,7 +95,7 @@ public class inventario_venta extends javax.swing.JFrame {
                 txtproductoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 340, 40));
+        getContentPane().add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 340, 50));
 
         JL_cantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_cantidad.setText("Cantidad");
@@ -113,18 +113,28 @@ public class inventario_venta extends javax.swing.JFrame {
         });
         getContentPane().add(txtprecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 130, 30));
 
-        btnregistra.setText("Registrar");
-        btnregistra.addActionListener(new java.awt.event.ActionListener() {
+        JL_subTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_subTotal.setText("Subtotal");
+        getContentPane().add(JL_subTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, -1, -1));
+        getContentPane().add(txtsubTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 130, 40));
+
+        JL_Total.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_Total.setText("Total");
+        getContentPane().add(JL_Total, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, -1, -1));
+        getContentPane().add(txttotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 130, 40));
+
+        btnprocesar.setText("Procesar");
+        btnprocesar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnregistraActionPerformed(evt);
+                btnprocesarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnregistra, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 150, 50));
+        getContentPane().add(btnprocesar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 100, 40));
 
         btnlimpiar.setText("Limpiar");
-        getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 150, 50));
+        getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 480, 100, 40));
 
-        tbbusqueda.setModel(new javax.swing.table.DefaultTableModel(
+        tbventas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -132,33 +142,20 @@ public class inventario_venta extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Cantidad", "Precio"
+                "ID", "Producto", "Fecha", "Total"
             }
         ));
-        jScrollPane1.setViewportView(tbbusqueda);
+        jScrollPane1.setViewportView(tbventas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 140, 350, 330));
 
         jLabel3.setText("Cerra sesion");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Tipo");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 330, 70, -1));
-        getContentPane().add(txttipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 180, 40));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Consulta de producto");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
-        getContentPane().add(txtconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 300, 30));
-
-        btneliminar.setText("Eliminar");
-        getContentPane().add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
-
-        btneditar.setText("Editar");
-        getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 600));
-        jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
+        jLabel4.setText("Ventas Reciente");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, 180, -1));
+        getContentPane().add(JL_fondoVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -167,18 +164,16 @@ public class inventario_venta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtproductoActionPerformed
 
+    private void btnprocesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprocesarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnprocesarActionPerformed
+
     private void txtprecioUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtprecioUnitarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtprecioUnitarioActionPerformed
 
-    private void btnregistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnregistraActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -192,50 +187,57 @@ public class inventario_venta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(inventario_venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tablero_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(inventario_venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tablero_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(inventario_venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tablero_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(inventario_venta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tablero_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new inventario_venta().setVisible(true);
                 
+                new Ventas_Ven().setVisible(true);
             }
         });
     }
+     
+     //Metodo para ingresar datos
+     public void insertarDatos(){
+        
+     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
+    private javax.swing.JLabel JL_Total;
     private javax.swing.JLabel JL_cantidad;
+    private javax.swing.JLabel JL_fondoVentas;
     private javax.swing.JLabel JL_precioUnitario;
     private javax.swing.JLabel JL_producto;
+    private javax.swing.JLabel JL_sesion;
+    private javax.swing.JLabel JL_subTotal;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JButton btneditar;
-    private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnlimpiar;
-    private javax.swing.JButton btnregistra;
+    private javax.swing.JButton btnprocesar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spcantidad;
-    private javax.swing.JTable tbbusqueda;
-    private javax.swing.JTextField txtconsulta;
+    private javax.swing.JTable tbventas;
     private javax.swing.JTextField txtprecioUnitario;
     private javax.swing.JTextField txtproducto;
-    private javax.swing.JTextField txttipo;
+    private javax.swing.JTextField txtsubTotal;
+    private javax.swing.JTextField txttotal;
     // End of variables declaration//GEN-END:variables
+
+   
 }
+
