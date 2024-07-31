@@ -15,6 +15,9 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         initComponents();
         iniciarConexion();
         iniciarCliente();
+
+        JL_inicioFallido.setVisible(false);
+        btnAceptar.setVisible(false);
     }
 
     public void iniciarConexion() {
@@ -36,6 +39,8 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAceptar = new javax.swing.JButton();
+        JL_inicioFallido = new javax.swing.JLabel();
         JL_Usuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         JL_Contrasena = new javax.swing.JLabel();
@@ -46,9 +51,21 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnAceptar.setText("ACEPTAR");
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 390, -1, -1));
+
+        JL_inicioFallido.setText("USUARIO NO ENCONTRADO");
+        getContentPane().add(JL_inicioFallido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 370, 260));
+
         JL_Usuario.setText("Usuario");
         getContentPane().add(JL_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 46, 59, -1));
 
+        txtUsuario.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
@@ -58,6 +75,8 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
         JL_Contrasena.setText("Contraseña");
         getContentPane().add(JL_Contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 89, 85, -1));
+
+        txtPass.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 86, 229, -1));
 
         btnIngresar.setText("INGRESAR");
@@ -72,7 +91,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 154, 160, -1));
-        getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
+        getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -106,25 +125,37 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
         } else if ("Vendedor".equals(rolUsuario)) {
             System.out.println("Vendedor ha iniciado sesión");
+        } else {
+            JL_inicioFallido.setVisible(true);
+            btnAceptar.setVisible(true);
+            btnIngresar.setVisible(false);
+            txtUsuario.setEditable(false);
+            txtPass.setEditable(false);
         }
     }//GEN-LAST:event_btnIngresarMouseClicked
+
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+        JL_inicioFallido.setVisible(false);
+        btnAceptar.setVisible(false);
+        btnIngresar.setVisible(true);
+        txtUsuario.setEditable(true);
+        txtPass.setEditable(true);
+    }//GEN-LAST:event_btnAceptarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Contrasena;
     private javax.swing.JLabel JL_Usuario;
+    private javax.swing.JLabel JL_inicioFallido;
     private javax.swing.JLabel Pantalla_InicioSesion;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
 
-
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

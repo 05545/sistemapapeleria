@@ -1,5 +1,4 @@
 //No modificar
-
 package Logic;
 
 import java.sql.Connection;
@@ -21,7 +20,7 @@ public class InicioSesion {
         if (connection != null) {
             try {
                 Statement stmt = connection.createStatement();
-                String sql = "SELECT * FROM usuarios WHERE usuario = '" + nombreUsuario + "' AND contraseña = '" + contrasena + "'";
+                String sql = "SELECT R.Rol FROM Trabajador T JOIN Rol R ON T.IdRol = R.IdRol " + "WHERE T.Usuario = '" + nombreUsuario + "' " + "AND T.Contrasenia = '" + contrasena + "'";
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if (rs.next()) {
