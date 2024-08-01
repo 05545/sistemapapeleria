@@ -1,5 +1,7 @@
 package Interfaz;
 
+import Interfaz.Administrador.*;
+import Interfaz.ventas.*;
 import Logic.*;
 import Sockets.*;
 import java.sql.Connection;
@@ -59,7 +61,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 390, -1, -1));
 
-        JL_inicioFallido.setText("USUARIO NO ENCONTRADO");
+        JL_inicioFallido.setText("USUARIO O ROL NO ENCONTRADO");
         getContentPane().add(JL_inicioFallido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 370, 260));
 
         JL_Usuario.setText("Usuario");
@@ -124,7 +126,14 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             iniAdmin.setVisible(true);
 
         } else if ("Vendedor".equals(rolUsuario)) {
-            System.out.println("Vendedor ha iniciado sesión");
+            Tablero_Ventas TV = new Tablero_Ventas(conexion);
+            
+            this.dispose();
+            this.setVisible(false);
+            this.dispose();
+            
+            TV.setVisible(true);
+           
         } else {
             JL_inicioFallido.setVisible(true);
             btnAceptar.setVisible(true);
@@ -156,6 +165,9 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
+ * Hecho por: 
+ * Rodrigo Sosa Romero
+ * Ernesto García Nolazco
+ * Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */
