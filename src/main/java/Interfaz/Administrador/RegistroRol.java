@@ -2,14 +2,17 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+import java.sql.Connection;
 
 public class RegistroRol extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
     
-    public RegistroRol(Conexion conexion) {
+    public RegistroRol(Conexion conexion, Connection conn) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.conn = conn;
         this.conexion = conexion;
     }
     

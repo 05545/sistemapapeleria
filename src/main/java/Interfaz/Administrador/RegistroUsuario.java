@@ -2,13 +2,17 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+import java.sql.Connection;
 
 public class RegistroUsuario extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
-    public RegistroUsuario(Conexion conexion) {
+
+    public RegistroUsuario(Conexion conexion, Connection conn) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.conn = conn;
         this.conexion = conexion;
     }
 
@@ -17,7 +21,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
             conexion.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

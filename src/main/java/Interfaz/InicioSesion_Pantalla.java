@@ -5,6 +5,7 @@ import Interfaz.ventas.*;
 import Logic.*;
 import Sockets.*;
 import java.sql.Connection;
+import javax.swing.ImageIcon;
 
 public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
@@ -65,7 +66,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         getContentPane().add(JL_inicioFallido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 370, 260));
 
         JL_Usuario.setText("Usuario");
-        getContentPane().add(JL_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 46, 59, -1));
+        getContentPane().add(JL_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 450, 59, -1));
 
         txtUsuario.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -73,13 +74,13 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
                 txtUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 43, 228, -1));
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 450, 228, -1));
 
         JL_Contrasena.setText("Contraseña");
-        getContentPane().add(JL_Contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 89, 85, -1));
+        getContentPane().add(JL_Contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 490, 85, -1));
 
         txtPass.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 86, 229, -1));
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 490, 229, -1));
 
         btnIngresar.setText("INGRESAR");
         btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,7 +93,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(152, 154, 160, -1));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 160, -1));
         getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
 
         pack();
@@ -117,11 +118,10 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         String rolUsuario = inicioSesion.obtenerRol(usuario, contrasena);
 
         if ("Administrador".equals(rolUsuario)) {
-            InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion); //Recibe a conexion como instancia para evitar abrir nuevas y que las consultas se ejecuten
+            InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion, conn, usuario); //Recibe a conexion como instancia para evitar abrir nuevas y que las consultas se ejecuten
 
             this.dispose();
             this.setVisible(false);
-            this.dispose();
 
             iniAdmin.setVisible(true);
 

@@ -2,14 +2,16 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+import java.sql.Connection;
 
 public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
 
-    public ProveedoresAdmin_Pantalla(Conexion conexion) {
+    public ProveedoresAdmin_Pantalla(Conexion conexion, Connection conn) {
         initComponents();
-
+        this.conn = conn;
         this.conexion = conexion;
         this.setLocationRelativeTo(null);
     }

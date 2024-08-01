@@ -2,14 +2,17 @@ package Interfaz.Administrador;
 
 import Interfaz.*;
 import Logic.*;
+import java.sql.Connection;
 
 public class VentasAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
     
-    public VentasAdmin_Pantalla(Conexion conexion) {
+    public VentasAdmin_Pantalla(Conexion conexion, Connection conn) {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
+        this.conn = conn;
         this.conexion = conexion;
     }
     

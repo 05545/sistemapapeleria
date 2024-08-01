@@ -2,15 +2,18 @@ package Interfaz.Administrador;
 
 import Interfaz.*;
 import Logic.*;
+import java.sql.Connection;
 
 public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
     
-    public InventarioAdmin_Pantalla(Conexion conexion) {
+    public InventarioAdmin_Pantalla(Conexion conexion, Connection conn) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.conexion = conexion;
+        this.conn = conn;
     }
     
     private void cerrarConexion() {

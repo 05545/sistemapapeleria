@@ -2,16 +2,24 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+import java.sql.Connection;
 
 public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
-
-    public AjustesAdmin_Pantalla(Conexion conexion) {
+    String usuario;
+    String nomUsuario;
+    
+    public AjustesAdmin_Pantalla(Conexion conexion, Connection conn, String usuario, String nomUsuario) {
         initComponents();
 
+        this.conn = conn;
         this.conexion = conexion;
+        this.usuario = usuario;
         this.setLocationRelativeTo(null);
+        
+        NombreAdmin.setText(usuario);
     }
 
     private void cerrarConexion() {
@@ -24,6 +32,7 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        NombreAdmin = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
@@ -32,11 +41,14 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         btnReportes = new javax.swing.JButton();
         btnAjustes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        NombreAdmin = new javax.swing.JLabel();
         JL_FondoAjustesAdmin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
+        NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
 
         btnTablero.setText("Tablero");
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
@@ -54,6 +66,11 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         btnAjustes.setText("Ajustes");
@@ -66,9 +83,6 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
-
-        NombreAdmin.setText("Nombre usuario");
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
         getContentPane().add(JL_FondoAjustesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
 
         pack();
@@ -83,6 +97,15 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
 
         iniSesion.setVisible(true);
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        ReportesAdmin_Pantalla rpa = new ReportesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        this.setVisible(false);
+        this.dispose();
+        
+        rpa.setVisible(true);
+        rpa.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnReportesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

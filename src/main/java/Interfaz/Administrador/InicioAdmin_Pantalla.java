@@ -1,18 +1,29 @@
 //Se han ajustado los nombres de los elementos
-
 package Interfaz.Administrador;
 
 import Interfaz.*;
 import Logic.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     private Conexion conexion;
-    
-    public InicioAdmin_Pantalla(Conexion conexion) {
+    String nomUsuario = "";
+    String iniNombreUsuario = "";
+
+    public InicioAdmin_Pantalla(Conexion conexion, Connection conn, String nomUsuario) {
         initComponents();
+        
         this.setLocationRelativeTo(null);
+        this.conn = conn;
         this.conexion = conexion;
+        this.nomUsuario = nomUsuario;
+        
+        consultarNombre();
     }
 
     private void cerrarConexion() {
@@ -20,7 +31,33 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
             conexion.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
         }
     }
-    
+
+    private void consultarNombre() {
+        String nombre = "";
+        System.out.println("Se ha llamado a consultar nombre");
+
+        if (conn != null) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "SELECT Nombre FROM Trabajador WHERE Usuario = '" + nomUsuario + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next()) {
+                    nombre = rs.getString("Nombre");
+                    iniNombreUsuario = nombre;
+                    NombreAdmin.setText(iniNombreUsuario);
+                } else {
+                    System.out.println("Nombre de usuario o contraseña incorrectos.");
+                }
+                rs.close();
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Error al ejecutar la consulta.");
+                e.printStackTrace();
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,7 +84,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
         JL_VentasRecientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_VentasRecientes.setText("Ventas recientes");
-        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 190, -1));
+        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, 190, -1));
 
         tbVentasRecientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,11 +116,11 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbVentasRecientes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 320, 350));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 440, 350));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Productos con poco Stock");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 90, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 150, -1, -1));
 
         tbProductoStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -106,12 +143,22 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbProductoStock);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, 290, 350));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 200, 350, 350));
 
         btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProveedoresMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
@@ -137,8 +184,9 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         btnInventario.setText("Inventario");
         getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        NombreAdmin.setText("Nombre usuario");
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
+        NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
+        NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
         getContentPane().add(JL_FondoTableroAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
 
         pack();
@@ -146,17 +194,30 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
-        
+
         this.setVisible(false);
         this.dispose();
         cerrarConexion();
-        
+
         iniSesion.setVisible(true);
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void tbVentasRecientesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbVentasRecientesAncestorAdded
 
     }//GEN-LAST:event_tbVentasRecientesAncestorAdded
+
+    private void btnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseClicked
+
+    }//GEN-LAST:event_btnProveedoresMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        ReportesAdmin_Pantalla rpa = new ReportesAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
+        this.setVisible(false);
+        this.dispose();
+
+        rpa.setVisible(true);
+        rpa.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnReportesMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_FondoTableroAdmin;
@@ -180,9 +241,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

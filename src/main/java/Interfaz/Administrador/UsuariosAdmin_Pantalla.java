@@ -2,14 +2,17 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+import java.sql.Connection;
 
 public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
+    Connection conn;
     Conexion conexion;
 
-    public UsuariosAdmin_Pantalla(Conexion conexion) {
+    public UsuariosAdmin_Pantalla(Conexion conexion, Connection conn) {
         initComponents();
-
+        this.setLocationRelativeTo(null);
+        this.conn = conn;
         this.conexion = conexion;
     }
 
