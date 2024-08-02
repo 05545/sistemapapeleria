@@ -4,9 +4,12 @@ package Interfaz.Administrador;
 import Interfaz.*;
 import Logic.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
@@ -17,13 +20,15 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
     public InicioAdmin_Pantalla(Conexion conexion, Connection conn, String nomUsuario) {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.conn = conn;
         this.conexion = conexion;
         this.nomUsuario = nomUsuario;
-        
+
         consultarNombre();
+        obtenerInventario();
     }
 
     private void cerrarConexion() {
@@ -122,6 +127,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         jLabel4.setText("Productos con poco Stock");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 150, -1, -1));
 
+        tbProductoStock.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
         tbProductoStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -141,7 +147,19 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbProductoStock.setOpaque(false);
+        tbProductoStock.setRowHeight(30);
+        tbProductoStock.setRowSelectionAllowed(false);
+        tbProductoStock.setSelectionBackground(new java.awt.Color(0, 255, 0));
         jScrollPane3.setViewportView(tbProductoStock);
+        if (tbProductoStock.getColumnModel().getColumnCount() > 0) {
+            tbProductoStock.getColumnModel().getColumn(0).setResizable(false);
+            tbProductoStock.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tbProductoStock.getColumnModel().getColumn(1).setResizable(false);
+            tbProductoStock.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tbProductoStock.getColumnModel().getColumn(2).setResizable(false);
+            tbProductoStock.getColumnModel().getColumn(2).setPreferredWidth(30);
+        }
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 200, 350, 350));
 
@@ -218,6 +236,41 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         rpa.setVisible(true);
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void obtenerInventario() {
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Cantidad");
+        
+        tbProductoStock.setModel(tabla);
+        
+        if (conn != null) {
+            try {
+                String query = "SELECT IDProducto, Nombre, Cantidad_Disponible FROM Producto WHERE Cantidad_Disponible < 10";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDProducto"),
+                        rs.getString("Nombre"),
+                        rs.getString("Cantidad_Disponible"),
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_FondoTableroAdmin;
