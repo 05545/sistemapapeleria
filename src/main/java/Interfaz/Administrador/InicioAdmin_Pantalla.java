@@ -29,6 +29,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
         consultarNombre();
         obtenerInventario();
+        obtenerVentas();
     }
 
     private void cerrarConexion() {
@@ -120,6 +121,14 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tbVentasRecientes);
+        if (tbVentasRecientes.getColumnModel().getColumnCount() > 0) {
+            tbVentasRecientes.getColumnModel().getColumn(0).setResizable(false);
+            tbVentasRecientes.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tbVentasRecientes.getColumnModel().getColumn(1).setResizable(false);
+            tbVentasRecientes.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tbVentasRecientes.getColumnModel().getColumn(2).setResizable(false);
+            tbVentasRecientes.getColumnModel().getColumn(2).setPreferredWidth(30);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 440, 350));
 
@@ -185,7 +194,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, -1, 30));
 
         btnUsuarios.setText("Usuarios");
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +213,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnAjustes.setText("Ajustes");
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, -1, -1));
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, -1, -1));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -225,7 +234,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
         NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
-        getContentPane().add(JL_FondoTableroAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        getContentPane().add(JL_FondoTableroAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1152, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -331,6 +340,39 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
         }
 
+    }
+
+    public void obtenerVentas() {
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Subtotal");
+
+        tbVentasRecientes.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT IDVenta, Nombre, Subtotal FROM Venta ORDER BY IDVenta DESC LIMIT 10";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDVenta"),
+                        rs.getString("Nombre"),
+                        rs.getString("Subtotal"),};
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
