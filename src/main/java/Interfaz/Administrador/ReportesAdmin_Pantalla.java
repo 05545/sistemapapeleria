@@ -235,7 +235,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
                 String fechaHora = ahora.format(formato);
 
-                String nombreArchivo = ruta + "/Documentos/Reportes/ReporteInventario_" + fechaHora + ".pdf";
+                String nombreArchivo = ruta + "/Documents/Reportes/ReporteInventario_" + fechaHora + ".pdf";
 
                 PdfWriter.getInstance(RInventario, new FileOutputStream(nombreArchivo));
 
@@ -308,7 +308,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
                 String fechaHora = ahora.format(formato);
 
-                String nombreArchivo = ruta + "/Documentos/Reportes/ReporteVentas_" + fechaHora + ".pdf";
+                String nombreArchivo = ruta + "/Documents/Reportes/ReporteVentas_" + fechaHora + ".pdf";
 
                 PdfWriter.getInstance(RVentas, new FileOutputStream(nombreArchivo));
 
@@ -379,7 +379,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
                 String fechaHora = ahora.format(formato);
 
-                String nombreArchivo = ruta + "/Documentos/Reportes/ReporteUsuarios_" + fechaHora + ".pdf";
+                String nombreArchivo = ruta + "/Documents/Reportes/ReporteUsuarios_" + fechaHora + ".pdf";
 
                 PdfWriter.getInstance(RUsuarios, new FileOutputStream(nombreArchivo));
 
