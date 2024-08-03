@@ -48,7 +48,7 @@ los sistemas operativos, se toman las siguientes consideraciones:
 1. La interfaz será diseñada solo con las partes que proporciona Java/NetBeans, es decir, no se implmenta ningún elemento externo como imágenes, audios, etc.
 2. Para el nombre de los JLabel, JPanel o similares, usar las convenciones anteriormente descritas.
 3. Para las imagenes o recursos externos que se necesiten implementar será de forma local y tendrán que ser redimensionadas según sea necesario.
-4. El tamaño de ventana será de 1920*1080.
+4. El tamaño de ventana será de 1280*720.
 5. El JFrame usado en cada pantalla debe estar configurado con "AbsoluteLayout".
 
 ## Convenciones generales
