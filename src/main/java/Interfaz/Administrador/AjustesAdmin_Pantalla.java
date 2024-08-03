@@ -51,18 +51,43 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
 
         btnTablero.setText("Tablero");
+        btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTableroMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnVentas.setText("Ventas");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnInventario.setText("Inventario");
+        btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventarioMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         btnUsuarios.setText("Usuarios");
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProveedoresMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         btnReportes.setText("Reportes");
@@ -106,6 +131,51 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         rpa.setVisible(true);
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion, conn, nomUsuario);
+        iniAdmin.setVisible(true);
+        iniAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnTableroMouseClicked
+
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        VentasAdmin_Pantalla ventasAdmin = new VentasAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        ventasAdmin.setVisible(true);
+        ventasAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasMouseClicked
+
+    private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        invA.setVisible(true);
+        invA.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnInventarioMouseClicked
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        UsuariosAdmin_Pantalla usersAdmin = new UsuariosAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        usersAdmin.setVisible(true);
+        usersAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnUsuariosMouseClicked
+
+    private void btnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        ProveedoresAdmin_Pantalla proviAdmin = new ProveedoresAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        proviAdmin.setVisible(true);
+        proviAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnProveedoresMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

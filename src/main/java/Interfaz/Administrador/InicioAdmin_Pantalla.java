@@ -188,15 +188,30 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
 
         btnUsuarios.setText("Usuarios");
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         btnVentas.setText("Ventas");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnAjustes.setText("Ajustes");
         getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, -1, -1));
 
         btnTablero.setText("Tablero");
+        btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTableroMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnInventario.setText("Inventario");
@@ -230,7 +245,12 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_tbVentasRecientesAncestorAdded
 
     private void btnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseClicked
+        this.setVisible(false);
+        this.dispose();
 
+        ProveedoresAdmin_Pantalla proviAdmin = new ProveedoresAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
+        proviAdmin.setVisible(true);
+        proviAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnProveedoresMouseClicked
 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
@@ -245,20 +265,48 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
     private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
         this.setVisible(false);
         this.dispose();
-        
-        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario); 
+
+        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
         invA.setVisible(true);
         invA.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnInventarioMouseClicked
+
+    private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
+
+        this.setVisible(false);
+        this.dispose();
+
+        InicioAdmin_Pantalla iniAdmin = new InicioAdmin_Pantalla(conexion, conn, nomUsuario);
+        iniAdmin.setVisible(true);
+        iniAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnTableroMouseClicked
+
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        VentasAdmin_Pantalla ventasAdmin = new VentasAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
+        ventasAdmin.setVisible(true);
+        ventasAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasMouseClicked
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        UsuariosAdmin_Pantalla usersAdmin = new UsuariosAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
+        usersAdmin.setVisible(true);
+        usersAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnUsuariosMouseClicked
 
     private void obtenerInventario() {
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
         tabla.addColumn("Nombre");
         tabla.addColumn("Cantidad");
-        
+
         tbProductoStock.setModel(tabla);
-        
+
         if (conn != null) {
             try {
                 String query = "SELECT IDProducto, Nombre, Cantidad_Disponible FROM Producto WHERE Cantidad_Disponible < 10";
@@ -269,8 +317,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                     String[] rowData = {
                         rs.getString("IDProducto"),
                         rs.getString("Nombre"),
-                        rs.getString("Cantidad_Disponible"),
-                    };
+                        rs.getString("Cantidad_Disponible"),};
                     tabla.addRow(rowData);
                 }
 
@@ -283,7 +330,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

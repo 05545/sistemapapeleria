@@ -78,9 +78,19 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 40, 30));
 
         btnTablero.setText("Tablero");
+        btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTableroMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnVentas.setText("Ventas");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnInventario.setText("Inventario");
@@ -246,6 +256,24 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        ProveedoresAdmin_Pantalla proviAdmin = new ProveedoresAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        proviAdmin.setVisible(true);
+        proviAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnTableroMouseClicked
+
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        VentasAdmin_Pantalla ventasAdmin = new VentasAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        ventasAdmin.setVisible(true);
+        ventasAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Cale;
