@@ -93,7 +93,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
 
         JL_GenReports.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
         JL_GenReports.setText("Generación de reportes");
-        getContentPane().add(JL_GenReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 220, 70));
+        getContentPane().add(JL_GenReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 220, 70));
 
         btnGenerar.setText("Generar");
         btnGenerar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -101,7 +101,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 btnGenerarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 710, -1, -1));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 600, -1, -1));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,22 +112,52 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnVentas.setText("Ventas");
+        btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVentasMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnInventario.setText("Inventario");
+        btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventarioMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         btnUsuarios.setText("Usuarios");
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProveedoresMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         btnAjustes.setText("Ajustes");
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, -1, -1));
+        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAjustesMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,7 +165,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, -1, -1));
 
         txtDetallesReporteVentas.setEditable(false);
         txtDetallesReporteVentas.setColumns(20);
@@ -143,11 +173,11 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         txtDetallesReporteVentas.setText("Este reporte contiene todo el historial\nde ventas a lo largo del tiempo. Es \ngenerado en base a los registtros.");
         jScrollPane1.setViewportView(txtDetallesReporteVentas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, -1, 70));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, -1, 70));
 
         JL_ReporteInventario.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
         JL_ReporteInventario.setText("Reporte de inventario");
-        getContentPane().add(JL_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, 220, 40));
+        getContentPane().add(JL_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 220, 40));
 
         txtDetallesReporteInventario.setEditable(false);
         txtDetallesReporteInventario.setColumns(20);
@@ -155,17 +185,17 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         txtDetallesReporteInventario.setText("Este reporte contiene todo el\ninventario disponible actualmente\nbasandose en los registros disponibles\nconforme a las ventas.");
         jScrollPane2.setViewportView(txtDetallesReporteInventario);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, -1, 70));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, -1, 70));
 
         JL_ReporteUsuarios.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
         JL_ReporteUsuarios.setText("Reporte de usuarios");
-        getContentPane().add(JL_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 540, 220, 40));
+        getContentPane().add(JL_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 220, 40));
 
         JCB_ReporteUsuarios.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         JCB_ReporteUsuarios.setBorder(null);
         JCB_ReporteUsuarios.setContentAreaFilled(false);
         JCB_ReporteUsuarios.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 546, 290, 20));
+        getContentPane().add(JCB_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 290, 20));
 
         txtDetallesReporteUsuarios.setEditable(false);
         txtDetallesReporteUsuarios.setColumns(20);
@@ -173,23 +203,23 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         txtDetallesReporteUsuarios.setText("Este reporte contiene los datos de\ntodos los usuarios registrados en el\nsistema. Se excentan ciertos datos\npor privacidad del mismo. En caso \nde requerir conocer datos especificos\nde cada usuario dirijase al menú de\nusuarios.");
         jScrollPane3.setViewportView(txtDetallesReporteUsuarios);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, -1, 70));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, -1, 70));
 
         JCB_ReporteInventario.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         JCB_ReporteInventario.setBorder(null);
         JCB_ReporteInventario.setContentAreaFilled(false);
         JCB_ReporteInventario.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 396, 290, 20));
+        getContentPane().add(JCB_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 290, 20));
 
         JCB_ReporteVentas.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         JCB_ReporteVentas.setBorder(null);
         JCB_ReporteVentas.setContentAreaFilled(false);
         JCB_ReporteVentas.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 256, 290, 20));
+        getContentPane().add(JCB_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 290, 20));
 
         JL_ReporteVentas.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
         JL_ReporteVentas.setText("Reporte de ventas");
-        getContentPane().add(JL_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 220, 40));
+        getContentPane().add(JL_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 220, 40));
 
         JL_Reportes.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
         JL_Reportes.setText("Reportes");
@@ -209,7 +239,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, -1, 110));
-        getContentPane().add(JL_FondoReportesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        getContentPane().add(JL_FondoReportesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -456,6 +486,60 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnTableroMouseClicked
 
+    private void btnVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        VentasAdmin_Pantalla ventasAdmin = new VentasAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        ventasAdmin.setVisible(true);
+        ventasAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasMouseClicked
+
+    private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        invA.setVisible(true);
+        invA.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnInventarioMouseClicked
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        UsuariosAdmin_Pantalla usersAdmin = new UsuariosAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        usersAdmin.setVisible(true);
+        usersAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnUsuariosMouseClicked
+
+    private void btnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        ProveedoresAdmin_Pantalla proviAdmin = new ProveedoresAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        proviAdmin.setVisible(true);
+        proviAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnProveedoresMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        ReportesAdmin_Pantalla rpa = new ReportesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        this.setVisible(false);
+        this.dispose();
+
+        rpa.setVisible(true);
+        rpa.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        confiAdmin.setVisible(true);
+        confiAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAjustesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox JCB_ReporteInventario;
@@ -491,8 +575,6 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: Rodrigo Sosa Romero 
- * Ernesto García Nolazco 
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

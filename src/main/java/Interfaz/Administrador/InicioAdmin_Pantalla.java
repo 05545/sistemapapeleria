@@ -213,6 +213,11 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnAjustes.setText("Ajustes");
+        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAjustesMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, -1, -1));
 
         btnTablero.setText("Tablero");
@@ -307,6 +312,15 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         usersAdmin.setVisible(true);
         usersAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnUsuariosMouseClicked
+
+    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
+        confiAdmin.setVisible(true);
+        confiAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAjustesMouseClicked
 
     private void obtenerInventario() {
         DefaultTableModel tabla = new DefaultTableModel();

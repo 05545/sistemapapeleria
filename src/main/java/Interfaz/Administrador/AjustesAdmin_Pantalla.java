@@ -99,7 +99,12 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         btnAjustes.setText("Ajustes");
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, -1, -1));
+        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAjustesMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,8 +112,8 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
-        getContentPane().add(JL_FondoAjustesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 640, -1, -1));
+        getContentPane().add(JL_FondoAjustesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -176,6 +181,15 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         proviAdmin.setVisible(true);
         proviAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnProveedoresMouseClicked
+
+    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        confiAdmin.setVisible(true);
+        confiAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAjustesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

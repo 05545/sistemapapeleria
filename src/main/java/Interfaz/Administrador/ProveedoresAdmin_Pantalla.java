@@ -75,7 +75,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 40, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 40, 30));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,19 +94,44 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         btnInventario.setText("Inventario");
+        btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventarioMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         btnUsuarios.setText("Usuarios");
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         btnProveedores.setText("Proveedores");
+        btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProveedoresMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         btnAjustes.setText("Ajustes");
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 670, -1, -1));
+        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAjustesMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,45 +139,45 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 680, -1, -1));
 
         NombreAdmin.setText("Nombre usuario");
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
 
         JL_TRegistroProducto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_TRegistroProducto.setText("Proveedores");
-        getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+        getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
 
         JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Producto.setText("Nombre del proveedor");
-        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 210, -1));
+        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 210, -1));
 
         txtNombreProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreProveedorActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNombreProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 340, 40));
+        getContentPane().add(txtNombreProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 340, 40));
 
         JL_Cale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Cale.setText("Calle");
-        getContentPane().add(JL_Cale, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, -1, -1));
+        getContentPane().add(JL_Cale, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
 
         JL_CodigoP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_CodigoP.setText("Código Postal");
-        getContentPane().add(JL_CodigoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, -1, 30));
+        getContentPane().add(JL_CodigoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, -1, 30));
 
         txtCalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCalleActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 200, 40));
+        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 200, 40));
 
         JL_Correo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Correo.setText("Correo");
-        getContentPane().add(JL_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 70, -1));
-        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 350, 40));
+        getContentPane().add(JL_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 70, -1));
+        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 350, 40));
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -160,16 +185,16 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 690, 150, 50));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 630, 150, 50));
 
         btnLimpiar.setText("Limpiar");
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 690, 150, 50));
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 630, 150, 50));
 
         btnEditar.setText("Editar");
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 700, 120, 40));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 640, 120, 40));
 
         btnEliminar.setText("Eliminar");
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 620, 120, 40));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 120, 40));
 
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,15 +209,15 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbResultados);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 300, 350, 170));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 350, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 240, 350, 170));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 350, 30));
 
         txtCodigoPostal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoPostalActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, 130, 40));
+        getContentPane().add(txtCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 350, 130, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de proovedores");
@@ -200,25 +225,25 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
         JL_Numero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Numero.setText("Número");
-        getContentPane().add(JL_Numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, -1, 30));
+        getContentPane().add(JL_Numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, -1, 30));
 
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 300, 130, 40));
+        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 130, 40));
 
         JL_Colonia1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Colonia1.setText("Colonia");
-        getContentPane().add(JL_Colonia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 70, -1));
-        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, 180, 40));
+        getContentPane().add(JL_Colonia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 70, -1));
+        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 180, 40));
 
         JL_Telefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Telefono.setText("Teléfono");
-        getContentPane().add(JL_Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 580, 110, -1));
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, 180, 40));
-        getContentPane().add(JL_FondoProovedoresAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        getContentPane().add(JL_Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 110, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 560, 180, 40));
+        getContentPane().add(JL_FondoProovedoresAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -274,6 +299,51 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         ventasAdmin.setVisible(true);
         ventasAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVentasMouseClicked
+
+    private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        invA.setVisible(true);
+        invA.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnInventarioMouseClicked
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        UsuariosAdmin_Pantalla usersAdmin = new UsuariosAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        usersAdmin.setVisible(true);
+        usersAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnUsuariosMouseClicked
+
+    private void btnProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProveedoresMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        ProveedoresAdmin_Pantalla proviAdmin = new ProveedoresAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        proviAdmin.setVisible(true);
+        proviAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnProveedoresMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        ReportesAdmin_Pantalla rpa = new ReportesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        this.setVisible(false);
+        this.dispose();
+
+        rpa.setVisible(true);
+        rpa.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
+        this.setVisible(false);
+        this.dispose();
+
+        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+        confiAdmin.setVisible(true);
+        confiAdmin.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAjustesMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Cale;
