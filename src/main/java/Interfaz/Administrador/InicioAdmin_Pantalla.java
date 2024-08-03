@@ -30,6 +30,22 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         consultarNombre();
         obtenerInventario();
         obtenerVentas();
+
+        //Tabla del inventario disponible
+        tbProductoStock.getColumnModel().getColumn(0).setPreferredWidth(40);  // Ancho para la columna "ID"
+        tbProductoStock.getColumnModel().getColumn(1).setPreferredWidth(200); // Ancho para la columna "Nombre"
+        tbProductoStock.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Cantidad"
+        tbProductoStock.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        tbProductoStock.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
+        
+        //Tabla de las ventas recientes
+        tbVentasRecientes.getColumnModel().getColumn(0).setPreferredWidth(40);  // Ancho para la columna "ID"
+        tbVentasRecientes.getColumnModel().getColumn(1).setPreferredWidth(200); // Ancho para la columna "Nombre"
+        tbVentasRecientes.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Subtotal"
+        tbVentasRecientes.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        tbVentasRecientes.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
+        
+        
     }
 
     private void cerrarConexion() {
@@ -90,7 +106,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
         JL_VentasRecientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_VentasRecientes.setText("Ventas recientes");
-        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, 190, -1));
+        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 190, -1));
 
         tbVentasRecientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,11 +146,11 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
             tbVentasRecientes.getColumnModel().getColumn(2).setPreferredWidth(30);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 440, 350));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 400, 350));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Productos con poco Stock");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 150, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, -1, -1));
 
         tbProductoStock.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
         tbProductoStock.setModel(new javax.swing.table.DefaultTableModel(
@@ -170,7 +186,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
             tbProductoStock.getColumnModel().getColumn(2).setPreferredWidth(30);
         }
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 200, 350, 350));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 410, 350));
 
         btnReportes.setText("Reportes");
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -178,7 +194,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
 
         btnProveedores.setText("Proveedores");
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -186,7 +202,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -194,7 +210,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 670, -1, 30));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, -1, 30));
 
         btnUsuarios.setText("Usuarios");
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -202,7 +218,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
 
         btnVentas.setText("Ventas");
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,7 +226,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
 
         btnAjustes.setText("Ajustes");
         btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,7 +234,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnAjustesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, -1, -1));
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, -1));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -226,7 +242,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
 
         btnInventario.setText("Inventario");
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -234,12 +250,12 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
 
         NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
         NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
-        getContentPane().add(JL_FondoTableroAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1152, 720));
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 190, 63));
+        getContentPane().add(JL_FondoTableroAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -346,7 +362,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
 
                 rs.close();
                 ps.close();
-
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
