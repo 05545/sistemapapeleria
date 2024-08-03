@@ -8,12 +8,17 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     Connection conn;
     Conexion conexion;
+    String usuario, nomUsuario;
 
-    public RegistroUsuario(Conexion conexion, Connection conn) {
+    public RegistroUsuario(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.conn = conn;
+
         this.conexion = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        NombreAdmin.setText(usuario);
     }
 
     private void cerrarConexion() {
@@ -330,9 +335,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

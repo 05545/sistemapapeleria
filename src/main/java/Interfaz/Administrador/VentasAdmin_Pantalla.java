@@ -8,14 +8,19 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
 
     Connection conn;
     Conexion conexion;
-    
-    public VentasAdmin_Pantalla(Conexion conexion, Connection conn) {
+    String usuario, nomUsuario;
+
+    public VentasAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.conn = conn;
+
         this.conexion = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        NombreAdmin.setText(usuario);
     }
-    
+
     private void cerrarConexion() {
         if (conexion != null) {
             conexion.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion

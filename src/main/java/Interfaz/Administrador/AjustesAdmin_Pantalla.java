@@ -10,15 +10,15 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
     Conexion conexion;
     String usuario;
     String nomUsuario;
-    
-    public AjustesAdmin_Pantalla(Conexion conexion, Connection conn, String usuario, String nomUsuario) {
-        initComponents();
 
-        this.conn = conn;
-        this.conexion = conexion;
-        this.usuario = usuario;
+    public AjustesAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
+        initComponents();
         this.setLocationRelativeTo(null);
-        
+
+        this.conexion = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
     }
 
@@ -102,7 +102,7 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
         ReportesAdmin_Pantalla rpa = new ReportesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
         this.setVisible(false);
         this.dispose();
-        
+
         rpa.setVisible(true);
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
@@ -124,8 +124,6 @@ public class AjustesAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: Rodrigo Sosa Romero 
- * Ernesto García Nolazco 
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */
