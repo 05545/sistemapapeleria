@@ -37,6 +37,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
@@ -61,6 +62,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbResultados = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         JL_TRegistroProducto = new javax.swing.JLabel();
         NombreAdmin = new javax.swing.JLabel();
@@ -68,6 +70,10 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setText("Proveedor");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, 100, -1));
 
         btnBuscar.setText("BUSCAR");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,6 +161,11 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 150, 50));
 
         btnEditar.setText("Editar");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
 
         btnEliminar.setText("Eliminar");
@@ -206,6 +217,9 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
         getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 120, 270, 30));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, 120, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de productos");
@@ -352,6 +366,46 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         btnRegistrar.setEnabled(true);
     }//GEN-LAST:event_btnLimpiarMouseClicked
 
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        String idpr = String.valueOf(IdProducto);
+        String Producto = txtProducto.getText();
+        String PrecioUnitario = txtPrecioUnitario.getText();
+        String Tipo = txtTipo.getText();
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el producto con ID " + idpr + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (conn != null) {
+                try {
+                    String query = "DELETE FROM Producto WHERE IDProducto = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, idpr);
+
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                    int columEliminadas = ps.executeUpdate();
+                    System.out.println("Filas afectadas: " + columEliminadas);
+
+                    ps.close();
+
+                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
+                    tabla.setRowCount(0);
+                    txtBuscar.setText("");
+                    txtProducto.setText("");
+                    txtPrecioUnitario.setText("");
+                    txtTipo.setText("");
+                    spCantidad.setValue(0);
+                    btnRegistrar.setEnabled(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("No se pudo conectar a la base de datos.");
+            }
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
+    }//GEN-LAST:event_btnEditarMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Cantidad;
     private javax.swing.JLabel JL_FondoInventarioAdmin;
@@ -372,8 +426,10 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spCantidad;
     private javax.swing.JTable tbResultados;
