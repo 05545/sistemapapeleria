@@ -200,6 +200,11 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         btnInventario.setText("Inventario");
+        btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventarioMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
@@ -236,6 +241,15 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         rpa.setVisible(true);
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
+        this.setVisible(false);
+        this.dispose();
+        
+        InventarioAdmin_Pantalla invA = new InventarioAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario); 
+        invA.setVisible(true);
+        invA.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnInventarioMouseClicked
 
     private void obtenerInventario() {
         DefaultTableModel tabla = new DefaultTableModel();

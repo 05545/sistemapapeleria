@@ -32,6 +32,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
 
     public ReportesAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
+        this.setLocationRelativeTo(null);
 
         this.conexion = conexion;
         this.conn = connection;

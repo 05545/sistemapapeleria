@@ -3,19 +3,30 @@ package Interfaz.Administrador;
 import Interfaz.*;
 import Logic.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
     Connection conn;
     Conexion conexion;
-    
-    public InventarioAdmin_Pantalla(Conexion conexion, Connection conn) {
+    String usuario;
+    String nomUsuario;
+    int IdProducto;
+
+    public InventarioAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.conexion = conexion;
-        this.conn = conn;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        NombreAdmin.setText(usuario);
     }
-    
+
     private void cerrarConexion() {
         if (conexion != null) {
             conexion.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
@@ -26,6 +37,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnBuscar = new javax.swing.JButton();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
@@ -56,6 +68,14 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, -1, 30));
 
         btnTablero.setText("Tablero");
         getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
@@ -127,29 +147,65 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 150, 50));
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 150, 50));
 
         btnEditar.setText("Editar");
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
 
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Cantidad", "Precio"
+                "ID", "Nombre", "Tipo", "Cantidad", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbResultados.setRowHeight(40);
+        tbResultados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbResultadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbResultados);
+        if (tbResultados.getColumnModel().getColumnCount() > 0) {
+            tbResultados.getColumnModel().getColumn(0).setResizable(false);
+            tbResultados.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tbResultados.getColumnModel().getColumn(1).setResizable(false);
+            tbResultados.getColumnModel().getColumn(1).setPreferredWidth(70);
+            tbResultados.getColumnModel().getColumn(2).setResizable(false);
+            tbResultados.getColumnModel().getColumn(2).setPreferredWidth(30);
+            tbResultados.getColumnModel().getColumn(3).setResizable(false);
+            tbResultados.getColumnModel().getColumn(3).setPreferredWidth(20);
+            tbResultados.getColumnModel().getColumn(4).setResizable(false);
+            tbResultados.getColumnModel().getColumn(4).setPreferredWidth(20);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 350, 30));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 120, 270, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de productos");
@@ -188,6 +244,113 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void tbResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultadosMouseClicked
+        btnRegistrar.setEnabled(false);
+        int fila = this.tbResultados.getSelectedRow();
+
+        if (fila >= 0) {
+            try {
+                this.txtProducto.setText(this.tbResultados.getValueAt(fila, 1).toString());
+                this.txtTipo.setText(this.tbResultados.getValueAt(fila, 2).toString());
+                this.txtPrecioUnitario.setText(this.tbResultados.getValueAt(fila, 4).toString());
+
+                IdProducto = Integer.parseInt(this.tbResultados.getValueAt(fila, 0).toString());
+                float cantidad = Float.parseFloat(this.tbResultados.getValueAt(fila, 3).toString());
+
+                this.spCantidad.setValue(cantidad);
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tbResultadosMouseClicked
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        String parametroBusqueda = txtBuscar.getText();
+
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Tipo");
+        tabla.addColumn("Cantidad");
+        tabla.addColumn("Precio");
+
+        tbResultados.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT IDProducto, Nombre, Tipo, Cantidad_Disponible, Precio FROM Producto WHERE Nombre LIKE ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, "%" + parametroBusqueda + "%");
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDProducto"),
+                        rs.getString("Nombre"),
+                        rs.getString("Tipo"),
+                        rs.getString("Cantidad_Disponible"),
+                        rs.getString("Precio")
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        String idpr = String.valueOf(IdProducto);
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el producto con ID " + idpr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (conn != null) {
+                try {
+                    String query = "DELETE FROM Producto WHERE IDProducto = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, idpr);
+
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                    int columEliminadas = ps.executeUpdate();
+                    System.out.println("Filas afectadas: " + columEliminadas);
+
+                    ps.close();
+
+                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
+                    tabla.setRowCount(0);
+                    txtBuscar.setText("");
+                    txtProducto.setText("");
+                    txtPrecioUnitario.setText("");
+                    txtTipo.setText("");
+                    spCantidad.setValue(0);
+                    btnRegistrar.setEnabled(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("No se pudo conectar a la base de datos.");
+            }
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
+        spCantidad.setValue(0);
+        txtPrecioUnitario.setText("");
+        txtProducto.setText("");
+        txtTipo.setText("");
+        
+        btnRegistrar.setEnabled(true);
+    }//GEN-LAST:event_btnLimpiarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Cantidad;
@@ -197,6 +360,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel JL_precioUnitario;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnAjustes;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInventario;
@@ -222,9 +386,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */
