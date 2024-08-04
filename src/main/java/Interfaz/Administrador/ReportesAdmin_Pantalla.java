@@ -12,9 +12,15 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +28,7 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
 
@@ -39,6 +46,8 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
+
+        cargarReportesRecientes();
     }
 
     private void cerrarConexion() {
@@ -77,7 +86,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         JL_ReporteVentas = new javax.swing.JLabel();
         JL_Reportes = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JTB_ReportesRecientes = new javax.swing.JTable();
         JL_FondoReportesAdmin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -225,7 +234,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         JL_Reportes.setText("Reportes");
         getContentPane().add(JL_Reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 220, 70));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JTB_ReportesRecientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -236,7 +245,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 "Nombre", "Tipo", "Fecha"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(JTB_ReportesRecientes);
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, -1, 110));
         getContentPane().add(JL_FondoReportesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -316,6 +325,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                             e.printStackTrace();
                         }
                     }
+                    registrarReporteGenerado("ReporteInventario_" + fechaHora + ".pdf", "Inventario", fechaHora);
                 } catch (DocumentException e) {
                     System.out.println("Hay un error en el documento." + e);
                 }
@@ -350,7 +360,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                 parrafo.setAlignment(Paragraph.ALIGN_CENTER);
                 parrafo.add("Formato creado por PAPELERIA SUMI\n");
                 parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
-                parrafo.add("Registro de inventario actual\n\n");
+                parrafo.add("Registro de ventas actual\n\n");
 
                 RVentas.open();
                 RVentas.add(img);
@@ -375,8 +385,6 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                                     Tabla.addCell(rs.getString(2));
                                     Tabla.addCell(rs.getString(3));
                                     Tabla.addCell(rs.getString(4));
-                                    Tabla.addCell(rs.getString(5));
-                                    Tabla.addCell(rs.getString(6));
                                 } while (rs.next());
                                 RVentas.add(Tabla);
                             }
@@ -387,6 +395,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                             e.printStackTrace();
                         }
                     }
+                    registrarReporteGenerado("ReporteVentas_" + fechaHora + ".pdf", "Ventas", fechaHora);
                 } catch (DocumentException e) {
                     System.out.println("Hay un error en el documento." + e);
                 }
@@ -462,6 +471,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
                             e.printStackTrace();
                         }
                     }
+                    registrarReporteGenerado("ReporteUsuarios_" + fechaHora + ".pdf", "Usuarios", fechaHora);
                 } catch (DocumentException e) {
                     System.out.println("Hay un error en el documento." + e);
                 }
@@ -482,7 +492,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         this.dispose();
 
         TV.setLocationRelativeTo(null);
-        TV.setVisible(false);
+        TV.setVisible(true);
 
     }//GEN-LAST:event_btnTableroMouseClicked
 
@@ -540,6 +550,43 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         confiAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAjustesMouseClicked
 
+    private void registrarReporteGenerado(String nombreReporte, String tipoReporte, String fechaGeneracion) {
+        String carpetaUsuario = System.getProperty("user.home");
+        String rutaArchivo = carpetaUsuario + "/Documents/registro_reportes.txt";
+
+        try (FileWriter fw = new FileWriter(rutaArchivo, true); BufferedWriter bw = new BufferedWriter(fw); PrintWriter out = new PrintWriter(bw)) {
+            out.println(nombreReporte + "," + tipoReporte + "," + fechaGeneracion);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarReportesRecientes() {
+        String carpetaUsuario = System.getProperty("user.home");
+        String rutaArchivo = carpetaUsuario + "/Documents/registro_reportes.txt";
+
+        File archivo = new File(rutaArchivo);
+        if (!archivo.exists()) {
+            JOptionPane.showMessageDialog(null, "No existe el archivo");
+            System.out.println("El archivo no existe: " + rutaArchivo);
+            return;
+        }
+
+        DefaultTableModel modelo = (DefaultTableModel) JTB_ReportesRecientes.getModel();
+        modelo.setRowCount(0);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] datos = line.split(",");
+                if (datos.length == 3) {
+                    modelo.addRow(datos);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox JCB_ReporteInventario;
@@ -552,6 +599,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel JL_ReporteUsuarios;
     private javax.swing.JLabel JL_ReporteVentas;
     private javax.swing.JLabel JL_Reportes;
+    private javax.swing.JTable JTB_ReportesRecientes;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnAjustes;
     private javax.swing.JButton btnGenerar;
@@ -566,7 +614,6 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea txtDetallesReporteInventario;
     private javax.swing.JTextArea txtDetallesReporteUsuarios;
     private javax.swing.JTextArea txtDetallesReporteVentas;

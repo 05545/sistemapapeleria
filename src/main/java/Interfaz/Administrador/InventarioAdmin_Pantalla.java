@@ -443,8 +443,26 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         String tipo = txtTipo.getText();
         String proveedor = (String) JCB_Proovedores.getSelectedItem();
 
-        float precio = Float.parseFloat(precioUnitario);
-        float cantidad = ((Number) spCantidad.getValue()).floatValue();
+        if (producto.isEmpty() || precioUnitario.isEmpty() || tipo.isEmpty() || proveedor.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
+            return;
+        }
+
+        float precio, cantidad;
+
+        try {
+            precio = Float.parseFloat(precioUnitario);
+            cantidad = ((Number) spCantidad.getValue()).floatValue();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Precio unitario inválido. Ingresa un número válido.");
+            return;
+        }
+
+        if (cantidad < 1) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingresa una cantidad valida.");
+            return;
+        }
+
         int idProveedor = obtenerIdProveedor(proveedor);
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el producto con ID " + idpr + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
 
@@ -492,8 +510,26 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         String tipo = txtTipo.getText();
         String proveedor = (String) JCB_Proovedores.getSelectedItem();
 
-        float precio = Float.parseFloat(precioUnitario);
-        float cantidad = ((Number) spCantidad.getValue()).floatValue();
+        if (producto.isEmpty() || precioUnitario.isEmpty() || tipo.isEmpty() || proveedor.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
+            return;
+        }
+
+        float precio, cantidad;
+
+        try {
+            precio = Float.parseFloat(precioUnitario);
+            cantidad = ((Number) spCantidad.getValue()).floatValue();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Precio unitario inválido. Ingresa un número válido.");
+            return;
+        }
+
+        if (cantidad < 1) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingresa una cantidad valida.");
+            return;
+        }
+
         int idProveedor = obtenerIdProveedor(proveedor);
         int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas insertar el producto nuevo?", "Confirmar inserción", JOptionPane.YES_NO_OPTION);
 

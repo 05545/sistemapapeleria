@@ -27,22 +27,21 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         NombreAdmin.setText(usuario);
 
         obtenerUsuarios();
-        
+
         //Tabla de la busqueda
         tbResultados.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
         tbResultados.getColumnModel().getColumn(1).setPreferredWidth(80); // Ancho para la columna "Nombre"
-        tbResultados.getColumnModel().getColumn(3).setPreferredWidth(40); // Ancho para la columna "Rol"
+        tbResultados.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Rol"
         tbResultados.setDefaultEditor(Object.class, null); // Inhabilitar la edición
         tbResultados.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
-   
+
         //Tabla de los registros recientes
         tbResultados1.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
         tbResultados1.getColumnModel().getColumn(1).setPreferredWidth(80); // Ancho para la columna "Nombre"
-        tbResultados1.getColumnModel().getColumn(3).setPreferredWidth(40); // Ancho para la columna "Rol"
+        tbResultados1.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Rol"
         tbResultados1.setDefaultEditor(Object.class, null); // Inhabilitar la edición
         tbResultados1.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
-   
-        
+
     }
 
     private void cerrarConexion() {
@@ -70,7 +69,6 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         JL_Producto = new javax.swing.JLabel();
         btnRegistrarUsuario = new javax.swing.JButton();
-        btnRegistrarRol = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -99,6 +97,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbResultados1.setRowHeight(40);
         jScrollPane2.setViewportView(tbResultados1);
         if (tbResultados1.getColumnModel().getColumnCount() > 0) {
             tbResultados1.getColumnModel().getColumn(0).setResizable(false);
@@ -197,15 +196,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
                 btnRegistrarUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 150, 50));
-
-        btnRegistrarRol.setText("Registrar rol");
-        btnRegistrarRol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegistrarRolMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnRegistrarRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 150, 50));
+        getContentPane().add(btnRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 150, 50));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de usuarios");
@@ -230,6 +221,11 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         tbResultados.setRowHeight(40);
+        tbResultados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbResultadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbResultados);
         if (tbResultados.getColumnModel().getColumnCount() > 0) {
             tbResultados.getColumnModel().getColumn(0).setResizable(false);
@@ -240,9 +236,19 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
 
         btnEditar.setText("Editar");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
         getContentPane().add(JL_FondoUsuariosAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -367,20 +373,69 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
     private void btnRegistrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioMouseClicked
         this.setVisible(false);
         this.dispose();
-        
-        RegistroUsuario rup = new RegistroUsuario(conexion, conn, usuario, nomUsuario);
+
+        RegistroUsuario rup = new RegistroUsuario(conexion, conn, usuario, nomUsuario, -1);
         rup.setVisible(true);
         rup.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnRegistrarUsuarioMouseClicked
 
-    private void btnRegistrarRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarRolMouseClicked
-        this.setVisible(false);
-        this.dispose();
-        
-        RegistroRol rrp = new RegistroRol(conexion, conn, usuario, nomUsuario);
-        rrp.setVisible(true);
-        rrp.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnRegistrarRolMouseClicked
+    private void tbResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultadosMouseClicked
+        int fila = this.tbResultados.getSelectedRow();
+
+        if (fila >= 0) {
+            try {
+                IDUsuario = Integer.parseInt(this.tbResultados.getValueAt(fila, 0).toString());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tbResultadosMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        String idtr = String.valueOf(IDUsuario);
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el usuario con ID " + idtr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (conn != null) {
+                try {
+                    String query = "DELETE FROM Trabajador WHERE IDVendedor = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, idtr);
+
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                    int columEliminadas = ps.executeUpdate();
+                    System.out.println("Filas afectadas: " + columEliminadas);
+
+                    ps.close();
+
+                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
+                    tabla.setRowCount(0);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("No se pudo conectar a la base de datos.");
+            }
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+
+        if (IDUsuario < 1) {
+            JOptionPane.showMessageDialog(null, "Primero selecciona una columna de la tabla.");
+        } else {
+            RegistroUsuario ru = new RegistroUsuario(conexion, conn, usuario, nomUsuario, IDUsuario);
+
+            this.setVisible(false);
+            this.dispose();
+            
+            ru.setVisible(true);
+            ru.setLocationRelativeTo(null);
+        }
+    }//GEN-LAST:event_btnEditarMouseClicked
 
     public void obtenerUsuarios() {
         DefaultTableModel tabla = new DefaultTableModel();
@@ -425,7 +480,6 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnProveedores;
-    private javax.swing.JButton btnRegistrarRol;
     private javax.swing.JButton btnRegistrarUsuario;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnSalir;

@@ -61,7 +61,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         if (conn != null) {
             try {
                 Statement stmt = conn.createStatement();
-                String sql = "SELECT Nombre FROM Trabajador WHERE Usuario = '" + nomUsuario + "'";
+                String sql = "SELECT CONCAT(Nombre, ' ', AP, ' ', AM) AS Nombre FROM Trabajador WHERE Usuario = '" + nomUsuario + "'";
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if (rs.next()) {

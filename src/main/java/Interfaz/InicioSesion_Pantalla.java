@@ -5,7 +5,6 @@ import Interfaz.ventas.*;
 import Logic.*;
 import Sockets.*;
 import java.sql.Connection;
-import javax.swing.ImageIcon;
 
 public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
@@ -126,13 +125,12 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             iniAdmin.setVisible(true);
 
         } else if ("Vendedor".equals(rolUsuario)) {
-            Tablero_Ventas TV = new Tablero_Ventas(conexion);
+            //Tablero_Ventas TV = new Tablero_Ventas(conexion);
             
             this.dispose();
             this.setVisible(false);
-            this.dispose();
             
-            TV.setVisible(true);
+            //TV.setVisible(true);
            
         } else {
             JL_inicioFallido.setVisible(true);

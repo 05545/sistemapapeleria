@@ -3,14 +3,21 @@ package Interfaz.Administrador;
 import Logic.*;
 import Interfaz.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class RegistroUsuario extends javax.swing.JFrame {
 
     Connection conn;
     Conexion conexion;
     String usuario, nomUsuario;
+    int idUsuario = 0;
 
-    public RegistroUsuario(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
+    public RegistroUsuario(Conexion conexion, Connection connection, String usuario, String nomUsuario, int idUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -18,7 +25,21 @@ public class RegistroUsuario extends javax.swing.JFrame {
         this.conn = connection;
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
+        this.idUsuario = idUsuario;
+
         NombreAdmin.setText(usuario);
+
+        cargarRoles();
+
+        txtNombreUsuario.setEditable(false);
+        if (idUsuario > 0) {
+            obtenerDatosEdicion(idUsuario);
+            txtNombreUsuario.setEditable(false);
+        } else {
+            btnActualizar.setEnabled(false);
+            btnActualizar.setVisible(false);
+        }
+
     }
 
     private void cerrarConexion() {
@@ -31,6 +52,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGenerar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         JL_CorreoE = new javax.swing.JLabel();
         txtCorreoE = new javax.swing.JTextField();
         NombreAdmin = new javax.swing.JLabel();
@@ -64,11 +89,43 @@ public class RegistroUsuario extends javax.swing.JFrame {
         JL_ApellidoP = new javax.swing.JLabel();
         JL_ApellidoM = new javax.swing.JLabel();
         txtApellidoM = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        JCB_Roles = new javax.swing.JComboBox<>();
         Fondo_RegistroUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGenerar.setText("Generar");
+        btnGenerar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGenerarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(694, 195, 90, 30));
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, -1, -1));
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 620, -1, -1));
+
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, -1, -1));
 
         JL_CorreoE.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_CorreoE.setText("Correo electrónico");
@@ -264,8 +321,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         });
         getContentPane().add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 200, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 520, 210, 40));
+        getContentPane().add(JCB_Roles, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 520, 210, 40));
 
         Fondo_RegistroUsuario.setText("}");
         getContentPane().add(Fondo_RegistroUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -390,8 +446,402 @@ public class RegistroUsuario extends javax.swing.JFrame {
         confiAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAjustesMouseClicked
 
+    private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
+        String nombreUsuario, AP, AM, calle, numeroCalle, colonia, correo, telefono, usuarioNuevo, contrasenia, rolDef;
+        int CP = 0, idRol = 0;
+
+        nombreUsuario = txtNombre.getText();
+        AP = txtApellidoP.getText();
+        AM = txtApellidoM.getText();
+        calle = txtCalle.getText();
+        numeroCalle = txtNumero.getText();
+        colonia = txtColonia.getText();
+        correo = txtCorreoE.getText();
+        telefono = txtTelefono.getText();
+        usuarioNuevo = txtNombreUsuario.getText();
+        contrasenia = txtContrasena.getText();
+
+        try {
+            CP = Integer.parseInt(txtCodigoP.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números");
+            return;
+        }
+
+        for (int i = 0; i < JCB_Roles.getItemCount(); i++) {
+            String rol = JCB_Roles.getItemAt(i);
+            if (comprobarRol(idRol, rol)) {
+                JCB_Roles.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        rolDef = (String) JCB_Roles.getSelectedItem();
+        idRol = obtenerIdRol(rolDef);
+
+        if (nombreUsuario.isEmpty() || AP.isEmpty() || AM.isEmpty() || calle.isEmpty()
+                || numeroCalle.isEmpty() || colonia.isEmpty() || correo.isEmpty()
+                || telefono.isEmpty() || usuarioNuevo.isEmpty() || contrasenia.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
+            return;
+        } else {
+            if (conn != null) {
+                try {
+                    String query = "CALL RegistrarTrabajador(?,?,?,?,?,?,?,?,?,?,?,?)";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, nombreUsuario);
+                    ps.setString(2, AP);
+                    ps.setString(3, AM);
+                    ps.setString(4, calle);
+                    ps.setString(5, numeroCalle);
+                    ps.setString(6, colonia);
+                    ps.setInt(7, CP);
+                    ps.setString(8, correo);
+                    ps.setString(9, telefono);
+                    ps.setString(10, usuarioNuevo);
+                    ps.setString(11, contrasenia);
+                    ps.setInt(12, idRol);
+
+                    JOptionPane.showMessageDialog(null, "Se ha insertado el registro correctamente");
+                    int columEliminadas = ps.executeUpdate();
+                    System.out.println("Filas afectadas: " + columEliminadas);
+
+                    ps.close();
+
+                    txtApellidoM.setText("");
+                    txtApellidoP.setText("");
+                    txtCalle.setText("");
+                    txtCodigoP.setText("");
+                    txtColonia.setText("");
+                    txtContrasena.setText("");
+                    txtCorreoE.setText("");
+                    txtNombre.setText("");
+                    txtNombreUsuario.setText("");
+                    txtNumero.setText("");
+                    txtTelefono.setText("");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("No se pudo conectar a la base de datos.");
+            }
+        }
+    }//GEN-LAST:event_btnRegistrarMouseClicked
+
+    private void btnGenerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMouseClicked
+
+        String nomUserNuevo = "";
+        String nombreUsuario = txtNombre.getText();
+        String AP = txtApellidoP.getText();
+        String AM = txtApellidoM.getText();
+
+        if (nombreUsuario.isEmpty() || AP.isEmpty() || AM.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingresa el nombre y apellidos para generar el usuario.");
+        } else {
+            nomUserNuevo = generarNombreUsuario(nombreUsuario, AP, AM);
+            if (comprobarUsuario(nomUserNuevo)) {
+                nomUserNuevo = generarNombreUsuario(nombreUsuario, AP, AM);
+            }
+        }
+
+        txtNombreUsuario.setText(nomUserNuevo);
+    }//GEN-LAST:event_btnGenerarMouseClicked
+
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
+
+        String nombreUsuario, AP, AM, calle, numeroCalle, colonia, correo, telefono, usuarioNuevo, contrasenia, rolDef;
+        int CP = 0, idRol = 0;
+
+        nombreUsuario = txtNombre.getText();
+        AP = txtApellidoP.getText();
+        AM = txtApellidoM.getText();
+        calle = txtCalle.getText();
+        numeroCalle = txtNumero.getText();
+        colonia = txtColonia.getText();
+        correo = txtCorreoE.getText();
+        telefono = txtTelefono.getText();
+        usuarioNuevo = txtNombreUsuario.getText();
+        contrasenia = txtContrasena.getText();
+
+        try {
+            CP = Integer.parseInt(txtCodigoP.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números");
+            return;
+        }
+
+        for (int i = 0; i < JCB_Roles.getItemCount(); i++) {
+            String rol = JCB_Roles.getItemAt(i);
+            if (comprobarRol(idRol, rol)) {
+                JCB_Roles.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        rolDef = (String) JCB_Roles.getSelectedItem();
+        idRol = obtenerIdRol(rolDef);
+
+        if (nombreUsuario.isEmpty() || AP.isEmpty() || AM.isEmpty() || calle.isEmpty()
+                || numeroCalle.isEmpty() || colonia.isEmpty() || correo.isEmpty()
+                || telefono.isEmpty() || usuarioNuevo.isEmpty() || contrasenia.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
+            return;
+        } else {
+            if (conn != null) {
+                try {
+                    String query = "UPDATE Trabajador SET Nombre = ?, AP = ?, AM = ?, Calle = ?, Numero = ?, Colonia = ?, CP = ?, Correo = ?, Telefono = ?, Usuario = ?, Contrasenia = ?, IdRol = ? WHERE IDVendedor = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, nombreUsuario);
+                    ps.setString(2, AP);
+                    ps.setString(3, AM);
+                    ps.setString(4, calle);
+                    ps.setString(5, numeroCalle);
+                    ps.setString(6, colonia);
+                    ps.setInt(7, CP);
+                    ps.setString(8, correo);
+                    ps.setString(9, telefono);
+                    ps.setString(10, usuarioNuevo);
+                    ps.setString(11, contrasenia);
+                    ps.setInt(12, idRol);
+                    ps.setInt(13, idUsuario);
+
+                    int filasAfectadas = ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado el registro correctamente. Filas afectadas: " + filasAfectadas);
+
+                    ps.close();
+
+                    txtApellidoM.setText("");
+                    txtApellidoP.setText("");
+                    txtCalle.setText("");
+                    txtCodigoP.setText("");
+                    txtColonia.setText("");
+                    txtContrasena.setText("");
+                    txtCorreoE.setText("");
+                    txtNombre.setText("");
+                    txtNombreUsuario.setText("");
+                    txtNumero.setText("");
+                    txtTelefono.setText("");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                UsuariosAdmin_Pantalla uap = new UsuariosAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
+                this.setVisible(false);
+                this.dispose();
+
+                uap.setVisible(true);
+                uap.setLocationRelativeTo(null);
+            } else {
+                System.out.println("No se pudo conectar a la base de datos.");
+            }
+        }
+    }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
+        txtApellidoM.setText("");
+        txtApellidoP.setText("");
+        txtCalle.setText("");
+        txtCodigoP.setText("");
+        txtColonia.setText("");
+        txtContrasena.setText("");
+        txtCorreoE.setText("");
+        txtNombre.setText("");
+        txtNombreUsuario.setText("");
+        txtNumero.setText("");
+        txtTelefono.setText("");
+    }//GEN-LAST:event_btnLimpiarMouseClicked
+
+    public void cargarRoles() {
+        if (conn != null) {
+            try {
+                String query = "SELECT IDRol, Rol FROM Rol";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+                while (rs.next()) {
+                    String rol = rs.getString("Rol");
+                    modelo.addElement(rol);
+                }
+
+                JCB_Roles.setModel(modelo);
+
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    }
+
+    public int obtenerIdRol(String nomRol) {
+        int idRol = 0;
+
+        if (conn != null) {
+            try {
+                String query = "SELECT IDRol FROM Rol WHERE Rol = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, nomRol);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    idRol = rs.getInt("IDRol");
+                }
+
+                rs.close();
+                ps.close();
+            } catch (SQLException e) {
+                System.out.println("Error en la ejecución de la consula. " + e);
+            }
+        } else {
+            System.out.println("Error en la conexión a la base de datos");
+        }
+
+        return idRol;
+    }
+
+    public boolean comprobarRol(int id, String nombre) {
+        boolean encontrado = false;
+
+        if (conn != null) {
+            try {
+                String query = "SELECT Rol FROM Rol WHERE IDRol = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    String Rol = rs.getString("Rol");
+                    if (Rol.equals(nombre)) {
+                        encontrado = true;
+                    }
+                }
+
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+        return encontrado;
+    }
+
+    public void obtenerDatosEdicion(int id) {
+        btnActualizar.setEnabled(true);
+        btnActualizar.setVisible(true);
+        btnRegistrar.setVisible(false);
+        btnGenerar.setVisible(false);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM Trabajador WHERE IDVendedor = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    txtNombre.setText(rs.getString("Nombre"));
+                    txtApellidoP.setText(rs.getString("AP"));
+                    txtApellidoM.setText(rs.getString("AM"));
+                    txtCalle.setText(rs.getString("Calle"));
+                    txtNumero.setText(rs.getString("Numero"));
+                    txtColonia.setText(rs.getString("Colonia"));
+                    txtCodigoP.setText(rs.getString("CP"));
+                    txtCorreoE.setText(rs.getString("Correo"));
+                    txtTelefono.setText(rs.getString("Telefono"));
+                    txtNombreUsuario.setText(rs.getString("Usuario"));
+                    txtContrasena.setText(rs.getString("Contrasenia"));
+                    int rolId = rs.getInt("IDRol");
+                    JCB_Roles.setSelectedItem(obtenerNombreRol(rolId));
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String obtenerNombreRol(int idRol) {
+        String query = "SELECT Rol FROM Rol WHERE IDRol = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, idRol);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("Rol");
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private static String generarNombreUsuario(String nombre, String apellidoP, String apellidoM) {
+        int maxLetras = 15;
+        Random random = new Random();
+
+        String[] partes = {nombre, apellidoP, apellidoM};
+        StringBuilder nombreUsuario = new StringBuilder();
+
+        for (int i = 0; i < 2; i++) {
+            String parte = partes[random.nextInt(partes.length)];
+            nombreUsuario.append(parte);
+            if (i == 0) {
+                nombreUsuario.append(random.nextInt(100));
+            }
+        }
+
+        if (nombreUsuario.length() > maxLetras) {
+            nombreUsuario.setLength(maxLetras);
+        }
+
+        return nombreUsuario.toString().toLowerCase();
+    }
+
+    private boolean comprobarUsuario(String usuario) {
+        boolean encontrado = false;
+
+        if (conn != null) {
+            try {
+                String query = "SELECT Usuario FROM Trabajador WHERE Usuario LIKE ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, "%" + usuario + "%");
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    String Usuario = rs.getString("Usuario");
+                    if (Usuario.equals(usuario)) {
+                        encontrado = true;
+                    }
+                }
+
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+        return encontrado;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo_RegistroUsuario;
+    private javax.swing.JComboBox<String> JCB_Roles;
     private javax.swing.JLabel JL_ApellidoM;
     private javax.swing.JLabel JL_ApellidoP;
     private javax.swing.JLabel JL_CCodigoPostal;
@@ -406,15 +856,18 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel JL_TRegistroUsuarios;
     private javax.swing.JLabel JL_Telefono;
     private javax.swing.JLabel NombreAdmin;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAjustes;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnProveedores;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField txtApellidoM;
     private javax.swing.JTextField txtApellidoP;
     private javax.swing.JTextField txtCalle;
