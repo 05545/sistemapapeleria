@@ -1,16 +1,36 @@
 package Interfaz.ventas;
 
-import Logic.*;
+import Logic.Conexion;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Tablero_Ventas extends javax.swing.JFrame {
+private Timer timer;
+Conexion con = new Conexion();
+Connection conn = null;
 
-    Conexion conexion;
-    
-    public Tablero_Ventas(Conexion conexion) {
+    public Tablero_Ventas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.conexion = conexion;
+       this.conn = con.abrirConexion();
+        //Temporizador de datos 
+       timer = new Timer(9000, new ActionListener() { // 5000 milisegundos = 5 segundos
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MostraDVentas();
+                MostraBS();
+            }
+        });
+        timer.start(); // Iniciar el temporizador 
         
         // this.setExtendedState(JFrame.MAXIMIZED_BOTH); (No usar porque los tamaños de imagen y de pantalla en cada disp. son diferentes)
     }
@@ -28,13 +48,13 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         tbVentasReciente = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbproductoStock = new javax.swing.JTable();
+        JL_TableroVendedor = new javax.swing.JLabel();
         JL_Logo = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        JL_TableroVendedor = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,7 +109,7 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbVentasReciente);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 320, 350));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 340, 400));
 
         tbproductoStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,28 +124,48 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tbproductoStock);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, 290, 350));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, 340, 390));
+        getContentPane().add(JL_TableroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        JL_TableroVendedor.getAccessibleContext().setAccessibleName("JL_fondoTablero");
 
         JL_Logo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Logo.setText("Papeleria SUMI");
         getContentPane().add(JL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, -1));
 
         btnTablero.setText("Tablero");
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 90, -1));
+        btnTablero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTableroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 100, 40));
 
         btnVentas.setText("Ventas");
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 90, -1));
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 100, 30));
 
         btnInventario.setText("Inventario");
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 90, -1));
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 100, 40));
 
         btnCuenta.setText("Cuenta");
-        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 90, -1));
+        btnCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuentaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 100, 40));
 
-        jLabel7.setText("Cerra sesion");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, -1, -1));
-        getContentPane().add(JL_TableroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
-        JL_TableroVendedor.getAccessibleContext().setAccessibleName("JL_fondoTablero");
+        jLabel3.setText("Cerra sesion");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -134,6 +174,145 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tbVentasRecienteAncestorAdded
 
+    private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
+        this.setVisible(false);
+        this.dispose();
+
+        Tablero_Ventas TV= new Tablero_Ventas();
+        TV.setVisible(true);
+        TV.setLocationRelativeTo(null);
+
+    }//GEN-LAST:event_btnTableroActionPerformed
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        this.setVisible(false);
+        this.dispose();
+
+        Ventas_Ven VV=new Ventas_Ven();
+        VV.setVisible(true);
+        VV.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasActionPerformed
+
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        this.setVisible(false);
+        this.dispose();
+
+        Inventario_Venta IV=new Inventario_Venta();
+        IV.setVisible(true);
+        IV.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
+        this.setVisible(false);
+        this.dispose();
+
+        Cuenta_Venta CV=new Cuenta_Venta();
+        CV.setVisible(true);
+        CV.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnCuentaActionPerformed
+//Muestra los datos de las ventas 
+     public void MostraDVentas() {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID");
+    model.addColumn("Nombre");
+    model.addColumn("Precio Unitario");
+    model.addColumn("SubTotal");
+    model.addColumn("Cantidad");
+    tbVentasReciente.setModel(model);
+
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    try {
+        if (conn != null) {
+            String Consulta = "SELECT * FROM venta";
+            preparedStatement = conn.prepareStatement(Consulta);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Object[] datos = new Object[5]; 
+                datos[0] = resultSet.getInt("IDVenta"); 
+                datos[1] = resultSet.getString("Nombre");
+                datos[2] = resultSet.getDouble("Precio_Unitario");
+                datos[3] = resultSet.getDouble("Subtotal");
+                datos[4] = resultSet.getInt("CantidadP"); // Cambié "Cantidad" a "CantidadP"
+                model.addRow(datos);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se conectó a la base de datos");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Termino ejecucion");  
+    }
+}
+
+    //llena tabla de bajo stocks
+     public void MostraBS(){
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID");
+    model.addColumn("Producto");
+    model.addColumn("Tipo");
+    model.addColumn("Cantidad");
+    model.addColumn("Precio");
+    tbproductoStock.setModel(model);
+
+    String[] datos = new String[5];
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    try {
+        if (conn != null) {
+            String Consulta = "SELECT * FROM Producto WHERE cantidad_disponible<=10";
+            preparedStatement = conn.prepareStatement(Consulta);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                datos[0] = resultSet.getString("IDProducto");
+                datos[1] = resultSet.getString("Nombre");
+                datos[2] = resultSet.getString("Tipo");
+                datos[3] = resultSet.getString("cantidad_disponible");
+                datos[4] = resultSet.getString("Precio");
+                model.addRow(datos);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Ejecucion terminada");
+    }
+}   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
@@ -144,8 +323,8 @@ public class Tablero_Ventas extends javax.swing.JFrame {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

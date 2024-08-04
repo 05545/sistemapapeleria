@@ -3,18 +3,70 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 
 //Esta Clase esta enfocada para optimizar algunas consultas de SQL
 public class Consultas {
+ Conexion con = new Conexion();
+Connection conn = null; 
+    public Consultas() {
+         this.conn = con.abrirConexion();
+    }
     
-    /*
-   tabla es el nombre de la tabla donde se eliminara los registro 
-   nomCampo es el nombre del campo de la tabla de SQL
-   nomEliminar es el nombre del dato a eliminar
-    */
+    
+    
+    //Este metodod es de ventas_ven calcula el subtotal de un producto y lo retorna 
+    public double calcularTotalVenta(String[] productos, int[] cantidades) {
+        double total = 0.0;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            if (conn != null) {
+                String consulta = "SELECT Precio FROM producto WHERE Nombre = ?";
+                preparedStatement = conn.prepareStatement(consulta);
+
+                for (int i = 0; i < productos.length; i++) {
+                    preparedStatement.setString(1, productos[i]);
+                    resultSet = preparedStatement.executeQuery();
+
+                    if (resultSet.next()) {
+                        double precioUnidad = resultSet.getDouble("Precio");
+                        total += precioUnidad * cantidades[i];
+                    } else {
+                        System.out.println("Producto no encontrado: " + productos[i]);
+                    }
+                }
+            } else {
+                System.out.println("No se puede conectar a la base de datos.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return total;
+    }
+
+    //Nota si no usa este metodo eliminalo
     //Metdod para eliminar datos
     public void Eliminar(String tabla, String nomCampo, String nomEliminar) throws SQLException {
         Conexion con = null;
