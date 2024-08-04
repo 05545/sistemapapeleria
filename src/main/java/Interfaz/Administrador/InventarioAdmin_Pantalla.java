@@ -274,8 +274,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         JL_TRegistroProducto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_TRegistroProducto.setText("Registro de productos");
         getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
-
-        NombreAdmin.setText("Nombre usuario");
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
         getContentPane().add(JL_FondoInventarioAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -700,6 +698,9 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
+ * Hecho por: 
+ * Rodrigo Sosa Romero 
+ * Ernesto García Nolazco 
+ * Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */
