@@ -169,26 +169,43 @@ public class RegistroRol extends javax.swing.JFrame {
 
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Cantidad", "Precio"
+                "ID", "Rol", "Descripción"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tbResultados);
+        if (tbResultados.getColumnModel().getColumnCount() > 0) {
+            tbResultados.getColumnModel().getColumn(1).setResizable(false);
+            tbResultados.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 180, 350, 170));
 
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, 40, 30));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, 350, 30));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 130, 310, 30));
 
         JL_BusquedaRoles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_BusquedaRoles.setText("Búsqueda de roles");
@@ -282,6 +299,12 @@ public class RegistroRol extends javax.swing.JFrame {
         confiAdmin.setVisible(true);
         confiAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAjustesMouseClicked
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        String parametroBusqueda = txtBuscar.getText();
+        
+        
+    }//GEN-LAST:event_btnBuscarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_BusquedaRoles;

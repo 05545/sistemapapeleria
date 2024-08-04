@@ -28,6 +28,16 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         NombreAdmin.setText(usuario);
 
         cargarProveedores();
+
+        //Propiedades de la tabla busqueda
+        tbResultados.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
+        tbResultados.getColumnModel().getColumn(1).setPreferredWidth(100); // Ancho para la columna "Nombre"
+        tbResultados.getColumnModel().getColumn(2).setPreferredWidth(20); // Ancho para la columna "Tipo"
+        tbResultados.getColumnModel().getColumn(3).setPreferredWidth(20); // Ancho para la columna "Cantidad"
+        tbResultados.getColumnModel().getColumn(4).setPreferredWidth(20); // Ancho para la columna "Precio"
+        tbResultados.getColumnModel().getColumn(5).setPreferredWidth(20); // Ancho para la columna "Proveedor"
+        tbResultados.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        tbResultados.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
     }
 
     private void cerrarConexion() {
@@ -76,7 +86,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Proveedor");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, 100, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 100, -1));
 
         btnBuscar.setText("BUSCAR");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,7 +94,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnBuscarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, -1, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 50, 40));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,7 +102,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
         btnVentas.setText("Ventas");
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -100,7 +110,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
 
         btnInventario.setText("Inventario");
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,7 +118,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
 
         btnUsuarios.setText("Usuarios");
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +126,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
 
         btnProveedores.setText("Proveedores");
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -124,7 +134,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         btnReportes.setText("Reportes");
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -132,7 +142,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
 
         btnAjustes.setText("Ajustes");
         btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -140,7 +150,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnAjustesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
+        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -148,41 +158,42 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 640, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, -1, -1));
 
         JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Producto.setText("Producto");
-        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 160, -1));
+        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 160, -1));
 
         txtProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 340, 40));
+        getContentPane().add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 340, 30));
 
         JL_Cantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Cantidad.setText("Cantidad");
-        getContentPane().add(JL_Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, -1, -1));
+        getContentPane().add(JL_Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, -1, -1));
 
         JL_precioUnitario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_precioUnitario.setText("Precio unitario");
-        getContentPane().add(JL_precioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, -1, 30));
+        getContentPane().add(JL_precioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, -1, 30));
 
         spCantidad.setToolTipText("");
-        getContentPane().add(spCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 100, 40));
+        getContentPane().add(spCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 110, 30));
 
         txtPrecioUnitario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecioUnitarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 300, 130, 40));
+        getContentPane().add(txtPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 140, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Tipo");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 70, -1));
-        getContentPane().add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, 180, 40));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 70, -1));
+        getContentPane().add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 425, 110, 33));
+        txtTipo.getAccessibleContext().setAccessibleName("");
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -195,7 +206,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 150, 50));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 510, 150, 50));
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,7 +214,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnLimpiarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 150, 50));
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, 160, 50));
 
         btnEditar.setText("Editar");
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -211,7 +222,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnEditarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 520, 120, 40));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -219,8 +230,11 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
                 btnEliminarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 440, 120, 40));
 
+        tbResultados.setBackground(new java.awt.Color(255, 255, 255));
+        tbResultados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tbResultados.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -262,10 +276,10 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
             tbResultados.getColumnModel().getColumn(5).setPreferredWidth(10);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 420, 170));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 120, 270, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 240, 420, 170));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 190, 300, 40));
 
-        getContentPane().add(JCB_Proovedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, 120, 40));
+        getContentPane().add(JCB_Proovedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 427, 140, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de productos");
@@ -273,7 +287,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         JL_TRegistroProducto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_TRegistroProducto.setText("Registro de productos");
-        getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+        getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
         getContentPane().add(JL_FondoInventarioAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -698,9 +712,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero 
- * Ernesto García Nolazco 
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

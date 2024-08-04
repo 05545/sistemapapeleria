@@ -3,12 +3,18 @@ package Interfaz.Administrador;
 import Logic.*;
 import Interfaz.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
     Connection conn;
     Conexion conexion;
     String usuario, nomUsuario;
+    int IDUsuario;
 
     public UsuariosAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
@@ -19,6 +25,24 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
+
+        obtenerUsuarios();
+        
+        //Tabla de la busqueda
+        tbResultados.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
+        tbResultados.getColumnModel().getColumn(1).setPreferredWidth(80); // Ancho para la columna "Nombre"
+        tbResultados.getColumnModel().getColumn(3).setPreferredWidth(40); // Ancho para la columna "Rol"
+        tbResultados.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        tbResultados.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
+   
+        //Tabla de los registros recientes
+        tbResultados1.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
+        tbResultados1.getColumnModel().getColumn(1).setPreferredWidth(80); // Ancho para la columna "Nombre"
+        tbResultados1.getColumnModel().getColumn(3).setPreferredWidth(40); // Ancho para la columna "Rol"
+        tbResultados1.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        tbResultados1.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
+   
+        
     }
 
     private void cerrarConexion() {
@@ -58,19 +82,17 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tbResultados1.setBackground(new java.awt.Color(255, 255, 255));
         tbResultados1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Nombre", "Rol"
+                "ID", "Nombre", "Rol"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -78,6 +100,9 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tbResultados1);
+        if (tbResultados1.getColumnModel().getColumnCount() > 0) {
+            tbResultados1.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, 350, 170));
 
@@ -149,6 +174,12 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         JL_TRegistroUsuariosyRoles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_TRegistroUsuariosyRoles.setText("Registro de usuarios");
         getContentPane().add(JL_TRegistroUsuariosyRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 40, 30));
 
         JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -156,6 +187,11 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, 190, -1));
 
         btnRegistrarUsuario.setText("Registrar usuario");
+        btnRegistrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarUsuarioMouseClicked(evt);
+            }
+        });
         btnRegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarUsuarioActionPerformed(evt);
@@ -164,33 +200,42 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 150, 50));
 
         btnRegistrarRol.setText("Registrar rol");
+        btnRegistrarRol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarRolMouseClicked(evt);
+            }
+        });
         getContentPane().add(btnRegistrarRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 150, 50));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Consulta de usuarios");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 350, 30));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 120, 310, 30));
 
+        tbResultados.setBackground(new java.awt.Color(255, 255, 255));
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Nombre", "Rol"
+                "ID", "Nombre", "Rol"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tbResultados.setRowHeight(40);
         jScrollPane1.setViewportView(tbResultados);
+        if (tbResultados.getColumnModel().getColumnCount() > 0) {
+            tbResultados.getColumnModel().getColumn(0).setResizable(false);
+            tbResultados.getColumnModel().getColumn(1).setResizable(false);
+            tbResultados.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
 
@@ -281,7 +326,94 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         confiAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAjustesMouseClicked
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        String usuarioBuscado = txtBuscar.getText();
 
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Rol");
+
+        this.tbResultados.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT T.IDVendedor, CONCAT(T.Nombre, ' ', T.AP, ' ', T.AM) AS Nombre, R.Rol FROM Trabajador T JOIN Rol R ON T.IDRol = R.IDRol WHERE T.Nombre LIKE ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, "%" + usuarioBuscado + "%");
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDVendedor"),
+                        rs.getString("Nombre"),
+                        rs.getString("Rol")
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnRegistrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioMouseClicked
+        this.setVisible(false);
+        this.dispose();
+        
+        RegistroUsuario rup = new RegistroUsuario(conexion, conn, usuario, nomUsuario);
+        rup.setVisible(true);
+        rup.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnRegistrarUsuarioMouseClicked
+
+    private void btnRegistrarRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarRolMouseClicked
+        this.setVisible(false);
+        this.dispose();
+        
+        RegistroRol rrp = new RegistroRol(conexion, conn, usuario, nomUsuario);
+        rrp.setVisible(true);
+        rrp.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnRegistrarRolMouseClicked
+
+    public void obtenerUsuarios() {
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Rol");
+
+        tbResultados1.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT T.IDVendedor, CONCAT(T.Nombre, ' ', T.AP, ' ', T.AM) AS Nombre, R.Rol FROM Trabajador T JOIN Rol R ON T.IDRol = R.IDRol ORDER BY IDVendedor DESC LIMIT 4";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDVendedor"),
+                        rs.getString("Nombre"),
+                        rs.getString("Rol"),};
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_FondoUsuariosAdmin;
     private javax.swing.JLabel JL_Producto;

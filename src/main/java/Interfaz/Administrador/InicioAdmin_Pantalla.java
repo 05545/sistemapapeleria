@@ -108,6 +108,9 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         JL_VentasRecientes.setText("Ventas recientes");
         getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 190, -1));
 
+        tbVentasRecientes.setBackground(new java.awt.Color(255, 255, 255));
+        tbVentasRecientes.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
+        tbVentasRecientes.setForeground(new java.awt.Color(0, 0, 0));
         tbVentasRecientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -127,6 +130,7 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbVentasRecientes.setRowHeight(40);
         tbVentasRecientes.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tbVentasRecientesAncestorAdded(evt);
