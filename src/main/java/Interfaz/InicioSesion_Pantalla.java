@@ -5,6 +5,7 @@ import Interfaz.ventas.*;
 import Logic.*;
 import Sockets.*;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
@@ -17,9 +18,6 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         initComponents();
         iniciarConexion();
         iniciarCliente();
-
-        JL_inicioFallido.setVisible(false);
-        btnAceptar.setVisible(false);
     }
 
     public void iniciarConexion() {
@@ -41,11 +39,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAceptar = new javax.swing.JButton();
-        JL_inicioFallido = new javax.swing.JLabel();
-        JL_Usuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        JL_Contrasena = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         Pantalla_InicioSesion = new javax.swing.JLabel();
@@ -53,35 +47,27 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnAceptar.setText("ACEPTAR");
-        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAceptarMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 390, -1, -1));
-
-        JL_inicioFallido.setText("USUARIO O ROL NO ENCONTRADO");
-        getContentPane().add(JL_inicioFallido, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 370, 260));
-
-        JL_Usuario.setText("Usuario");
-        getContentPane().add(JL_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 450, 59, -1));
-
+        txtUsuario.setBackground(new java.awt.Color(78, 78, 78));
         txtUsuario.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setBorder(null);
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 450, 228, -1));
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 290, 400, 40));
 
-        JL_Contrasena.setText("Contraseña");
-        getContentPane().add(JL_Contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 490, 85, -1));
-
+        txtPass.setBackground(new java.awt.Color(78, 78, 78));
         txtPass.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 490, 229, -1));
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass.setBorder(null);
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 410, 400, 40));
 
-        btnIngresar.setText("INGRESAR");
+        btnIngresar.setIcon(new javax.swing.ImageIcon("/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/btnIngresar.png")); // NOI18N
+        btnIngresar.setBorder(null);
+        btnIngresar.setBorderPainted(false);
+        btnIngresar.setContentAreaFilled(false);
         btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnIngresarMouseClicked(evt);
@@ -92,8 +78,10 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 160, -1));
-        getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 520, 510, 70));
+
+        Pantalla_InicioSesion.setIcon(new javax.swing.ImageIcon("/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/Pantalla_Loggin.png")); // NOI18N
+        getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -134,28 +122,17 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             TV.setLocationRelativeTo(null);
            
         } else {
-            JL_inicioFallido.setVisible(true);
-            btnAceptar.setVisible(true);
+            
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña no coincidentes");
+            
             btnIngresar.setVisible(false);
             txtUsuario.setEditable(false);
             txtPass.setEditable(false);
         }
     }//GEN-LAST:event_btnIngresarMouseClicked
 
-    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        JL_inicioFallido.setVisible(false);
-        btnAceptar.setVisible(false);
-        btnIngresar.setVisible(true);
-        txtUsuario.setEditable(true);
-        txtPass.setEditable(true);
-    }//GEN-LAST:event_btnAceptarMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JL_Contrasena;
-    private javax.swing.JLabel JL_Usuario;
-    private javax.swing.JLabel JL_inicioFallido;
     private javax.swing.JLabel Pantalla_InicioSesion;
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
