@@ -66,6 +66,41 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         }
     }
 
+    //Metodo para obtener el ID mediante el usuario
+    private int obtenerID(String nomUsuario) {
+        String id = "";
+        int idUser = 0;
+
+        if (conn != null) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "SELECT IDVendedor FROM Trabajador WHERE Usuario = '" + nomUsuario + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next()) {
+                    id = rs.getString("IDVendedor");
+                    try {
+                        idUser = Integer.parseInt(id);
+                    } catch (NumberFormatException e) {
+                        System.out.println("El IDVendedor no es un número válido: " + id);
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Nombre de usuario o contraseña incorrectos.");
+                }
+                rs.close();
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Error al ejecutar la consulta.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No se pudo conectar a la base de datos.");
+        }
+
+        return idUser;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -26,6 +26,41 @@ public class Cuenta_Venta extends javax.swing.JFrame {
         llenatxt();
     }
 
+    //Metodo para obtener el ID mediante el usuario
+    private int obtenerID(String nomUsuario) {
+        String id = "";
+        int idUser = 0;
+
+        if (conn != null) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "SELECT IDVendedor FROM Trabajador WHERE Usuario = '" + nomUsuario + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next()) {
+                    id = rs.getString("IDVendedor");
+                    try {
+                        idUser = Integer.parseInt(id);
+                    } catch (NumberFormatException e) {
+                        System.out.println("El IDVendedor no es un número válido: " + id);
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Nombre de usuario o contraseña incorrectos.");
+                }
+                rs.close();
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Error al ejecutar la consulta.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No se pudo conectar a la base de datos.");
+        }
+
+        return idUser;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,7 +266,8 @@ public class Cuenta_Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCuentaActionPerformed
 
     public void llenatxt() {
-        String consulta = "SELECT * FROM Trabajador WHERE IDVendedor = 3";
+        int id = obtenerID(nomUsuario);
+        String consulta = "SELECT * FROM Trabajador WHERE IDVendedor = " + id;
 
         try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(consulta)) {
             if (conn != null) {
@@ -243,16 +279,16 @@ public class Cuenta_Venta extends javax.swing.JFrame {
 
             if (rs.next()) {
                 System.out.println("Datos encontrados.");
-                txtnombre.setText(rs.getString("nombre"));
-                txtapellidoP.setText(rs.getString("ap"));
-                txtapellidoM.setText(rs.getString("am"));
-                txtcalle.setText(rs.getString("calle"));
-                txtnumero.setText(String.valueOf(rs.getInt("numero"))); // Convertir int a String
-                txtcolonia.setText(rs.getString("colonia"));
-                txtcodigoP.setText(String.valueOf(rs.getInt("cp"))); // Convertir int a String
-                txtcorreo.setText(rs.getString("correo"));
-                txttelefono.setText(rs.getString("telefono"));
-                txtcontraseña.setText(rs.getString("contrasenia"));
+                txtnombre.setText(rs.getString("Nombre"));
+                txtapellidoP.setText(rs.getString("AP"));
+                txtapellidoM.setText(rs.getString("AM"));
+                txtcalle.setText(rs.getString("Calle"));
+                txtnumero.setText(rs.getString("Numero")); 
+                txtcolonia.setText(rs.getString("Colonia"));
+                txtcodigoP.setText(String.valueOf(rs.getInt("CP"))); 
+                txtcorreo.setText(rs.getString("Correo"));
+                txttelefono.setText(rs.getString("Telefono"));
+                txtcontraseña.setText(rs.getString("Contrasenia"));
             } else {
                 System.out.println("Datos de usuario no disponibles.");
             }
