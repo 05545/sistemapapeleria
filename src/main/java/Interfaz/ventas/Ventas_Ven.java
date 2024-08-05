@@ -3,47 +3,48 @@ package Interfaz.ventas;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import Logic.*;
-import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.*;
+
 public class Ventas_Ven extends javax.swing.JFrame {
-Conexion con = new Conexion();
-Connection conn = null;
 
-//Variables para ventas en acomulo
-private int maxProductos = 100; // Puedes ajustar este tamaño según tus necesidades
-private String[] productos = new String[maxProductos];
-private int[] cantidades = new int[maxProductos];
-private double[] precios = new double[maxProductos];
-private int indice = 0;
-private double total = 0.0;
-double totalVentaActual;
+    Conexion con;
+    Connection conn;
+    String nomUsuario;
+    String usuario;
 
-    public Ventas_Ven() {
+//Variables para ventas en acumulo
+    private int maxProductos = 100;
+    private String[] productos = new String[maxProductos];
+    private int[] cantidades = new int[maxProductos];
+    private double[] precios = new double[maxProductos];
+    private int indice = 0;
+    private double total = 0.0;
+    double totalVentaActual;
+
+    public Ventas_Ven(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-       this.conn = con.abrirConexion();
-       rellenarC("producto", "Nombre", txtproducto);
-       MostraProducto(); 
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.con = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        rellenarC("Producto", "Nombre", txtproducto);
+        MostraProducto();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JL_NomUser = new javax.swing.JLabel();
         JL_Logo = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
@@ -80,6 +81,7 @@ double totalVentaActual;
         setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
 
         JL_Logo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Logo.setText("Papeleria SUMI");
@@ -257,40 +259,40 @@ double totalVentaActual;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnprocesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprocesarActionPerformed
-          // Obtener el producto seleccionado
-    String producto = (String) txtproducto.getSelectedItem();
-    productos[indice] = producto;
+        // Obtener el producto seleccionado
+        String producto = (String) txtproducto.getSelectedItem();
+        productos[indice] = producto;
 
-    // Obtener la cantidad ingresada
-    try {
-        cantidades[indice] = Integer.parseInt(spcantidad.getValue().toString());
-    } catch (NumberFormatException e) {
-        System.out.println("No se aceptan números decimales");
-    }
+        // Obtener la cantidad ingresada
+        try {
+            cantidades[indice] = Integer.parseInt(spcantidad.getValue().toString());
+        } catch (NumberFormatException e) {
+            System.out.println("No se aceptan números decimales");
+        }
 
-    // Crear instancia de Consultas y calcular el total de venta para el producto actual
-    Consultas consul = new Consultas();
-   totalVentaActual = consul.calcularTotalVenta(
-        new String[] { productos[indice] }, 
-        new int[] { cantidades[indice] }
-    );
+        // Crear instancia de Consultas y calcular el total de venta para el producto actual
+        Consultas consul = new Consultas();
+        totalVentaActual = consul.calcularTotalVenta(
+                new String[]{productos[indice]},
+                new int[]{cantidades[indice]}
+        );
 
-     //Actualizar el total acumulado
-    total += totalVentaActual;
-    precios[indice] = (totalVentaActual/cantidades[indice]);
+        //Actualizar el total acumulado
+        total += totalVentaActual;
+        precios[indice] = (totalVentaActual / cantidades[indice]);
 
-    // Mostrar el total acumulado en el campo de texto
-    txttotal.setText(String.format("%.2f", total));
-    txtsubTotal.setText(String.format("%.2f", totalVentaActual));
-    txtprecioUnitario.setText(String.format("%.2f", precios[indice]));
-    
-    // Imprimir los productos y cantidades actuales
-    System.out.println("id: " + indice + ", Producto: " + productos[indice] + ", Cantidad: " + cantidades[indice] + ", Total Venta Actual: " + totalVentaActual);
-    System.out.println("El total acumulado es: " + total);
+        // Mostrar el total acumulado en el campo de texto
+        txttotal.setText(String.format("%.2f", total));
+        txtsubTotal.setText(String.format("%.2f", totalVentaActual));
+        txtprecioUnitario.setText(String.format("%.2f", precios[indice]));
 
-    // Incrementar el índice para el próximo producto
-    indice++;
-    MostraRegistro();
+        // Imprimir los productos y cantidades actuales
+        System.out.println("id: " + indice + ", Producto: " + productos[indice] + ", Cantidad: " + cantidades[indice] + ", Total Venta Actual: " + totalVentaActual);
+        System.out.println("El total acumulado es: " + total);
+
+        // Incrementar el índice para el próximo producto
+        indice++;
+        MostraRegistro();
     }//GEN-LAST:event_btnprocesarActionPerformed
 
     private void txtprecioUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtprecioUnitarioActionPerformed
@@ -300,9 +302,9 @@ double totalVentaActual;
     private void btnCobraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobraActionPerformed
         // Mostrar el diálogo de confirmación con el total formateado a 2 decimales
         int confirmacion = JOptionPane.showConfirmDialog(this,
-            "Confirmar compra con un total de " + String.format("%.2f", total) + "?",
-            "Confirmación de Compra",
-            JOptionPane.YES_NO_OPTION);
+                "Confirmar compra con un total de " + String.format("%.2f", total) + "?",
+                "Confirmación de Compra",
+                JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             for (int i = 0; i < indice; i++) {
@@ -322,12 +324,13 @@ double totalVentaActual;
     }//GEN-LAST:event_txtConsulatActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String Buscar=txtConsulat.getText();
+        String Buscar = txtConsulat.getText();
         Buscar(Buscar);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tbbusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbbusquedaMouseClicked
         int fila = this.tbbusqueda.getSelectedRow();
+        
         if (fila >= 0) {
             this.txtproducto.setSelectedItem(this.tbbusqueda.getValueAt(fila, 1).toString());
         } else {
@@ -341,86 +344,140 @@ double totalVentaActual;
     }//GEN-LAST:event_txtproductoActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
-       Limpiar();
+        Limpiar();
     }//GEN-LAST:event_btnlimpiarActionPerformed
 //Boton tablero
     private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
-     this.setVisible(false);
-     this.dispose();
+        this.setVisible(false);
+        this.dispose();
 
-        Tablero_Ventas TV= new Tablero_Ventas();
+        Tablero_Ventas TV = new Tablero_Ventas(con, conn, nomUsuario);
         TV.setVisible(true);
         TV.setLocationRelativeTo(null);
-    
+
     }//GEN-LAST:event_btnTableroActionPerformed
 //Boton ventas
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-     this.setVisible(false);
-     this.dispose();
-     
-     Ventas_Ven VV=new Ventas_Ven();
-     VV.setVisible(true);
-     VV.setLocationRelativeTo(null); 
+        this.setVisible(false);
+        this.dispose();
+
+        Ventas_Ven VV = new Ventas_Ven(con, conn, usuario, nomUsuario);
+        VV.setVisible(true);
+        VV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVentasActionPerformed
 //Boton Inventario
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-     this.setVisible(false);
-     this.dispose();
-     
-     Inventario_Venta IV=new Inventario_Venta();
-     IV.setVisible(true);
-     IV.setLocationRelativeTo(null);
+        this.setVisible(false);
+        this.dispose();
+
+        Inventario_Venta IV = new Inventario_Venta(con, conn, usuario, nomUsuario);
+        IV.setVisible(true);
+        IV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnInventarioActionPerformed
 //Boton Cuenta
     private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
-this.setVisible(false);
-this.dispose();
-     
-     Cuenta_Venta CV=new Cuenta_Venta();
-     CV.setVisible(true);
-     CV.setLocationRelativeTo(null);  
+        this.setVisible(false);
+        this.dispose();
+
+        Cuenta_Venta CV = new Cuenta_Venta(con, conn, usuario, nomUsuario);
+        CV.setVisible(true);
+        CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
     //Metodo Buscar
-    public void Buscar(String Nombre){
-    DefaultTableModel model = new DefaultTableModel();
-    String[] datos = new String[5];
-    model.addColumn("ID");
-    model.addColumn("Producto");
-    model.addColumn("Tipo");
-    model.addColumn("Cantidad");
-    model.addColumn("Precio");
-    tbbusqueda.setModel(model);
+    public void Buscar(String Nombre) {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] datos = new String[5];
+        model.addColumn("ID");
+        model.addColumn("Producto");
+        model.addColumn("Tipo");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio");
+        tbbusqueda.setModel(model);
 
-    if (!Nombre.isEmpty()) {
+        if (!Nombre.isEmpty()) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+
+            try {
+                if (conn != null) {
+                    String Buscar = "SELECT * FROM Producto WHERE Nombre LIKE ?";
+                    preparedStatement = conn.prepareStatement(Buscar);
+                    preparedStatement.setString(1, "%" + Nombre + "%");
+                    resultSet = preparedStatement.executeQuery();
+
+                    if (!resultSet.isBeforeFirst()) { // Verifica si no hay resultados
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros en la base de datos.");
+                    } else {
+                        while (resultSet.next()) {
+                            datos[0] = resultSet.getString("IDProducto");
+                            datos[1] = resultSet.getString("Nombre");
+                            datos[2] = resultSet.getString("Tipo");
+                            datos[3] = resultSet.getString("cantidad_disponible");
+                            datos[4] = resultSet.getString("Precio");
+                            model.addRow(datos);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+            } finally {
+                System.out.println("Ejecucion terminada");
+                if (resultSet != null) {
+                    try {
+                        resultSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (preparedStatement != null) {
+                    try {
+                        preparedStatement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El campo de búsqueda está vacío.");
+        }
+    }
+
+    //Muestra los datos de la tabla buscar producto
+    public void MostraProducto() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Producto");
+        model.addColumn("Tipo");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio");
+        tbbusqueda.setModel(model);
+
+        String[] datos = new String[5];
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        
+
         try {
             if (conn != null) {
-                String Buscar = "SELECT * FROM producto WHERE nombre LIKE ?";
-                preparedStatement = conn.prepareStatement(Buscar);
-                preparedStatement.setString(1, "%" + Nombre + "%");
+                String Consulta = "SELECT * FROM Producto";
+                preparedStatement = conn.prepareStatement(Consulta);
                 resultSet = preparedStatement.executeQuery();
 
-                if (!resultSet.isBeforeFirst()) { // Verifica si no hay resultados
-                    JOptionPane.showMessageDialog(null, "No se encontraron registros en la base de datos.");
-                } else {
-                    while (resultSet.next()) {
-                        datos[0] = resultSet.getString("IDProducto");
-                        datos[1] = resultSet.getString("Nombre");
-                        datos[2] = resultSet.getString("Tipo");
-                        datos[3] = resultSet.getString("cantidad_disponible");
-                        datos[4] = resultSet.getString("Precio");
-                        model.addRow(datos);
-                    }
+                while (resultSet.next()) {
+                    datos[0] = resultSet.getString("IDProducto");
+                    datos[1] = resultSet.getString("Nombre");
+                    datos[2] = resultSet.getString("Tipo");
+                    datos[3] = resultSet.getString("cantidad_disponible");
+                    datos[4] = resultSet.getString("Precio");
+                    model.addRow(datos);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+            ex.printStackTrace();
         } finally {
-            System.out.println("Ejecucion terminada");
             if (resultSet != null) {
                 try {
                     resultSet.close();
@@ -435,174 +492,119 @@ this.dispose();
                     e.printStackTrace();
                 }
             }
+            System.out.println("Ejecucion completa");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "El campo de búsqueda está vacío.");
-    }
-}
-    
-    
-    //Muestra los datos de la tabla buscar producto
-public void MostraProducto(){
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Producto");
-    model.addColumn("Tipo");
-    model.addColumn("Cantidad");
-    model.addColumn("Precio");
-    tbbusqueda.setModel(model);
-
-    String[] datos = new String[5];
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-
-    try {
-        if (conn != null) {
-            String Consulta = "SELECT * FROM Producto";
-            preparedStatement = conn.prepareStatement(Consulta);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                datos[0] = resultSet.getString("IDProducto");
-                datos[1] = resultSet.getString("Nombre");
-                datos[2] = resultSet.getString("Tipo");
-                datos[3] = resultSet.getString("cantidad_disponible");
-                datos[4] = resultSet.getString("Precio");
-                model.addRow(datos);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    } finally {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Ejecucion completa");
-    }
-}
-
-     //Mostra ventas en la tabla 
-public void MostraRegistro(){
-  DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Nombre");
-    model.addColumn("Cantidad");
-    model.addColumn("Precio Unitario");
-    model.addColumn("SubTotal");
-    for (int i = 0; i < indice; i++) {
-         double subTotal = cantidades[i] * precios[i];
-        model.addRow(new Object[]{i + 1, productos[i], cantidades[i], precios[i],subTotal});
     }
 
-    tbventas.setModel(model);  
-    
-    
-}
-
-     //Metodo para ingresar datos
-public void Vender(String Nombre, int cantidad) {
-    PreparedStatement ps = null;
-
-    try {
-        if (conn != null) {
-            String insertar = "CALL registrarventa(?, ?)";
-            ps = conn.prepareStatement(insertar);
-            ps.setString(1, Nombre);
-            ps.setInt(2, cantidad);
-            
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Venta registrada exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo registrar la venta.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+    //Mostra ventas en la tabla 
+    public void MostraRegistro() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio Unitario");
+        model.addColumn("SubTotal");
+        for (int i = 0; i < indice; i++) {
+            double subTotal = cantidades[i] * precios[i];
+            model.addRow(new Object[]{i + 1, productos[i], cantidades[i], precios[i], subTotal});
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al registrar la venta: " + ex.getMessage());
-    } finally {
+
+        tbventas.setModel(model);
+
+    }
+
+    //Metodo para ingresar datos
+    public void Vender(String Nombre, int cantidad) {
+        PreparedStatement ps = null;
+
         try {
-            if (ps != null) {
-                ps.close();
+            if (conn != null) {
+                String insertar = "CALL RegistrarVenta(?, ?)";
+                ps = conn.prepareStatement(insertar);
+                ps.setString(1, Nombre);
+                ps.setInt(2, cantidad);
+
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Venta registrada exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo registrar la venta.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage());
-        }
-    } 
-}
-
-     //Metodos para rellenar comboBox con la base de datos
-public void rellenarC(String tabla, String valor, JComboBox<String> combo) {
-    Statement st = null;
-    ResultSet rs = null;
-
-    try {
-        if (conn != null) {
-            String consulta = "SELECT " + valor + " FROM " + tabla;
-            st = conn.createStatement();
-            rs = st.executeQuery(consulta);
-            while (rs.next()) {
-                combo.addItem(rs.getString(valor));
+            JOptionPane.showMessageDialog(null, "Error al registrar la venta: " + ex.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage());
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
-    } finally {
-        
+    }
+
+    //Metodos para rellenar comboBox con la base de datos
+    public void rellenarC(String tabla, String valor, JComboBox<String> combo) {
+        Statement st = null;
+        ResultSet rs = null;
+
         try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (st != null) {
-                st.close();
+            if (conn != null) {
+                String consulta = "SELECT " + valor + " FROM " + tabla;
+                st = conn.createStatement();
+                rs = st.executeQuery(consulta);
+                while (rs.next()) {
+                    combo.addItem(rs.getString(valor));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage());
+            }
         }
     }
-}
 
     //Metodo para limpiar los txt
-public void Limpiar(){
-    txtprecioUnitario.setText("");
-    txtsubTotal.setText("");
-    spcantidad.setValue(0);
-}
+    public void Limpiar() {
+        txtprecioUnitario.setText("");
+        txtsubTotal.setText("");
+        spcantidad.setValue(0);
+    }
 
 //Reinicia Variables para la siguiente compra
-public void ReiniciarVariables(){
-indice = 0;
-total = 0.0;
-    for (int i = 0; i < maxProductos; i++) {
-        productos[i] = null;
-        cantidades[i] = 0;
-        precios[i] = 0.0;
+    public void ReiniciarVariables() {
+        indice = 0;
+        total = 0.0;
+        for (int i = 0; i < maxProductos; i++) {
+            productos[i] = null;
+            cantidades[i] = 0;
+            precios[i] = 0.0;
+        }
+        //Limpiar tabla 
+        DefaultTableModel model = (DefaultTableModel) tbventas.getModel();
+        model.setRowCount(0);
     }
-   //Limpiar tabla 
-  DefaultTableModel model = (DefaultTableModel) tbventas.getModel();
-    model.setRowCount(0);  
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
+    private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_Total;
     private javax.swing.JLabel JL_cantidad;
     private javax.swing.JLabel JL_fondoVentas;
@@ -637,9 +639,6 @@ total = 0.0;
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

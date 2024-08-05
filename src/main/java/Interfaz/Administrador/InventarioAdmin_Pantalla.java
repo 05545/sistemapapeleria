@@ -58,7 +58,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
-        btnAjustes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         JL_Producto = new javax.swing.JLabel();
         txtProducto = new javax.swing.JTextField();
@@ -143,14 +142,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
-
-        btnAjustes.setText("Ajustes");
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAjustesMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -349,6 +340,11 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         String parametroBusqueda = txtBuscar.getText();
+        
+        if(parametroBusqueda.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No hay ningún parámetro en el campo de busqueda.");
+            return;
+        }
 
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
@@ -623,15 +619,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
 
-    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
-        this.setVisible(false);
-        this.dispose();
-
-        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
-        confiAdmin.setVisible(true);
-        confiAdmin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnAjustesMouseClicked
-
     private int obtenerIdProveedor(String nomProveedor) {
         int idProveedor = 0;
 
@@ -720,7 +707,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel JL_TRegistroProducto;
     private javax.swing.JLabel JL_precioUnitario;
     private javax.swing.JLabel NombreAdmin;
-    private javax.swing.JButton btnAjustes;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;

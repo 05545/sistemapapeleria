@@ -125,12 +125,13 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
             iniAdmin.setVisible(true);
 
         } else if ("Vendedor".equals(rolUsuario)) {
-            //Tablero_Ventas TV = new Tablero_Ventas(conexion);
+            Tablero_Ventas TV = new Tablero_Ventas(conexion, conn, usuario);
             
             this.dispose();
             this.setVisible(false);
             
-            //TV.setVisible(true);
+            TV.setVisible(true);
+            TV.setLocationRelativeTo(null);
            
         } else {
             JL_inicioFallido.setVisible(true);

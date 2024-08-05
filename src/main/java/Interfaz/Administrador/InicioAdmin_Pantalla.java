@@ -95,7 +95,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
-        btnAjustes = new javax.swing.JButton();
         btnTablero = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         NombreAdmin = new javax.swing.JLabel();
@@ -232,14 +231,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
 
-        btnAjustes.setText("Ajustes");
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAjustesMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, -1));
-
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -333,15 +324,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         usersAdmin.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnUsuariosMouseClicked
 
-    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
-        this.setVisible(false);
-        this.dispose();
-
-        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, iniNombreUsuario, nomUsuario);
-        confiAdmin.setVisible(true);
-        confiAdmin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnAjustesMouseClicked
-
     private void obtenerInventario() {
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
@@ -412,7 +394,6 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel JL_FondoTableroAdmin;
     private javax.swing.JLabel JL_VentasRecientes;
     private javax.swing.JLabel NombreAdmin;
-    private javax.swing.JButton btnAjustes;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;

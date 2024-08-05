@@ -1,24 +1,21 @@
-
 package Logic;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
-
 
 //Esta Clase esta enfocada para optimizar algunas consultas de SQL
 public class Consultas {
- Conexion con = new Conexion();
-Connection conn = null; 
+
+    Conexion con = new Conexion();
+    Connection conn = null;
+
     public Consultas() {
-         this.conn = con.abrirConexion();
+        this.conn = con.abrirConexion();
     }
-    
-    
-    
+
     //Este metodod es de ventas_ven calcula el subtotal de un producto y lo retorna 
     public double calcularTotalVenta(String[] productos, int[] cantidades) {
         double total = 0.0;
@@ -27,7 +24,7 @@ Connection conn = null;
 
         try {
             if (conn != null) {
-                String consulta = "SELECT Precio FROM producto WHERE Nombre = ?";
+                String consulta = "SELECT Precio FROM Producto WHERE Nombre = ?";
                 preparedStatement = conn.prepareStatement(consulta);
 
                 for (int i = 0; i < productos.length; i++) {
@@ -71,31 +68,30 @@ Connection conn = null;
     public void Eliminar(String tabla, String nomCampo, String nomEliminar) throws SQLException {
         Conexion con = null;
         Connection conn = null;
-        
+
         try {
             con = new Conexion();
             conn = con.abrirConexion();
-        
+
             String Delete = "DELETE FROM " + tabla + " WHERE " + nomCampo + " = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(Delete);
             preparedStatement.setString(1, nomEliminar);
             int rowCount = preparedStatement.executeUpdate();
-          
+
             if (rowCount > 0) {
                 JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró ningún registro a eliminar");
             }
             preparedStatement.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             if (con != null) {
                 con.cerrarConexion();
             }
-        }  
+        }
     }
-    
-    
+
 }

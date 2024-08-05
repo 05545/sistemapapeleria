@@ -3,6 +3,13 @@ package Interfaz.Administrador;
 import Interfaz.*;
 import Logic.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class VentasAdmin_Pantalla extends javax.swing.JFrame {
 
@@ -13,12 +20,17 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
     public VentasAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         this.conexion = conexion;
         this.conn = connection;
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
+        
+        cargarVendedoresMas();
+        productosMas();
+        productosMenos();
     }
 
     private void cerrarConexion() {
@@ -31,34 +43,66 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JL_Producto1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbVendedoresVentas = new javax.swing.JTable();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
-        btnAjustes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        JCB_Mes = new javax.swing.JComboBox<>();
+        JCB_Anio = new javax.swing.JComboBox<>();
+        txtTotal = new javax.swing.JTextField();
+        btnConsultar = new javax.swing.JButton();
+        JL_Producto2 = new javax.swing.JLabel();
+        JL_VentasRecientes1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tbProductosMenos = new javax.swing.JTable();
         JL_Producto = new javax.swing.JLabel();
-        txtProducto = new javax.swing.JTextField();
         JL_VentasRecientes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbVentas = new javax.swing.JTable();
-        JL_Cantidad = new javax.swing.JLabel();
-        spCantidad = new javax.swing.JSpinner();
-        JL_PrecioUnitario = new javax.swing.JLabel();
-        txtPrecioUnitario = new javax.swing.JTextField();
-        JL_Subtotal = new javax.swing.JLabel();
-        txtSubtotal = new javax.swing.JTextField();
-        JL_Total = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JTextField();
-        btnProcesar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        tbProductosMas = new javax.swing.JTable();
         NombreAdmin = new javax.swing.JLabel();
         JL_FondoVentasAdmin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        JL_Producto1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_Producto1.setText("Vendedores con más ventas");
+        getContentPane().add(JL_Producto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 260, -1));
+
+        tbVendedoresVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Total vendido"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbVendedoresVentas.setRowHeight(40);
+        jScrollPane2.setViewportView(tbVendedoresVentas);
+        if (tbVendedoresVentas.getColumnModel().getColumnCount() > 0) {
+            tbVendedoresVentas.getColumnModel().getColumn(0).setResizable(false);
+            tbVendedoresVentas.getColumnModel().getColumn(1).setResizable(false);
+            tbVendedoresVentas.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 350, 190));
 
         btnTablero.setText("Tablero");
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,14 +152,6 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
-        btnAjustes.setText("Ajustes");
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAjustesMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
-
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,72 +160,96 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, -1, -1));
 
-        JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Producto.setText("Producto");
-        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 160, -1));
+        JCB_Mes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        getContentPane().add(JCB_Mes, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 150, -1));
 
-        txtProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductoActionPerformed(evt);
+        JCB_Anio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022", "2023", "2024" }));
+        getContentPane().add(JCB_Anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 400, -1, -1));
+
+        txtTotal.setEditable(false);
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 450, 80, 30));
+
+        btnConsultar.setText("Consultar");
+        btnConsultar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConsultarMouseClicked(evt);
             }
         });
-        getContentPane().add(txtProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 350, 50));
+        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, -1, -1));
 
-        JL_VentasRecientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_VentasRecientes.setText("Ventas recientes");
-        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 110, 180, -1));
+        JL_Producto2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_Producto2.setText("Total vendidio:");
+        getContentPane().add(JL_Producto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 260, -1));
 
-        tbVentas.setModel(new javax.swing.table.DefaultTableModel(
+        JL_VentasRecientes1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_VentasRecientes1.setText("Productos menos vendidos");
+        getContentPane().add(JL_VentasRecientes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 260, -1));
+
+        tbProductosMenos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Producto", "Fecha", "Total"
+                "ID", "Producto", "Cantidad"
             }
-        ));
-        jScrollPane1.setViewportView(tbVentas);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 150, 350, 330));
-
-        JL_Cantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Cantidad.setText("Cantidad");
-        getContentPane().add(JL_Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
-        getContentPane().add(spCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 100, 40));
-
-        JL_PrecioUnitario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_PrecioUnitario.setText("Precio Unitario");
-        getContentPane().add(JL_PrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, -1, 30));
-
-        txtPrecioUnitario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecioUnitarioActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        getContentPane().add(txtPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 130, 40));
+        tbProductosMenos.setRowHeight(40);
+        jScrollPane3.setViewportView(tbProductosMenos);
+        if (tbProductosMenos.getColumnModel().getColumnCount() > 0) {
+            tbProductosMenos.getColumnModel().getColumn(0).setResizable(false);
+            tbProductosMenos.getColumnModel().getColumn(1).setResizable(false);
+            tbProductosMenos.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        JL_Subtotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Subtotal.setText("Subtotal");
-        getContentPane().add(JL_Subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, -1, -1));
-        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 130, 40));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, 350, 190));
 
-        JL_Total.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Total.setText("Total");
-        getContentPane().add(JL_Total, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, -1, -1));
-        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 120, 40));
+        JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_Producto.setText("Total de ventas por més");
+        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 260, -1));
 
-        btnProcesar.setText("Procesar");
-        btnProcesar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProcesarActionPerformed(evt);
+        JL_VentasRecientes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        JL_VentasRecientes.setText("Productos más vendidos");
+        getContentPane().add(JL_VentasRecientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 110, 220, -1));
+
+        tbProductosMas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Producto", "Cantidad"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        getContentPane().add(btnProcesar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 100, 40));
+        tbProductosMas.setRowHeight(40);
+        jScrollPane1.setViewportView(tbProductosMas);
+        if (tbProductosMas.getColumnModel().getColumnCount() > 0) {
+            tbProductosMas.getColumnModel().getColumn(0).setResizable(false);
+            tbProductosMas.getColumnModel().getColumn(1).setResizable(false);
+            tbProductosMas.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        btnLimpiar.setText("Limpiar");
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 480, 100, 40));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 150, 350, 190));
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
         getContentPane().add(JL_FondoVentasAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -205,18 +265,6 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
 
         iniSesion.setVisible(true);
     }//GEN-LAST:event_btnSalirMouseClicked
-
-    private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
-
-    }//GEN-LAST:event_txtProductoActionPerformed
-
-    private void txtPrecioUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioUnitarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioUnitarioActionPerformed
-
-    private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
-
-    }//GEN-LAST:event_btnProcesarActionPerformed
 
     private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
         this.setVisible(false);
@@ -272,28 +320,192 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
 
-    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
-        this.setVisible(false);
-        this.dispose();
+    private void btnConsultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsultarMouseClicked
+        String anio = (String) JCB_Anio.getSelectedItem();
+        String mes = (String) JCB_Mes.getSelectedItem();
 
-        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
-        confiAdmin.setVisible(true);
-        confiAdmin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnAjustesMouseClicked
+        int anioN = 0;
+        try {
+            anioN = Integer.parseInt(anio);
+        } catch (NumberFormatException e) {
+            System.out.println("El año seleccionado no es un número válido: " + anio);
+            return;
+        }
+
+        int numeroMes;
+        try {
+            numeroMes = obtenerMes(mes);
+            if (conn != null) {
+                try {
+                    String query = "CALL ObtenerVentasPorMes(?, ?)";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, anioN);
+                    ps.setInt(2, numeroMes);
+                    ResultSet rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        txtTotal.setText(rs.getString("TotalVentas"));
+                    }
+
+                    rs.close();
+                    ps.close();
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+    }//GEN-LAST:event_btnConsultarMouseClicked
+
+    public void cargarVendedoresMas() {
+
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Total vendido");
+
+        this.tbVendedoresVentas.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT IDVendedor, CONCAT(Nombre, AP, AM) AS Nombre, TotalVendido FROM TrabajadorMasDineroVendido";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDVendedor"),
+                        rs.getString("Nombre"),
+                        rs.getString("TotalVendido")
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+    }
+
+    public void productosMas() {
+
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Producto");
+        tabla.addColumn("Cantidad");
+
+        this.tbProductosMas.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM MasVendidos";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDProducto"),
+                        rs.getString("Nombre"),
+                        rs.getString("CantidadVendida")
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+    }
+
+    public void productosMenos() {
+
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Producto");
+        tabla.addColumn("Cantidad");
+
+        this.tbProductosMenos.setModel(tabla);
+
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM MenosVendidos";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDProducto"),
+                        rs.getString("Nombre"),
+                        rs.getString("CantidadVendida")
+                    };
+                    tabla.addRow(rowData);
+                }
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+
+    }
+
+    private int obtenerMes(String nombreMes) {
+        Map<String, Integer> mesMap = new HashMap<>();
+        mesMap.put("ENERO", 1);
+        mesMap.put("FEBRERO", 2);
+        mesMap.put("MARZO", 3);
+        mesMap.put("ABRIL", 4);
+        mesMap.put("MAYO", 5);
+        mesMap.put("JUNIO", 6);
+        mesMap.put("JULIO", 7);
+        mesMap.put("AGOSTO", 8);
+        mesMap.put("SEPTIEMBRE", 9);
+        mesMap.put("OCTUBRE", 10);
+        mesMap.put("NOVIEMBRE", 11);
+        mesMap.put("DICIEMBRE", 12);
+
+        Integer numeroMes = mesMap.get(nombreMes);
+
+        if (numeroMes != null) {
+            return numeroMes;
+        } else {
+            throw new IllegalArgumentException("Mes inválido: " + nombreMes);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JL_Cantidad;
+    private javax.swing.JComboBox<String> JCB_Anio;
+    private javax.swing.JComboBox<String> JCB_Mes;
     private javax.swing.JLabel JL_FondoVentasAdmin;
-    private javax.swing.JLabel JL_PrecioUnitario;
     private javax.swing.JLabel JL_Producto;
-    private javax.swing.JLabel JL_Subtotal;
-    private javax.swing.JLabel JL_Total;
+    private javax.swing.JLabel JL_Producto1;
+    private javax.swing.JLabel JL_Producto2;
     private javax.swing.JLabel JL_VentasRecientes;
+    private javax.swing.JLabel JL_VentasRecientes1;
     private javax.swing.JLabel NombreAdmin;
-    private javax.swing.JButton btnAjustes;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnInventario;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnSalir;
@@ -301,11 +513,11 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner spCantidad;
-    private javax.swing.JTable tbVentas;
-    private javax.swing.JTextField txtPrecioUnitario;
-    private javax.swing.JTextField txtProducto;
-    private javax.swing.JTextField txtSubtotal;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tbProductosMas;
+    private javax.swing.JTable tbProductosMenos;
+    private javax.swing.JTable tbVendedoresVentas;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

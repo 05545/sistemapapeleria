@@ -1,31 +1,36 @@
 package Interfaz.ventas;
+
 import Logic.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 public class Inventario_Venta extends javax.swing.JFrame {
-Conexion con = new Conexion();
-Connection conn = null;
-    public Inventario_Venta() {
+
+    Conexion con;
+    Connection conn;
+    String nomUsuario;
+    String usuario;
+
+    public Inventario_Venta(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-         this.conn = con.abrirConexion();
-         Mostra();
+        this.con = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        Mostra();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JL_NomUser = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         JL_producto = new javax.swing.JLabel();
@@ -47,18 +52,19 @@ Connection conn = null;
         txtid = new javax.swing.JTextField();
         JL_producto1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         JL_Logo = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JF_Inventario");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Inventario");
@@ -179,14 +185,17 @@ Connection conn = null;
             }
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 120, 80, 30));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
-        jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
 
         JL_Logo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_Logo.setText("Papeleria SUMI");
         getContentPane().add(JL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, -1));
 
         btnTablero.setText("Tablero");
+        btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTableroMouseClicked(evt);
+            }
+        });
         btnTablero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTableroActionPerformed(evt);
@@ -220,6 +229,8 @@ Connection conn = null;
 
         jLabel3.setText("Cerra sesion");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
+        jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -233,13 +244,13 @@ Connection conn = null;
     }//GEN-LAST:event_txtprecioUnitarioActionPerformed
 
     private void btnregistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistraActionPerformed
-Registra();
+        Registra();
     }//GEN-LAST:event_btnregistraActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String NombreT = txtconsulta.getText();
         btnregistra.setEnabled(true);
-            Buscar(NombreT);
+        Buscar(NombreT);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
@@ -250,41 +261,49 @@ Registra();
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
         String eliminar = txtproducto.getText();
         btnregistra.setEnabled(true);
- Eliminar("producto", "nombre", eliminar);
+        Eliminar("producto", "nombre", eliminar);
 
         Limpiar();
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void btneditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneditarActionPerformed
- Actualizar();
- Mostra();
- Limpiar();
+        Actualizar();
+        Mostra();
+        Limpiar();
     }//GEN-LAST:event_btneditarActionPerformed
 
     private void tbbusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbbusquedaMouseClicked
-     btnregistra.setEnabled(false);
-        int fila=this.tbbusqueda.getSelectedRow();
-        this.txtproducto.setText(this.tbbusqueda.getValueAt(fila, 1).toString());
-        this.txtprecioUnitario.setText(this.tbbusqueda.getValueAt(fila, 4).toString());
-        this.txttipo.setText(this.tbbusqueda.getValueAt(fila, 2).toString());
-        int id=0;
-        //excepcion para numero
-         try {
-        id = Integer.parseInt(this.tbbusqueda.getValueAt(fila, 0).toString());
-        int cantidad = Integer.parseInt(this.tbbusqueda.getValueAt(fila, 3).toString());
-        this.spcantidad.setValue(cantidad);
-        this.txtid.setText(String.valueOf(id));
-    } catch (NumberFormatException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "El valor de cantidad no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-    }  
+        int fila = this.tbbusqueda.getSelectedRow();
+
+        // Obtener valores de la tabla
+        String producto = this.tbbusqueda.getValueAt(fila, 1).toString();
+        String precioUnitario = this.tbbusqueda.getValueAt(fila, 4).toString();
+        String tipo = this.tbbusqueda.getValueAt(fila, 2).toString();
+        String idString = this.tbbusqueda.getValueAt(fila, 0).toString();
+        String cantidadString = this.tbbusqueda.getValueAt(fila, 3).toString();
+
+        this.txtproducto.setText(producto);
+        this.txtprecioUnitario.setText(precioUnitario);
+        this.txttipo.setText(tipo);
+
+        int id = 0;
+        try {
+            id = Integer.parseInt(idString);
+            double cantidadDecimal = Double.parseDouble(cantidadString);
+            int cantidad = (int) cantidadDecimal;
+            this.spcantidad.setValue(cantidad);
+            this.txtid.setText(String.valueOf(id));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "El valor de cantidad o id no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_tbbusquedaMouseClicked
 
     private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
         this.setVisible(false);
         this.dispose();
 
-        Tablero_Ventas TV= new Tablero_Ventas();
+        Tablero_Ventas TV = new Tablero_Ventas(con, conn, nomUsuario);
         TV.setVisible(true);
         TV.setLocationRelativeTo(null);
 
@@ -294,7 +313,7 @@ Registra();
         this.setVisible(false);
         this.dispose();
 
-        Ventas_Ven VV=new Ventas_Ven();
+        Ventas_Ven VV = new Ventas_Ven(con, conn, usuario, nomUsuario);
         VV.setVisible(true);
         VV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVentasActionPerformed
@@ -303,7 +322,7 @@ Registra();
         this.setVisible(false);
         this.dispose();
 
-        Inventario_Venta IV=new Inventario_Venta();
+        Inventario_Venta IV = new Inventario_Venta(con, conn, usuario, nomUsuario);
         IV.setVisible(true);
         IV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnInventarioActionPerformed
@@ -312,13 +331,17 @@ Registra();
         this.setVisible(false);
         this.dispose();
 
-        Cuenta_Venta CV=new Cuenta_Venta();
+        Cuenta_Venta CV = new Cuenta_Venta(con, conn, usuario, nomUsuario);
         CV.setVisible(true);
         CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
 
+    private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
+
+    }//GEN-LAST:event_btnTableroMouseClicked
+
     //Metodo para limpiar
-    public void Limpiar(){
+    public void Limpiar() {
         txtconsulta.setText("");
         txtprecioUnitario.setText("");
         txtproducto.setText("");
@@ -326,100 +349,41 @@ Registra();
         spcantidad.setValue(0);
         txtid.setText("");
     }
-    
+
     //Metodo para mostra datos
-   public void Mostra(){
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Producto");
-    model.addColumn("Tipo");
-    model.addColumn("Cantidad");
-    model.addColumn("Precio");
-    tbbusqueda.setModel(model);
+    public void Mostra() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Producto");
+        model.addColumn("Tipo");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio");
+        tbbusqueda.setModel(model);
 
-    String[] datos = new String[5];
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-
-    try {
-        if (conn != null) {
-            String Consulta = "SELECT * FROM Producto";
-            preparedStatement = conn.prepareStatement(Consulta);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                datos[0] = resultSet.getString("IDProducto");
-                datos[1] = resultSet.getString("Nombre");
-                datos[2] = resultSet.getString("Tipo");
-                datos[3] = resultSet.getString("cantidad_disponible");
-                datos[4] = resultSet.getString("Precio");
-                model.addRow(datos);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    } finally {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Ejecucion completa");
-    }
-}
-
-//Metodo Para Buscar productos
-public void Buscar(String Nombre){
-    DefaultTableModel model = new DefaultTableModel();
-    String[] datos = new String[5];
-    model.addColumn("ID");
-    model.addColumn("Producto");
-    model.addColumn("Tipo");
-    model.addColumn("Cantidad");
-    model.addColumn("Precio");
-    tbbusqueda.setModel(model);
-
-    if (!Nombre.isEmpty()) {
+        String[] datos = new String[5];
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        
+
         try {
             if (conn != null) {
-                String Buscar = "SELECT * FROM producto WHERE nombre LIKE ?";
-                preparedStatement = conn.prepareStatement(Buscar);
-                preparedStatement.setString(1, "%" + Nombre + "%");
+                String Consulta = "SELECT * FROM Producto";
+                preparedStatement = conn.prepareStatement(Consulta);
                 resultSet = preparedStatement.executeQuery();
 
-                if (!resultSet.isBeforeFirst()) { // Verifica si no hay resultados
-                    JOptionPane.showMessageDialog(null, "No se encontraron registros en la base de datos.");
-                } else {
-                    while (resultSet.next()) {
-                        datos[0] = resultSet.getString("IDProducto");
-                        datos[1] = resultSet.getString("Nombre");
-                        datos[2] = resultSet.getString("Tipo");
-                        datos[3] = resultSet.getString("cantidad_disponible");
-                        datos[4] = resultSet.getString("Precio");
-                        model.addRow(datos);
-                    }
+                while (resultSet.next()) {
+                    datos[0] = resultSet.getString("IDProducto");
+                    datos[1] = resultSet.getString("Nombre");
+                    datos[2] = resultSet.getString("Tipo");
+                    datos[3] = resultSet.getString("cantidad_disponible");
+                    datos[4] = resultSet.getString("Precio");
+                    model.addRow(datos);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+            ex.printStackTrace();
         } finally {
-            System.out.println("Ejecucion terminada");
             if (resultSet != null) {
                 try {
                     resultSet.close();
@@ -434,138 +398,195 @@ public void Buscar(String Nombre){
                     e.printStackTrace();
                 }
             }
+            System.out.println("Ejecucion completa");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "El campo de búsqueda está vacío.");
-    }
-}
-
-
-//Metodo para registra
-public void Registra(){
-    String Nombre = txtproducto.getText();
-    String Tipo = txttipo.getText();
-    double precio = 0.0;
-    int cantidad = 0;
-
-    try {
-        precio = Double.parseDouble(txtprecioUnitario.getText());
-        cantidad = Integer.parseInt(spcantidad.getValue().toString());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-        return; // Salir del método si hay un error en la conversión
     }
 
-    try {
+//Metodo Para Buscar productos
+    public void Buscar(String Nombre) {
+        DefaultTableModel model = new DefaultTableModel();
+        String[] datos = new String[5];
+        model.addColumn("ID");
+        model.addColumn("Producto");
+        model.addColumn("Tipo");
+        model.addColumn("Cantidad");
+        model.addColumn("Precio");
+        tbbusqueda.setModel(model);
 
-        if (conn != null) {
-            String existsQuery = "SELECT COUNT(*) FROM producto WHERE nombre = ?";
-            try (PreparedStatement existsStatement = conn.prepareStatement(existsQuery)) {
-                existsStatement.setString(1, Nombre);
-                ResultSet existsResult = existsStatement.executeQuery();
-                if (existsResult.next() && existsResult.getInt(1) > 0) {
-                    JOptionPane.showMessageDialog(null, "El Producto ya existe.");
-                    return; // Salir del método si el producto ya existe
+        if (!Nombre.isEmpty()) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+
+            try {
+                if (conn != null) {
+                    String Buscar = "SELECT * FROM Producto WHERE Nombre LIKE ?";
+                    preparedStatement = conn.prepareStatement(Buscar);
+                    preparedStatement.setString(1, "%" + Nombre + "%");
+                    resultSet = preparedStatement.executeQuery();
+
+                    if (!resultSet.isBeforeFirst()) { // Verifica si no hay resultados
+                        JOptionPane.showMessageDialog(null, "No se encontraron registros en la base de datos.");
+                    } else {
+                        while (resultSet.next()) {
+                            datos[0] = resultSet.getString("IDProducto");
+                            datos[1] = resultSet.getString("Nombre");
+                            datos[2] = resultSet.getString("Tipo");
+                            datos[3] = resultSet.getString("cantidad_disponible");
+                            datos[4] = resultSet.getString("Precio");
+                            model.addRow(datos);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+            } finally {
+                System.out.println("Ejecucion terminada");
+                if (resultSet != null) {
+                    try {
+                        resultSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (preparedStatement != null) {
+                    try {
+                        preparedStatement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
-            String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, Nombre);
-                preparedStatement.setString(2, Tipo);
-                preparedStatement.setInt(3, cantidad);
-                preparedStatement.setDouble(4, precio);
-                preparedStatement.setInt(5, 2);
-                preparedStatement.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
-            }
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+            JOptionPane.showMessageDialog(null, "El campo de búsqueda está vacío.");
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
-    } finally {
-        System.out.println("Tarea terminada");
     }
-}
 
+//Metodo para registra
+    public void Registra() {
+        String Nombre = txtproducto.getText();
+        String Tipo = txttipo.getText();
+        double precio = 0.0;
+        int cantidad = 0;
+
+        try {
+            precio = Double.parseDouble(txtprecioUnitario.getText());
+            cantidad = Integer.parseInt(spcantidad.getValue().toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+            return; // Salir del método si hay un error en la conversión
+        }
+
+        try {
+            if (conn != null) {
+                String existsQuery = "SELECT COUNT(*) FROM Producto WHERE Nombre = ?";
+                try (PreparedStatement existsStatement = conn.prepareStatement(existsQuery)) {
+                    existsStatement.setString(1, Nombre);
+                    ResultSet existsResult = existsStatement.executeQuery();
+                    if (existsResult.next() && existsResult.getInt(1) > 0) {
+                        JOptionPane.showMessageDialog(null, "El Producto ya existe.");
+                        return; // Salir del método si el producto ya existe
+                    }
+                }
+
+                String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
+                try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
+                    preparedStatement.setString(1, Nombre);
+                    preparedStatement.setString(2, Tipo);
+                    preparedStatement.setInt(3, cantidad);
+                    preparedStatement.setDouble(4, precio);
+                    preparedStatement.setInt(5, 2);
+                    preparedStatement.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
+        } finally {
+            System.out.println("Tarea terminada");
+        }
+    }
 
 //Metodo para eliminar
- public void Eliminar(String tabla, String nomCampo, String nomEliminar) {
+    public void Eliminar(String tabla, String nomCampo, String nomEliminar) {
         try {
             String Delete = "DELETE FROM " + tabla + " WHERE " + nomCampo + " = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(Delete);
             preparedStatement.setString(1, nomEliminar);
             int rowCount = preparedStatement.executeUpdate();
-          
+
             if (rowCount > 0) {
                 JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró ningún registro a eliminar");
             }
             preparedStatement.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             System.out.println("Termino ejecucion");
-        }  
+        }
     }
-    
+
 //Actualizar datos
-public void Actualizar(){
-    String Nombre = txtproducto.getText();
-    String Tipo = txttipo.getText();
-    double precio = 0.0;
-    int cantidad = 0;
+    public void Actualizar() {
+        String Nombre = txtproducto.getText();
+        String Tipo = txttipo.getText();
+        double precio = 0.0;
+        int cantidad = 0;
 
-    try {
-        precio = Double.parseDouble(txtprecioUnitario.getText());
-        cantidad = Integer.parseInt(spcantidad.getValue().toString());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-        return; // Salir del método si hay un error en la conversión
-    }
+        try {
+            precio = Double.parseDouble(txtprecioUnitario.getText());
+            cantidad = Integer.parseInt(spcantidad.getValue().toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+            return; // Salir del método si hay un error en la conversión
+        }
 
-    PreparedStatement ps = null;
+        PreparedStatement ps = null;
 
-    try {
-        if (conn != null) {
-            String Actualizar = "UPDATE producto SET nombre = ?, Tipo = ?, cantidad_disponible = ?, Precio = ? WHERE Idproducto = ?";
-            ps = conn.prepareStatement(Actualizar);
-            ps.setString(1, Nombre);
-            ps.setString(2, Tipo);
-            ps.setInt(3, cantidad);
-            ps.setDouble(4, precio);
-            ps.setInt(5, Integer.parseInt(txtid.getText()));
+        try {
+            if (conn != null) {
+                String Actualizar = "UPDATE Producto SET nombre = ?, Tipo = ?, cantidad_disponible = ?, Precio = ? WHERE Idproducto = ?";
+                ps = conn.prepareStatement(Actualizar);
+                ps.setString(1, Nombre);
+                ps.setString(2, Tipo);
+                ps.setInt(3, cantidad);
+                ps.setDouble(4, precio);
+                ps.setInt(5, Integer.parseInt(txtid.getText()));
 
-            int indice = ps.executeUpdate();
-            if (indice > 0) {
-                JOptionPane.showMessageDialog(this, "Datos actualizados");
+                int indice = ps.executeUpdate();
+                if (indice > 0) {
+                    JOptionPane.showMessageDialog(this, "Datos actualizados");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
+                JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
-        ex.printStackTrace();
-    } finally {
-        System.out.println("Fin de la ejecucion");
-        if (ps != null) {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            System.out.println("Fin de la ejecucion");
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
+    private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_cantidad;
     private javax.swing.JLabel JL_precioUnitario;
     private javax.swing.JLabel JL_producto;

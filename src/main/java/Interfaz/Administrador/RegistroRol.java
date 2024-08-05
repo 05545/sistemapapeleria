@@ -38,7 +38,6 @@ public class RegistroRol extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
-        btnAjustes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
@@ -108,14 +107,6 @@ public class RegistroRol extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
-
-        btnAjustes.setText("Ajustes");
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAjustesMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -291,15 +282,6 @@ public class RegistroRol extends javax.swing.JFrame {
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
 
-    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
-        this.setVisible(false);
-        this.dispose();
-
-        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
-        confiAdmin.setVisible(true);
-        confiAdmin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnAjustesMouseClicked
-
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         String parametroBusqueda = txtBuscar.getText();
         
@@ -313,7 +295,6 @@ public class RegistroRol extends javax.swing.JFrame {
     private javax.swing.JLabel JL_TRegistroRol;
     private javax.swing.JLabel JL_precioUnitario;
     private javax.swing.JLabel NombreAdmin;
-    private javax.swing.JButton btnAjustes;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;

@@ -65,7 +65,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
-        btnAjustes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         JL_Contrasena1 = new javax.swing.JLabel();
         JL_Contrasena = new javax.swing.JLabel();
@@ -186,14 +185,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
-
-        btnAjustes.setText("Ajustes");
-        btnAjustes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAjustesMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, -1));
 
         btnSalir.setText("Cerrar sesión");
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -436,15 +427,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         rpa.setVisible(true);
         rpa.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnReportesMouseClicked
-
-    private void btnAjustesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMouseClicked
-        this.setVisible(false);
-        this.dispose();
-
-        AjustesAdmin_Pantalla confiAdmin = new AjustesAdmin_Pantalla(conexion, conn, usuario, nomUsuario);
-        confiAdmin.setVisible(true);
-        confiAdmin.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btnAjustesMouseClicked
 
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
         String nombreUsuario, AP, AM, calle, numeroCalle, colonia, correo, telefono, usuarioNuevo, contrasenia, rolDef;
@@ -857,7 +839,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel JL_Telefono;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAjustes;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnLimpiar;

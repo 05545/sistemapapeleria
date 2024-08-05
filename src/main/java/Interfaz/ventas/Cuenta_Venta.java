@@ -1,29 +1,29 @@
 package Interfaz.ventas;
 
-import javax.swing.JFrame;
 import Logic.Conexion;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
-import javax.swing.table.DefaultTableModel;
 
 public class Cuenta_Venta extends javax.swing.JFrame {
-Conexion con = new Conexion();
-Connection conn = null;
 
-    public Cuenta_Venta() {
+    Conexion con;
+    Connection conn;
+    String nomUsuario;
+    String usuario;
+
+    public Cuenta_Venta(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-       this.conn = con.abrirConexion();
-       llenatxt();
+        this.con = conexion;
+        this.conn = connection;
+        this.usuario = usuario;
+        this.nomUsuario = nomUsuario;
+        llenatxt();
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +32,7 @@ Connection conn = null;
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        JL_iconoUsuario = new javax.swing.JLabel();
+        JL_NomUser = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -75,9 +75,7 @@ Connection conn = null;
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Tus datos personales");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
-
-        JL_iconoUsuario.setText("Usuario");
-        getContentPane().add(JL_iconoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 20, -1, -1));
+        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Apellido materno");
@@ -189,28 +187,27 @@ Connection conn = null;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsolicitarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsolicitarCActionPerformed
-        
+
     }//GEN-LAST:event_btnsolicitarCActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-     actualizarDatos(); 
+        actualizarDatos();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
         this.setVisible(false);
         this.dispose();
 
-        Tablero_Ventas TV= new Tablero_Ventas();
+        Tablero_Ventas TV = new Tablero_Ventas(con, conn, nomUsuario);
         TV.setVisible(true);
         TV.setLocationRelativeTo(null);
-
     }//GEN-LAST:event_btnTableroActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         this.setVisible(false);
         this.dispose();
 
-        Ventas_Ven VV=new Ventas_Ven();
+        Ventas_Ven VV = new Ventas_Ven(con, conn, usuario, nomUsuario);
         VV.setVisible(true);
         VV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVentasActionPerformed
@@ -219,7 +216,7 @@ Connection conn = null;
         this.setVisible(false);
         this.dispose();
 
-        Inventario_Venta IV=new Inventario_Venta();
+        Inventario_Venta IV = new Inventario_Venta(con, conn, usuario, nomUsuario);
         IV.setVisible(true);
         IV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnInventarioActionPerformed
@@ -228,81 +225,81 @@ Connection conn = null;
         this.setVisible(false);
         this.dispose();
 
-        Cuenta_Venta CV=new Cuenta_Venta();
+        Cuenta_Venta CV = new Cuenta_Venta(con, conn, usuario, nomUsuario);
         CV.setVisible(true);
         CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
 
-public void llenatxt() {
-    String consulta = "SELECT * FROM trabajador WHERE idvendedor = 3";
+    public void llenatxt() {
+        String consulta = "SELECT * FROM Trabajador WHERE IDVendedor = 3";
 
-    try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(consulta)) {
-        if (conn != null) {
-            System.out.println("Conexión establecida.");
-        } else {
-            System.out.println("No se puede conectar a la base de datos.");
-            return;
-        }
+        try (Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(consulta)) {
+            if (conn != null) {
+                System.out.println("Conexión establecida.");
+            } else {
+                System.out.println("No se puede conectar a la base de datos.");
+                return;
+            }
 
-        if (rs.next()) {
-            System.out.println("Datos encontrados.");
-            txtnombre.setText(rs.getString("nombre"));
-            txtapellidoP.setText(rs.getString("ap"));
-            txtapellidoM.setText(rs.getString("am"));
-            txtcalle.setText(rs.getString("calle"));
-            txtnumero.setText(String.valueOf(rs.getInt("numero"))); // Convertir int a String
-            txtcolonia.setText(rs.getString("colonia"));
-            txtcodigoP.setText(String.valueOf(rs.getInt("cp"))); // Convertir int a String
-            txtcorreo.setText(rs.getString("correo"));
-            txttelefono.setText(rs.getString("telefono"));
-            txtcontraseña.setText(rs.getString("contrasenia"));
-        } else {
-            System.out.println("Datos de usuario no disponibles.");
+            if (rs.next()) {
+                System.out.println("Datos encontrados.");
+                txtnombre.setText(rs.getString("nombre"));
+                txtapellidoP.setText(rs.getString("ap"));
+                txtapellidoM.setText(rs.getString("am"));
+                txtcalle.setText(rs.getString("calle"));
+                txtnumero.setText(String.valueOf(rs.getInt("numero"))); // Convertir int a String
+                txtcolonia.setText(rs.getString("colonia"));
+                txtcodigoP.setText(String.valueOf(rs.getInt("cp"))); // Convertir int a String
+                txtcorreo.setText(rs.getString("correo"));
+                txttelefono.setText(rs.getString("telefono"));
+                txtcontraseña.setText(rs.getString("contrasenia"));
+            } else {
+                System.out.println("Datos de usuario no disponibles.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Manejo de excepciones
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace(); // Manejo de excepciones
     }
-}
 
-public void actualizarDatos() {
-    String consulta = "UPDATE trabajador SET nombre = ?, ap = ?, am = ?, calle = ?, numero = ?, colonia = ?, cp = ?, correo = ?, telefono = ?, contrasenia = ? WHERE idvendedor = 3";
+    public void actualizarDatos() {
+        String consulta = "UPDATE Trabajador SET Nombre = ?, AP = ?, AM = ?, Calle = ?, Numero = ?, Colonia = ?, cp = ?, correo = ?, telefono = ?, contrasenia = ? WHERE idvendedor = 3";
 
-    try (PreparedStatement pst = conn.prepareStatement(consulta)) {
-        // Asignar valores de los campos de texto al PreparedStatement
-        pst.setString(1, txtnombre.getText());
-        pst.setString(2, txtapellidoP.getText());
-        pst.setString(3, txtapellidoM.getText());
-        pst.setString(4, txtcalle.getText());
-        pst.setInt(5, Integer.parseInt(txtnumero.getText()));
-        pst.setString(6, txtcolonia.getText());
-        pst.setInt(7, Integer.parseInt(txtcodigoP.getText()));
-        pst.setString(8, txtcorreo.getText());
-        pst.setString(9, txttelefono.getText());
-        pst.setString(10, txtcontraseña.getText());
+        try (PreparedStatement pst = conn.prepareStatement(consulta)) {
+            // Asignar valores de los campos de texto al PreparedStatement
+            pst.setString(1, txtnombre.getText());
+            pst.setString(2, txtapellidoP.getText());
+            pst.setString(3, txtapellidoM.getText());
+            pst.setString(4, txtcalle.getText());
+            pst.setInt(5, Integer.parseInt(txtnumero.getText()));
+            pst.setString(6, txtcolonia.getText());
+            pst.setInt(7, Integer.parseInt(txtcodigoP.getText()));
+            pst.setString(8, txtcorreo.getText());
+            pst.setString(9, txttelefono.getText());
+            pst.setString(10, txtcontraseña.getText());
 
-        // Ejecutar la actualización
-        int filasActualizadas = pst.executeUpdate();
+            // Ejecutar la actualización
+            int filasActualizadas = pst.executeUpdate();
 
-        if (filasActualizadas > 0) {
-            System.out.println("Actualización exitosa.");
-            JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
-        } else {
-            System.out.println("No se encontró el registro a actualizar.");
-            JOptionPane.showMessageDialog(null, "No se encontró el registro a actualizar.");
+            if (filasActualizadas > 0) {
+                System.out.println("Actualización exitosa.");
+                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
+            } else {
+                System.out.println("No se encontró el registro a actualizar.");
+                JOptionPane.showMessageDialog(null, "No se encontró el registro a actualizar.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al actualizar los datos: " + ex.getMessage());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Error de formato de número: " + nfe.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de formato de número: " + nfe.getMessage());
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al actualizar los datos: " + ex.getMessage());
-    } catch (NumberFormatException nfe) {
-        System.out.println("Error de formato de número: " + nfe.getMessage());
-        JOptionPane.showMessageDialog(null, "Error de formato de número: " + nfe.getMessage());
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
+    private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_fondoCuenta;
-    private javax.swing.JLabel JL_iconoUsuario;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
@@ -337,9 +334,6 @@ public void actualizarDatos() {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */
