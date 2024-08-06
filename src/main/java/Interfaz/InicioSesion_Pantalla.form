@@ -36,6 +36,8 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="toolTipText" type="java.lang.String" value="usuarioejemplo"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
         </Property>
@@ -73,7 +75,7 @@
     <Component class="javax.swing.JButton" name="btnIngresar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/btnIngresar.png"/>
+          <Image iconType="3" name="/btns/btnIngresar.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
@@ -94,7 +96,7 @@
     <Component class="javax.swing.JLabel" name="Pantalla_InicioSesion">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/Pantalla_Loggin.png"/>
+          <Image iconType="3" name="/imagenesAdmin/Pantalla_Loggin.png"/>
         </Property>
       </Properties>
       <Constraints>

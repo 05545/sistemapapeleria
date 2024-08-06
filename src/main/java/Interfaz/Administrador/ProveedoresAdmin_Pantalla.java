@@ -54,34 +54,27 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         btnReportes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         NombreAdmin = new javax.swing.JLabel();
-        JL_TRegistroProducto = new javax.swing.JLabel();
-        JL_Producto = new javax.swing.JLabel();
         txtNombreProveedor = new javax.swing.JTextField();
-        JL_Cale = new javax.swing.JLabel();
-        JL_CodigoP = new javax.swing.JLabel();
         txtCalle = new javax.swing.JTextField();
-        JL_Correo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
-        btnRegistrar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbResultados = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         txtCodigoPostal = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        JL_Numero = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
-        JL_Colonia1 = new javax.swing.JLabel();
         txtColonia = new javax.swing.JTextField();
-        JL_Telefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         JL_FondoProovedoresAdmin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnBuscar.setBorder(null);
+        btnBuscar.setContentAreaFilled(false);
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
@@ -92,103 +85,128 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 40, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 300, 30, 30));
 
-        btnTablero.setText("Tablero");
+        btnTablero.setBorder(null);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 100, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 120, 30));
 
-        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setBorder(null);
+        btnUsuarios.setContentAreaFilled(false);
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 110, 30));
 
-        btnProveedores.setText("Proveedores");
+        btnProveedores.setBorder(null);
+        btnProveedores.setContentAreaFilled(false);
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 140, 30));
 
-        btnReportes.setText("Reportes");
+        btnReportes.setBorder(null);
+        btnReportes.setContentAreaFilled(false);
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 30));
 
-        btnSalir.setText("Cerrar sesión");
+        btnSalir.setBorder(null);
+        btnSalir.setContentAreaFilled(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 680, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 170, 20));
 
-        NombreAdmin.setText("Nombre usuario");
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
+        NombreAdmin.setFont(new java.awt.Font("Bitstream Charter", 0, 14)); // NOI18N
+        NombreAdmin.setForeground(new java.awt.Color(51, 51, 51));
+        NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 230, 20));
 
-        JL_TRegistroProducto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_TRegistroProducto.setText("Proveedores");
-        getContentPane().add(JL_TRegistroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
-
-        JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Producto.setText("Nombre del proveedor");
-        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 210, -1));
-
+        txtNombreProveedor.setBackground(new java.awt.Color(189, 189, 189));
+        txtNombreProveedor.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtNombreProveedor.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombreProveedor.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNombreProveedor.setBorder(null);
         txtNombreProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreProveedorActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNombreProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 340, 40));
+        getContentPane().add(txtNombreProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 142, 380, 30));
 
-        JL_Cale.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Cale.setText("Calle");
-        getContentPane().add(JL_Cale, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
-
-        JL_CodigoP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_CodigoP.setText("Código Postal");
-        getContentPane().add(JL_CodigoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, -1, 30));
-
+        txtCalle.setBackground(new java.awt.Color(189, 189, 189));
+        txtCalle.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCalle.setForeground(new java.awt.Color(0, 0, 0));
+        txtCalle.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtCalle.setBorder(null);
         txtCalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCalleActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 200, 40));
+        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 180, 30));
 
-        JL_Correo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Correo.setText("Correo");
-        getContentPane().add(JL_Correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 70, -1));
-        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 350, 40));
+        txtCorreo.setBackground(new java.awt.Color(189, 189, 189));
+        txtCorreo.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCorreo.setForeground(new java.awt.Color(0, 0, 0));
+        txtCorreo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtCorreo.setBorder(null);
+        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 370, 36));
 
-        btnRegistrar.setText("Registrar");
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 620, 190, 60));
+
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
+        btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegistrarMouseClicked(evt);
@@ -199,39 +217,34 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 630, 150, 50));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 620, 200, 60));
 
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnLimpiarMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 630, 150, 50));
-
-        btnEditar.setText("Editar");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 640, 120, 40));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 540, 200, 60));
 
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
+        btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 120, 40));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 460, 200, 50));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setOpaque(false);
 
         tbResultados.setBackground(new java.awt.Color(255, 255, 255));
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Dirección"
@@ -245,6 +258,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbResultados.setRowHeight(40);
         tbResultados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbResultadosMouseClicked(evt);
@@ -260,40 +274,53 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
             tbResultados.getColumnModel().getColumn(2).setPreferredWidth(95);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 240, 350, 170));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 190, 310, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(822, 340, 350, 110));
 
+        txtBuscar.setBackground(new java.awt.Color(214, 214, 214));
+        txtBuscar.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.setBorder(null);
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 300, 300, 30));
+
+        txtCodigoPostal.setBackground(new java.awt.Color(189, 189, 189));
+        txtCodigoPostal.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCodigoPostal.setForeground(new java.awt.Color(0, 0, 0));
+        txtCodigoPostal.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtCodigoPostal.setBorder(null);
         txtCodigoPostal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoPostalActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 350, 130, 40));
+        getContentPane().add(txtCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, 140, 30));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Consulta de proovedores");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
-
-        JL_Numero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Numero.setText("Número");
-        getContentPane().add(JL_Numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, -1, 30));
-
+        txtNumero.setBackground(new java.awt.Color(189, 189, 189));
+        txtNumero.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtNumero.setForeground(new java.awt.Color(0, 0, 0));
+        txtNumero.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero.setBorder(null);
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 130, 40));
+        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 350, 140, 30));
 
-        JL_Colonia1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Colonia1.setText("Colonia");
-        getContentPane().add(JL_Colonia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 70, -1));
-        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 180, 40));
+        txtColonia.setBackground(new java.awt.Color(189, 189, 189));
+        txtColonia.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtColonia.setForeground(new java.awt.Color(0, 0, 0));
+        txtColonia.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtColonia.setBorder(null);
+        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 180, 36));
 
-        JL_Telefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Telefono.setText("Teléfono");
-        getContentPane().add(JL_Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 110, -1));
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 560, 180, 40));
+        txtTelefono.setBackground(new java.awt.Color(189, 189, 189));
+        txtTelefono.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtTelefono.setForeground(new java.awt.Color(0, 0, 0));
+        txtTelefono.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtTelefono.setBorder(null);
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 550, 110, 40));
+
+        JL_FondoProovedoresAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesAdmin/Pantalla_Proveedores_Administrador.png"))); // NOI18N
         getContentPane().add(JL_FondoProovedoresAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -539,21 +566,27 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         String calle = txtCalle.getText();
         String numero = txtNumero.getText();
         String colonia = txtColonia.getText();
-        String codigoPostal = txtCodigoPostal.getText();
+        String codigoPostal = txtCodigoPostal.getText().trim();
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
-
+        
         int CP = 0;
 
         if (nombreProveedor.isEmpty() || calle.isEmpty() || numero.isEmpty() || colonia.isEmpty() || codigoPostal.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         try {
-            CP = Integer.parseInt(txtCodigoPostal.getText());
+            // Verifica que el código postal contiene solo dígitos
+            if (codigoPostal.matches("\\d+")) {
+                CP = Integer.parseInt(codigoPostal);
+                System.out.println("" + CP);
+            } else {
+                throw new NumberFormatException(); // Lanza una excepción si contiene caracteres no numéricos
+            }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números");
+            JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -588,6 +621,14 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
             System.out.println("Actualización cancelada.");
         }
     }//GEN-LAST:event_btnRegistrarMouseClicked
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void cargarDatosElementos(int id) {
         btnRegistrar.setEnabled(false);
@@ -631,15 +672,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         txtBuscar.setText("");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JL_Cale;
-    private javax.swing.JLabel JL_CodigoP;
-    private javax.swing.JLabel JL_Colonia1;
-    private javax.swing.JLabel JL_Correo;
     private javax.swing.JLabel JL_FondoProovedoresAdmin;
-    private javax.swing.JLabel JL_Numero;
-    private javax.swing.JLabel JL_Producto;
-    private javax.swing.JLabel JL_TRegistroProducto;
-    private javax.swing.JLabel JL_Telefono;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
@@ -653,7 +686,6 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbResultados;
     private javax.swing.JTextField txtBuscar;

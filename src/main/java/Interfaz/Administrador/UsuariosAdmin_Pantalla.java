@@ -64,11 +64,8 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         btnReportes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         NombreAdmin = new javax.swing.JLabel();
-        JL_TRegistroUsuariosyRoles = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        JL_Producto = new javax.swing.JLabel();
         btnRegistrarUsuario = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbResultados = new javax.swing.JTable();
@@ -78,6 +75,10 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setForeground(new java.awt.Color(51, 51, 51));
+        jScrollPane2.setOpaque(false);
 
         tbResultados1.setBackground(new java.awt.Color(255, 255, 255));
         tbResultados1.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,81 +103,83 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
             tbResultados1.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, 350, 170));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 390, 150));
 
-        btnTablero.setText("Tablero");
+        btnTablero.setBorder(null);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 150, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 150, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 150, 30));
 
-        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setBorder(null);
+        btnUsuarios.setContentAreaFilled(false);
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 150, 30));
 
-        btnProveedores.setText("Proveedores");
+        btnProveedores.setBorder(null);
+        btnProveedores.setContentAreaFilled(false);
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 150, 30));
 
-        btnReportes.setText("Reportes");
+        btnReportes.setBorder(null);
+        btnReportes.setContentAreaFilled(false);
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 150, 30));
 
-        btnSalir.setText("Cerrar sesión");
+        btnSalir.setBorder(null);
+        btnSalir.setContentAreaFilled(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 150, 30));
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
 
-        JL_TRegistroUsuariosyRoles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_TRegistroUsuariosyRoles.setText("Registro de usuarios");
-        getContentPane().add(JL_TRegistroUsuariosyRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
-
+        btnBuscar.setBorder(null);
+        btnBuscar.setContentAreaFilled(false);
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 40, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, 40, 30));
 
-        JL_Producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Producto.setText("Usuarios agregados");
-        getContentPane().add(JL_Producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, 190, -1));
-
-        btnRegistrarUsuario.setText("Registrar usuario");
+        btnRegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistroUsuario.png"))); // NOI18N
+        btnRegistrarUsuario.setContentAreaFilled(false);
         btnRegistrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegistrarUsuarioMouseClicked(evt);
@@ -187,14 +190,16 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
                 btnRegistrarUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 150, 50));
+        getContentPane().add(btnRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 252, 190, 60));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Consulta de usuarios");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 120, 310, 30));
+        txtBuscar.setBackground(new java.awt.Color(214, 214, 214));
+        txtBuscar.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(51, 51, 51));
+        txtBuscar.setBorder(null);
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 180, 320, 30));
 
         tbResultados.setBackground(new java.awt.Color(255, 255, 255));
+        tbResultados.setForeground(new java.awt.Color(51, 51, 51));
         tbResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -211,6 +216,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbResultados.setOpaque(false);
         tbResultados.setRowHeight(40);
         tbResultados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -224,23 +230,27 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
             tbResultados.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(788, 220, 380, 160));
 
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
+        btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 382, 200, 60));
 
-        btnEditar.setText("Editar");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 480, 200, 60));
+
+        JL_FondoUsuariosAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesAdmin/Pantalla_Usuarios_Administrador.png"))); // NOI18N
         getContentPane().add(JL_FondoUsuariosAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -452,8 +462,6 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_FondoUsuariosAdmin;
-    private javax.swing.JLabel JL_Producto;
-    private javax.swing.JLabel JL_TRegistroUsuariosyRoles;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
@@ -466,7 +474,6 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbResultados;

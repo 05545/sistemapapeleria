@@ -50,6 +50,8 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(78, 78, 78));
         txtUsuario.setFont(new java.awt.Font("C059", 1, 24)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtUsuario.setToolTipText("usuarioejemplo");
         txtUsuario.setBorder(null);
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,7 +66,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         txtPass.setBorder(null);
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 410, 400, 40));
 
-        btnIngresar.setIcon(new javax.swing.ImageIcon("/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/btnIngresar.png")); // NOI18N
+        btnIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnIngresar.png"))); // NOI18N
         btnIngresar.setBorder(null);
         btnIngresar.setBorderPainted(false);
         btnIngresar.setContentAreaFilled(false);
@@ -80,7 +82,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 520, 510, 70));
 
-        Pantalla_InicioSesion.setIcon(new javax.swing.ImageIcon("/home/rodrigo/NetBeansProjects/sistemapapeleria/src/main/java/img/Pantalla_Loggin.png")); // NOI18N
+        Pantalla_InicioSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesAdmin/Pantalla_Loggin.png"))); // NOI18N
         getContentPane().add(Pantalla_InicioSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -114,20 +116,23 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
         } else if ("Vendedor".equals(rolUsuario)) {
             Tablero_Ventas TV = new Tablero_Ventas(conexion, conn, usuario);
-            
+
             this.dispose();
             this.setVisible(false);
-            
+
             TV.setVisible(true);
             TV.setLocationRelativeTo(null);
-           
+
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Usuario o contraseña no coincidentes");
-            
-            btnIngresar.setVisible(false);
-            txtUsuario.setEditable(false);
-            txtPass.setEditable(false);
+
+            txtUsuario.setText("");
+            txtPass.setText("");
+            txtUsuario.setEditable(true);
+            txtPass.setEditable(true);
+
+            btnIngresar.setVisible(true);
         }
     }//GEN-LAST:event_btnIngresarMouseClicked
 
@@ -141,9 +146,6 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
 
 /**
  *
- * Hecho por: 
- * Rodrigo Sosa Romero
- * Ernesto García Nolazco
- * Rosaisela Perez Morales
+ * Hecho por: Rodrigo Sosa Romero Ernesto García Nolazco Rosaisela Perez Morales
  * Elizabeth Maravillas Tzompantzi
  */

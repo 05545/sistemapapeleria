@@ -47,6 +47,13 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
 
+        //Propiedades de la tabla busqueda
+        JTB_ReportesRecientes.getColumnModel().getColumn(0).setPreferredWidth(70);  // Ancho para la columna "Nombre"
+        JTB_ReportesRecientes.getColumnModel().getColumn(1).setPreferredWidth(50); // Ancho para la columna "Tipo"
+        JTB_ReportesRecientes.getColumnModel().getColumn(2).setPreferredWidth(20); // Ancho para la columna "Fecha"
+        JTB_ReportesRecientes.setDefaultEditor(Object.class, null); // Inhabilitar la edición
+        JTB_ReportesRecientes.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
+
         cargarReportesRecientes();
     }
 
@@ -61,8 +68,6 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     private void initComponents() {
 
         NombreAdmin = new javax.swing.JLabel();
-        JL_GenReports1 = new javax.swing.JLabel();
-        JL_GenReports = new javax.swing.JLabel();
         btnGenerar = new javax.swing.JButton();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
@@ -83,7 +88,6 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         JCB_ReporteInventario = new javax.swing.JCheckBox();
         JCB_ReporteVentas = new javax.swing.JCheckBox();
         JL_ReporteVentas = new javax.swing.JLabel();
-        JL_Reportes = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         JTB_ReportesRecientes = new javax.swing.JTable();
         JL_FondoReportesAdmin = new javax.swing.JLabel();
@@ -91,140 +95,153 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        NombreAdmin.setFont(new java.awt.Font("C059", 0, 12)); // NOI18N
+        NombreAdmin.setFont(new java.awt.Font("Bitstream Charter", 1, 14)); // NOI18N
+        NombreAdmin.setForeground(new java.awt.Color(51, 51, 51));
         NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 30, 190, 63));
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 190, 20));
 
-        JL_GenReports1.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
-        JL_GenReports1.setText("Reportes recientes");
-        getContentPane().add(JL_GenReports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 120, 220, 70));
-
-        JL_GenReports.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
-        JL_GenReports.setText("Generación de reportes");
-        getContentPane().add(JL_GenReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 220, 70));
-
-        btnGenerar.setText("Generar");
+        btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnGenerar.png"))); // NOI18N
+        btnGenerar.setContentAreaFilled(false);
         btnGenerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGenerarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 600, -1, -1));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 510, -1, -1));
 
-        btnTablero.setText("Tablero");
+        btnTablero.setBorder(null);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 140, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 140, 30));
 
-        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setBorder(null);
+        btnUsuarios.setContentAreaFilled(false);
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 140, 30));
 
-        btnProveedores.setText("Proveedores");
+        btnProveedores.setBorder(null);
+        btnProveedores.setContentAreaFilled(false);
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 150, 30));
 
-        btnReportes.setText("Reportes");
+        btnReportes.setBorder(null);
+        btnReportes.setContentAreaFilled(false);
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 140, 30));
 
-        btnSalir.setText("Cerrar sesión");
+        btnSalir.setBorder(null);
+        btnSalir.setContentAreaFilled(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 180, 30));
+
+        jScrollPane1.setBackground(new java.awt.Color(204, 204, 204));
 
         txtDetallesReporteVentas.setEditable(false);
+        txtDetallesReporteVentas.setBackground(new java.awt.Color(255, 255, 255));
         txtDetallesReporteVentas.setColumns(20);
+        txtDetallesReporteVentas.setForeground(new java.awt.Color(0, 0, 0));
         txtDetallesReporteVentas.setRows(5);
         txtDetallesReporteVentas.setText("Este reporte contiene todo el historial\nde ventas a lo largo del tiempo. Es \ngenerado en base a los registtros.");
         jScrollPane1.setViewportView(txtDetallesReporteVentas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, -1, 70));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 200, 300, 60));
 
-        JL_ReporteInventario.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
+        JL_ReporteInventario.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        JL_ReporteInventario.setForeground(new java.awt.Color(51, 51, 51));
         JL_ReporteInventario.setText("Reporte de inventario");
-        getContentPane().add(JL_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 220, 40));
+        getContentPane().add(JL_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 220, 40));
 
         txtDetallesReporteInventario.setEditable(false);
+        txtDetallesReporteInventario.setBackground(new java.awt.Color(255, 255, 255));
         txtDetallesReporteInventario.setColumns(20);
+        txtDetallesReporteInventario.setForeground(new java.awt.Color(51, 51, 51));
         txtDetallesReporteInventario.setRows(5);
         txtDetallesReporteInventario.setText("Este reporte contiene todo el\ninventario disponible actualmente\nbasandose en los registros disponibles\nconforme a las ventas.");
         jScrollPane2.setViewportView(txtDetallesReporteInventario);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, -1, 70));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 300, 300, 60));
 
-        JL_ReporteUsuarios.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
+        JL_ReporteUsuarios.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        JL_ReporteUsuarios.setForeground(new java.awt.Color(51, 51, 51));
         JL_ReporteUsuarios.setText("Reporte de usuarios");
-        getContentPane().add(JL_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 220, 40));
+        getContentPane().add(JL_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 220, 40));
 
         JCB_ReporteUsuarios.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         JCB_ReporteUsuarios.setBorder(null);
         JCB_ReporteUsuarios.setContentAreaFilled(false);
         JCB_ReporteUsuarios.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 290, 20));
+        getContentPane().add(JCB_ReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 290, 20));
 
         txtDetallesReporteUsuarios.setEditable(false);
+        txtDetallesReporteUsuarios.setBackground(new java.awt.Color(255, 255, 255));
         txtDetallesReporteUsuarios.setColumns(20);
+        txtDetallesReporteUsuarios.setForeground(new java.awt.Color(51, 51, 51));
         txtDetallesReporteUsuarios.setRows(5);
         txtDetallesReporteUsuarios.setText("Este reporte contiene los datos de\ntodos los usuarios registrados en el\nsistema. Se excentan ciertos datos\npor privacidad del mismo. En caso \nde requerir conocer datos especificos\nde cada usuario dirijase al menú de\nusuarios.");
         jScrollPane3.setViewportView(txtDetallesReporteUsuarios);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, -1, 70));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 400, 300, 70));
 
         JCB_ReporteInventario.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         JCB_ReporteInventario.setBorder(null);
         JCB_ReporteInventario.setContentAreaFilled(false);
         JCB_ReporteInventario.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 290, 20));
+        getContentPane().add(JCB_ReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 290, 20));
 
-        JCB_ReporteVentas.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        JCB_ReporteVentas.setFont(new java.awt.Font("Bitstream Charter", 0, 24)); // NOI18N
+        JCB_ReporteVentas.setForeground(new java.awt.Color(51, 51, 51));
         JCB_ReporteVentas.setBorder(null);
         JCB_ReporteVentas.setContentAreaFilled(false);
         JCB_ReporteVentas.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        getContentPane().add(JCB_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 290, 20));
+        getContentPane().add(JCB_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 290, 20));
 
-        JL_ReporteVentas.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
+        JL_ReporteVentas.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        JL_ReporteVentas.setForeground(new java.awt.Color(51, 51, 51));
         JL_ReporteVentas.setText("Reporte de ventas");
-        getContentPane().add(JL_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 220, 40));
+        getContentPane().add(JL_ReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 220, 40));
 
-        JL_Reportes.setFont(new java.awt.Font("C059", 0, 18)); // NOI18N
-        JL_Reportes.setText("Reportes");
-        getContentPane().add(JL_Reportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 220, 70));
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setOpaque(false);
 
+        JTB_ReportesRecientes.setBackground(new java.awt.Color(255, 255, 255));
         JTB_ReportesRecientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -235,10 +252,28 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
             new String [] {
                 "Nombre", "Tipo", "Fecha"
             }
-        ));
-        jScrollPane4.setViewportView(JTB_ReportesRecientes);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, -1, 110));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(JTB_ReportesRecientes);
+        if (JTB_ReportesRecientes.getColumnModel().getColumnCount() > 0) {
+            JTB_ReportesRecientes.getColumnModel().getColumn(0).setResizable(false);
+            JTB_ReportesRecientes.getColumnModel().getColumn(0).setPreferredWidth(70);
+            JTB_ReportesRecientes.getColumnModel().getColumn(1).setResizable(false);
+            JTB_ReportesRecientes.getColumnModel().getColumn(1).setPreferredWidth(50);
+            JTB_ReportesRecientes.getColumnModel().getColumn(2).setResizable(false);
+            JTB_ReportesRecientes.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
+
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, 390, 420));
+
+        JL_FondoReportesAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesAdmin/Pantalla_Reportes_Administrador.png"))); // NOI18N
         getContentPane().add(JL_FondoReportesAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -575,12 +610,9 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JCheckBox JCB_ReporteUsuarios;
     private javax.swing.JCheckBox JCB_ReporteVentas;
     private javax.swing.JLabel JL_FondoReportesAdmin;
-    private javax.swing.JLabel JL_GenReports;
-    private javax.swing.JLabel JL_GenReports1;
     private javax.swing.JLabel JL_ReporteInventario;
     private javax.swing.JLabel JL_ReporteUsuarios;
     private javax.swing.JLabel JL_ReporteVentas;
-    private javax.swing.JLabel JL_Reportes;
     private javax.swing.JTable JTB_ReportesRecientes;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnGenerar;

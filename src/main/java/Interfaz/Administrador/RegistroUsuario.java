@@ -56,7 +56,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
-        JL_CorreoE = new javax.swing.JLabel();
         txtCorreoE = new javax.swing.JTextField();
         NombreAdmin = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
@@ -66,27 +65,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
         btnProveedores = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        JL_Contrasena1 = new javax.swing.JLabel();
-        JL_Contrasena = new javax.swing.JLabel();
         txtContrasena = new javax.swing.JTextField();
-        JL_Nombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        JL_CCodigoPostal = new javax.swing.JLabel();
         txtCodigoP = new javax.swing.JTextField();
-        JL_Colonia = new javax.swing.JLabel();
         txtColonia = new javax.swing.JTextField();
         txtNumero = new javax.swing.JTextField();
-        JL_Numero = new javax.swing.JLabel();
-        JL_Calle = new javax.swing.JLabel();
         txtCalle = new javax.swing.JTextField();
-        JL_Telefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        JL_TRegistroUsuarios = new javax.swing.JLabel();
-        JL_NombreUsuario = new javax.swing.JLabel();
         txtNombreUsuario = new javax.swing.JTextField();
         txtApellidoP = new javax.swing.JTextField();
-        JL_ApellidoP = new javax.swing.JLabel();
-        JL_ApellidoM = new javax.swing.JLabel();
         txtApellidoM = new javax.swing.JTextField();
         JCB_Roles = new javax.swing.JComboBox<>();
         Fondo_RegistroUsuario = new javax.swing.JLabel();
@@ -94,227 +81,225 @@ public class RegistroUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnGenerar.setText("Generar");
+        btnGenerar.setBorder(null);
+        btnGenerar.setContentAreaFilled(false);
         btnGenerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGenerarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(694, 195, 90, 30));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(694, 195, 40, 30));
 
-        btnActualizar.setText("Actualizar");
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btnActualizar.setContentAreaFilled(false);
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnActualizarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, -1, -1));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, -1, -1));
 
-        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
+        btnLimpiar.setContentAreaFilled(false);
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLimpiarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 620, -1, -1));
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 560, -1, 70));
 
-        btnRegistrar.setText("Registrar");
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
+        btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegistrarMouseClicked(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 620, -1, -1));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, -1, 60));
 
-        JL_CorreoE.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_CorreoE.setText("Correo electrónico");
-        getContentPane().add(JL_CorreoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 260, 220, -1));
-
+        txtCorreoE.setBackground(new java.awt.Color(189, 189, 189));
+        txtCorreoE.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCorreoE.setBorder(null);
         txtCorreoE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoEActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCorreoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 300, 290, 40));
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
+        getContentPane().add(txtCorreoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 268, 270, 36));
 
-        btnTablero.setText("Tablero");
+        NombreAdmin.setFont(new java.awt.Font("Bitstream Charter", 1, 14)); // NOI18N
+        NombreAdmin.setForeground(new java.awt.Color(51, 51, 51));
+        NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 40, 220, 20));
+
+        btnTablero.setBorder(null);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTableroMouseClicked(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 140, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVentasMouseClicked(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 140, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 140, 30));
 
-        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setBorder(null);
+        btnUsuarios.setContentAreaFilled(false);
         btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnUsuariosMouseClicked(evt);
             }
         });
-        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        getContentPane().add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 140, 30));
 
-        btnProveedores.setText("Proveedores");
+        btnProveedores.setBorder(null);
+        btnProveedores.setContentAreaFilled(false);
         btnProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProveedoresMouseClicked(evt);
             }
         });
-        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        getContentPane().add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 140, 30));
 
-        btnReportes.setText("Reportes");
+        btnReportes.setBorder(null);
+        btnReportes.setContentAreaFilled(false);
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnReportesMouseClicked(evt);
             }
         });
-        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        getContentPane().add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 140, 30));
 
-        btnSalir.setText("Cerrar sesión");
+        btnSalir.setBorder(null);
+        btnSalir.setContentAreaFilled(false);
         btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSalirMouseClicked(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 170, 20));
 
-        JL_Contrasena1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Contrasena1.setText("Rol");
-        getContentPane().add(JL_Contrasena1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 480, 220, 30));
-
-        JL_Contrasena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Contrasena.setText("Contraseña");
-        getContentPane().add(JL_Contrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 480, 220, 30));
-
+        txtContrasena.setBackground(new java.awt.Color(189, 189, 189));
+        txtContrasena.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtContrasena.setBorder(null);
         txtContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtContrasenaActionPerformed(evt);
             }
         });
-        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 520, 230, 40));
+        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 440, 220, 30));
 
-        JL_Nombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Nombre.setText("Nombre(s)");
-        getContentPane().add(JL_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 150, 220, -1));
-
+        txtNombre.setBackground(new java.awt.Color(189, 189, 189));
+        txtNombre.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtNombre.setBorder(null);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 340, 40));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 320, 36));
 
-        JL_CCodigoPostal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_CCodigoPostal.setText("Código Postal");
-        getContentPane().add(JL_CCodigoPostal, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 220, -1));
-
+        txtCodigoP.setBackground(new java.awt.Color(189, 189, 189));
+        txtCodigoP.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCodigoP.setBorder(null);
         txtCodigoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoPActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCodigoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 230, 40));
+        getContentPane().add(txtCodigoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 440, 180, 30));
 
-        JL_Colonia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Colonia.setText("Colonia");
-        getContentPane().add(JL_Colonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 370, 220, -1));
-
+        txtColonia.setBackground(new java.awt.Color(189, 189, 189));
+        txtColonia.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtColonia.setBorder(null);
         txtColonia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtColoniaActionPerformed(evt);
             }
         });
-        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 410, 230, 40));
+        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 350, 240, 30));
 
+        txtNumero.setBackground(new java.awt.Color(189, 189, 189));
+        txtNumero.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtNumero.setBorder(null);
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 410, 80, 40));
+        getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, 90, 30));
 
-        JL_Numero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Numero.setText("Número");
-        getContentPane().add(JL_Numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 370, 220, -1));
-
-        JL_Calle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Calle.setText("Calle");
-        getContentPane().add(JL_Calle, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 370, 220, -1));
-
+        txtCalle.setBackground(new java.awt.Color(189, 189, 189));
+        txtCalle.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtCalle.setBorder(null);
         txtCalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCalleActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 410, 130, 40));
+        getContentPane().add(txtCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, 80, 30));
 
-        JL_Telefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Telefono.setText("Telefono");
-        getContentPane().add(JL_Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 220, -1));
-
+        txtTelefono.setBackground(new java.awt.Color(189, 189, 189));
+        txtTelefono.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtTelefono.setBorder(null);
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, 200, 40));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 350, 178, 34));
 
-        JL_TRegistroUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_TRegistroUsuarios.setText("Registro de nuevos usuarios");
-        getContentPane().add(JL_TRegistroUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
-
-        JL_NombreUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_NombreUsuario.setText("Nombre de usuario");
-        getContentPane().add(JL_NombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 220, -1));
-
+        txtNombreUsuario.setBackground(new java.awt.Color(189, 189, 189));
+        txtNombreUsuario.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtNombreUsuario.setBorder(null);
         txtNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 370, 40));
+        getContentPane().add(txtNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 290, 36));
 
+        txtApellidoP.setBackground(new java.awt.Color(189, 189, 189));
+        txtApellidoP.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtApellidoP.setBorder(null);
         txtApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoPActionPerformed(evt);
             }
         });
-        getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 200, 40));
+        getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 268, 170, 36));
 
-        JL_ApellidoP.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_ApellidoP.setText("Apellido paterno");
-        getContentPane().add(JL_ApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 220, -1));
-
-        JL_ApellidoM.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_ApellidoM.setText("Apellido materno");
-        getContentPane().add(JL_ApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 220, -1));
-
+        txtApellidoM.setBackground(new java.awt.Color(189, 189, 189));
+        txtApellidoM.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtApellidoM.setBorder(null);
         txtApellidoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtApellidoMActionPerformed(evt);
             }
         });
-        getContentPane().add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 200, 40));
+        getContentPane().add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 268, 170, 36));
 
-        getContentPane().add(JCB_Roles, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 520, 210, 40));
+        JCB_Roles.setBackground(new java.awt.Color(189, 189, 189));
+        JCB_Roles.setBorder(null);
+        getContentPane().add(JCB_Roles, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 440, 210, 30));
 
-        Fondo_RegistroUsuario.setText("}");
+        Fondo_RegistroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesAdmin/Pantalla_UsuariosReg_Administrador.png"))); // NOI18N
         getContentPane().add(Fondo_RegistroUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
@@ -824,19 +809,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo_RegistroUsuario;
     private javax.swing.JComboBox<String> JCB_Roles;
-    private javax.swing.JLabel JL_ApellidoM;
-    private javax.swing.JLabel JL_ApellidoP;
-    private javax.swing.JLabel JL_CCodigoPostal;
-    private javax.swing.JLabel JL_Calle;
-    private javax.swing.JLabel JL_Colonia;
-    private javax.swing.JLabel JL_Contrasena;
-    private javax.swing.JLabel JL_Contrasena1;
-    private javax.swing.JLabel JL_CorreoE;
-    private javax.swing.JLabel JL_Nombre;
-    private javax.swing.JLabel JL_NombreUsuario;
-    private javax.swing.JLabel JL_Numero;
-    private javax.swing.JLabel JL_TRegistroUsuarios;
-    private javax.swing.JLabel JL_Telefono;
     private javax.swing.JLabel NombreAdmin;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnGenerar;
