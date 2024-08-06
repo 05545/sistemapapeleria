@@ -179,6 +179,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, 40, 30));
 
         btnRegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistroUsuario.png"))); // NOI18N
+        btnRegistrarUsuario.setBorder(null);
         btnRegistrarUsuario.setContentAreaFilled(false);
         btnRegistrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -233,6 +234,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(788, 220, 380, 160));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
+        btnEliminar.setBorder(null);
         btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -242,6 +244,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 382, 200, 60));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btnEditar.setBorder(null);
         btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

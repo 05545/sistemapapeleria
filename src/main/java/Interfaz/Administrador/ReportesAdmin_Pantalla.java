@@ -101,6 +101,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 190, 20));
 
         btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnGenerar.png"))); // NOI18N
+        btnGenerar.setBorder(null);
         btnGenerar.setContentAreaFilled(false);
         btnGenerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

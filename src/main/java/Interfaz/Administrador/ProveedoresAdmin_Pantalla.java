@@ -197,6 +197,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 370, 36));
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
         btnLimpiar.setContentAreaFilled(false);
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -206,6 +207,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 620, 190, 60));
 
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
+        btnRegistrar.setBorder(null);
         btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,6 +222,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 620, 200, 60));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btnEditar.setBorder(null);
         btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -229,6 +232,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 540, 200, 60));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
+        btnEliminar.setBorder(null);
         btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
