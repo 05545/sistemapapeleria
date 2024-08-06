@@ -40,6 +40,12 @@ public class Ventas_Ven extends javax.swing.JFrame {
         MostraProducto();
     }
 
+private void cerrarConexion() {
+  if (con != null) {
+   con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -65,7 +71,6 @@ public class Ventas_Ven extends javax.swing.JFrame {
         btnlimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbventas = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         JL_fondoVentas = new javax.swing.JLabel();
         btnCobra = new javax.swing.JButton();
@@ -75,6 +80,7 @@ public class Ventas_Ven extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbbusqueda = new javax.swing.JTable();
         txtproducto = new javax.swing.JComboBox<>();
+        btnCerrasesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JFventas");
@@ -193,9 +199,6 @@ public class Ventas_Ven extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, 400, 260));
 
-        jLabel3.setText("Cerra sesion");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Ventas Reciente");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 30, 180, -1));
@@ -255,6 +258,14 @@ public class Ventas_Ven extends javax.swing.JFrame {
         });
         getContentPane().add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 370, 50));
 
+        btnCerrasesion.setText("Cerra Sesion");
+        btnCerrasesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrasesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, 110, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -300,23 +311,26 @@ public class Ventas_Ven extends javax.swing.JFrame {
     }//GEN-LAST:event_txtprecioUnitarioActionPerformed
 
     private void btnCobraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobraActionPerformed
-        // Mostrar el diálogo de confirmación con el total formateado a 2 decimales
-        int confirmacion = JOptionPane.showConfirmDialog(this,
-                "Confirmar compra con un total de " + String.format("%.2f", total) + "?",
-                "Confirmación de Compra",
-                JOptionPane.YES_NO_OPTION);
+ int confirmacion = JOptionPane.showConfirmDialog(this,
+        "Confirmar compra con un total de " + String.format("%.2f", total) + "?",
+        "Confirmación de Compra",
+        JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            for (int i = 0; i < indice; i++) {
-                //Registra en la base de datos
-                Vender(productos[i], cantidades[i]);
-            }
-            // Reiniciar las variables
-            ReiniciarVariables();
-            Limpiar();
-        } else {
-            System.out.println("Sigue comprando.");
-        }
+if (confirmacion == JOptionPane.YES_OPTION) {
+    for (int i = 0; i < indice; i++) {
+        // Registra en la base de datos
+        int IDProducto = obtenerID("IDProducto", "producto", "Nombre", productos[i]);
+        Vender(productos[i], cantidades[i]);
+        int IDventa = ID_UltimaVenta();
+        //Registra la tabla venta_producto
+        RegistraV_T(IDProducto, IDventa);
+    }
+    // Reiniciar las variables
+    ReiniciarVariables();
+    Limpiar();
+} else {
+    System.out.println("Sigue comprando.");
+}
     }//GEN-LAST:event_btnCobraActionPerformed
 
     private void txtConsulatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConsulatActionPerformed
@@ -333,6 +347,7 @@ public class Ventas_Ven extends javax.swing.JFrame {
         
         if (fila >= 0) {
             this.txtproducto.setSelectedItem(this.tbbusqueda.getValueAt(fila, 1).toString());
+            txtprecioUnitario.setText(this.tbbusqueda.getValueAt(fila,4).toString());
         } else {
             System.out.println("No se ha seleccionado ninguna fila.");
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila.");
@@ -345,6 +360,7 @@ public class Ventas_Ven extends javax.swing.JFrame {
 
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         Limpiar();
+        MostraProducto();
     }//GEN-LAST:event_btnlimpiarActionPerformed
 //Boton tablero
     private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
@@ -383,6 +399,10 @@ public class Ventas_Ven extends javax.swing.JFrame {
         CV.setVisible(true);
         CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
+
+    private void btnCerrasesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesionActionPerformed
+        cerrarConexion();
+    }//GEN-LAST:event_btnCerrasesionActionPerformed
     //Metodo Buscar
     public void Buscar(String Nombre) {
         DefaultTableModel model = new DefaultTableModel();
@@ -601,6 +621,99 @@ public class Ventas_Ven extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbventas.getModel();
         model.setRowCount(0);
     }
+    
+    //Obtener ID de las ventas recientes
+  public int ID_UltimaVenta() {
+    int IdVenta = 0;
+
+    if (conn != null) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT idventa FROM venta ORDER BY idventa DESC LIMIT 1";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                IdVenta = rs.getInt("idventa");
+            } else {
+                System.out.println("No se encontró ninguna venta.");
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al ejecutar la consulta.");
+            ex.printStackTrace();
+        }
+    } else {
+        System.out.println("Conexión fallida.");
+    }
+
+    return IdVenta;
+}
+
+    
+      //Metodo para obtener el ID mediante Cualqueri Tabla
+   private int obtenerID(String ProductoID, String Tabla, String CampoT, String Producto_Buscar) {
+    int idPro = 0;
+
+    if (conn != null) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT " + ProductoID + " FROM " + Tabla + " WHERE " + CampoT + " = '" + Producto_Buscar + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                idPro = rs.getInt(ProductoID);
+            } else {
+                System.out.println("No se encontró el producto: " + Producto_Buscar);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta.");
+            e.printStackTrace();
+        }
+    } else {
+        System.out.println("No se pudo conectar a la base de datos.");
+    }
+
+    return idPro;
+}
+
+    
+   public void RegistraV_T(int ID_producto, int ID_Venta) {
+    PreparedStatement ps = null;
+
+    try {
+        if (conn != null) {
+            String consulta = "CALL RegistrarVentaProducto(?, ?)";
+            ps = conn.prepareStatement(consulta);
+            ps.setInt(1, ID_producto);
+            ps.setInt(2, ID_Venta);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Venta registrada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo registrar la venta.");
+            }
+        } else {
+            System.out.println("No se pudo conectar a la base de datos.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println("Fallo al registrar la venta.");
+    } finally {
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
@@ -613,6 +726,7 @@ public class Ventas_Ven extends javax.swing.JFrame {
     private javax.swing.JLabel JL_sesion;
     private javax.swing.JLabel JL_subTotal;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCerrasesion;
     private javax.swing.JButton btnCobra;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
@@ -622,7 +736,6 @@ public class Ventas_Ven extends javax.swing.JFrame {
     private javax.swing.JButton btnprocesar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;

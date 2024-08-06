@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +27,11 @@ public class Inventario_Venta extends javax.swing.JFrame {
         Mostra();
     }
 
+     private void cerrarConexion() {
+        if (con != null) {
+        con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,7 +39,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         JL_NomUser = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        JL_producto = new javax.swing.JLabel();
         txtproducto = new javax.swing.JTextField();
         JL_cantidad = new javax.swing.JLabel();
         spcantidad = new javax.swing.JSpinner();
@@ -49,7 +54,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         txtconsulta = new javax.swing.JTextField();
         btneliminar = new javax.swing.JButton();
         btneditar = new javax.swing.JButton();
-        txtid = new javax.swing.JTextField();
         JL_producto1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         JL_Logo = new javax.swing.JLabel();
@@ -57,8 +61,8 @@ public class Inventario_Venta extends javax.swing.JFrame {
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnCerrasesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JF_Inventario");
@@ -73,10 +77,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Registro de producto");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
-
-        JL_producto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_producto.setText("ID");
-        getContentPane().add(JL_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 30, -1));
 
         txtproducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,9 +171,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         });
         getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
 
-        txtid.setEditable(false);
-        getContentPane().add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 72, 70, 40));
-
         JL_producto1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_producto1.setText("Producto");
         getContentPane().add(JL_producto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 160, -1));
@@ -226,11 +223,16 @@ public class Inventario_Venta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 100, 40));
-
-        jLabel3.setText("Cerra sesion");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
         jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
+
+        btnCerrasesion.setText("Cerra Sesion");
+        btnCerrasesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrasesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, 110, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +258,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         Limpiar();
         btnregistra.setEnabled(true);
+        Mostra();
     }//GEN-LAST:event_btnlimpiarActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
@@ -270,6 +273,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
         Actualizar();
         Mostra();
         Limpiar();
+        btnregistra.setEnabled(true);
     }//GEN-LAST:event_btneditarActionPerformed
 
     private void tbbusquedaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbbusquedaMouseClicked
@@ -292,7 +296,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
             double cantidadDecimal = Double.parseDouble(cantidadString);
             int cantidad = (int) cantidadDecimal;
             this.spcantidad.setValue(cantidad);
-            this.txtid.setText(String.valueOf(id));
         } catch (NumberFormatException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "El valor de cantidad o id no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -340,6 +343,10 @@ public class Inventario_Venta extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnTableroMouseClicked
 
+    private void btnCerrasesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesionActionPerformed
+        cerrarConexion();
+    }//GEN-LAST:event_btnCerrasesionActionPerformed
+
     //Metodo para limpiar
     public void Limpiar() {
         txtconsulta.setText("");
@@ -347,7 +354,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         txtproducto.setText("");
         txttipo.setText("");
         spcantidad.setValue(0);
-        txtid.setText("");
     }
 
     //Metodo para mostra datos
@@ -533,55 +539,96 @@ public class Inventario_Venta extends javax.swing.JFrame {
         }
     }
 
-//Actualizar datos
-    public void Actualizar() {
-        String Nombre = txtproducto.getText();
-        String Tipo = txttipo.getText();
-        double precio = 0.0;
-        int cantidad = 0;
+ //Actualizar datos
+public void Actualizar() {
+    String Nombre = txtproducto.getText();
+    String Tipo = txttipo.getText();
+    double precio = 0.0;
+    int cantidad = 0;
+    int ID_Producto = obtenerID("IDProducto", "producto", "Nombre", Nombre);
 
-        try {
-            precio = Double.parseDouble(txtprecioUnitario.getText());
-            cantidad = Integer.parseInt(spcantidad.getValue().toString());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-            return; // Salir del método si hay un error en la conversión
-        }
+    // Validar ID_Producto
+    if (ID_Producto == 0) {
+        JOptionPane.showMessageDialog(this, "No se encontró el producto.");
+        return; // Salir del método si no se encontró el producto
+    }
 
-        PreparedStatement ps = null;
+    try {
+        precio = Double.parseDouble(txtprecioUnitario.getText());
+        cantidad = Integer.parseInt(spcantidad.getValue().toString());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+        return; // Salir del método si hay un error en la conversión
+    }
 
-        try {
-            if (conn != null) {
-                String Actualizar = "UPDATE Producto SET nombre = ?, Tipo = ?, cantidad_disponible = ?, Precio = ? WHERE Idproducto = ?";
-                ps = conn.prepareStatement(Actualizar);
-                ps.setString(1, Nombre);
-                ps.setString(2, Tipo);
-                ps.setInt(3, cantidad);
-                ps.setDouble(4, precio);
-                ps.setInt(5, Integer.parseInt(txtid.getText()));
+    PreparedStatement ps = null;
 
-                int indice = ps.executeUpdate();
-                if (indice > 0) {
-                    JOptionPane.showMessageDialog(this, "Datos actualizados");
-                } else {
-                    JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
-                }
+    try {
+        if (conn != null) {
+            String Actualizar = "UPDATE producto SET nombre = ?, tipo = ?, cantidad_disponible = ?, precio = ? WHERE idproducto = ?";
+            ps = conn.prepareStatement(Actualizar);
+            ps.setString(1, Nombre);
+            ps.setString(2, Tipo);
+            ps.setInt(3, cantidad);
+            ps.setDouble(4, precio);
+            ps.setInt(5, ID_Producto);
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
+                JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
-            ex.printStackTrace();
-        } finally {
-            System.out.println("Fin de la ejecucion");
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
+        ex.printStackTrace();
+    } finally {
+        System.out.println("Fin de la ejecución");
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+    }
+}
+
+ private int obtenerID(String ProductoID, String Tabla, String CampoT, String Producto_Buscar) {
+        String id = "";
+        int idPro = 0;
+
+        if (conn != null) {
+            try {
+                Statement stmt = conn.createStatement();
+                String sql = "SELECT "+ProductoID+" FROM "+Tabla+" WHERE "+CampoT+" = '" + Producto_Buscar + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next()) {
+                    id = rs.getString(ProductoID);
+                    try {
+                        idPro = Integer.parseInt(id);
+                    } catch (NumberFormatException e) {
+                        System.out.println("No se encuetra producto: " + id);
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Nombre de usuario o contraseña incorrectos.");
+                }
+                rs.close();
+                stmt.close();
+            } catch (SQLException e) {
+                System.out.println("Error al ejecutar la consulta.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No se pudo conectar a la base de datos.");
+        }
+
+        return idPro;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -589,9 +636,9 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_cantidad;
     private javax.swing.JLabel JL_precioUnitario;
-    private javax.swing.JLabel JL_producto;
     private javax.swing.JLabel JL_producto1;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCerrasesion;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnTablero;
@@ -602,7 +649,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private javax.swing.JButton btnregistra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -610,7 +656,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private javax.swing.JSpinner spcantidad;
     private javax.swing.JTable tbbusqueda;
     private javax.swing.JTextField txtconsulta;
-    private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtprecioUnitario;
     private javax.swing.JTextField txtproducto;
     private javax.swing.JTextField txttipo;
