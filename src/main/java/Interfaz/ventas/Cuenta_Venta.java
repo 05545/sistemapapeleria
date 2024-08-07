@@ -96,7 +96,7 @@ public class Cuenta_Venta extends javax.swing.JFrame {
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        btnCerrasesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JF_Cuenta");
@@ -215,8 +215,13 @@ public class Cuenta_Venta extends javax.swing.JFrame {
         });
         getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 100, 40));
 
-        jLabel3.setText("Cerra sesion");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
+        btnCerrasesion.setText("Cerra Sesion");
+        btnCerrasesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrasesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, 110, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -265,6 +270,17 @@ public class Cuenta_Venta extends javax.swing.JFrame {
         CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
 
+    private void btnCerrasesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesionActionPerformed
+        cerrarConexion();
+    }//GEN-LAST:event_btnCerrasesionActionPerformed
+ //Cierre de coneccion
+    private void cerrarConexion() {
+        if (con != null) {
+        con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
+        }
+    }
+ 
+ 
     public void llenatxt() {
         int id = obtenerID(nomUsuario);
         String consulta = "SELECT * FROM Trabajador WHERE IDVendedor = " + id;
@@ -337,6 +353,7 @@ public class Cuenta_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_fondoCuenta;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCerrasesion;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnTablero;
@@ -348,7 +365,6 @@ public class Cuenta_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

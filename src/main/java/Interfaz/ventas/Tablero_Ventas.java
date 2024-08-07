@@ -9,12 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 public class Tablero_Ventas extends javax.swing.JFrame {
 
-    private Timer timer;
     Conexion con;
     Connection conn;
     String nomUsuario, iniNombreUsuario;
@@ -27,16 +25,8 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         this.nomUsuario = nomUsuario;
         consultarNombre();
 
-        //Temporizador de datos 
-        timer = new Timer(9000, new ActionListener() { // 5000 milisegundos = 5 segundos
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 MostraDVentas();
                 MostraBS();
-            }
-        });
-        timer.start(); // Iniciar el temporizador 
-
         // this.setExtendedState(JFrame.MAXIMIZED_BOTH); (No usar porque los tamaños de imagen y de pantalla en cada disp. son diferentes)
     }
 

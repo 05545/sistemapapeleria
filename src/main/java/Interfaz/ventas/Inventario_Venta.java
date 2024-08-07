@@ -300,6 +300,8 @@ public class Inventario_Venta extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "El valor de cantidad o id no es un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        //Desativar boton 
+        btnregistra.setEnabled(false);
     }//GEN-LAST:event_tbbusquedaMouseClicked
 
     private void btnTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableroActionPerformed
@@ -475,7 +477,8 @@ public class Inventario_Venta extends javax.swing.JFrame {
         String Tipo = txttipo.getText();
         double precio = 0.0;
         int cantidad = 0;
-
+        int IdUsuario=obtenerID("IDVendedor", "trabajador", "Nombre", nomUsuario);
+        
         try {
             precio = Double.parseDouble(txtprecioUnitario.getText());
             cantidad = Integer.parseInt(spcantidad.getValue().toString());
@@ -502,7 +505,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
                     preparedStatement.setString(2, Tipo);
                     preparedStatement.setInt(3, cantidad);
                     preparedStatement.setDouble(4, precio);
-                    preparedStatement.setInt(5, 2);
+                    preparedStatement.setInt(5, IdUsuario);
                     preparedStatement.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
                 }
