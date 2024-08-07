@@ -40,7 +40,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         tbResultados.getColumnModel().getColumn(5).setPreferredWidth(20); // Ancho para la columna "Proveedor"
         tbResultados.setDefaultEditor(Object.class, null); // Inhabilitar la edición
         tbResultados.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
-        
+
         ((JSpinner.DefaultEditor) spCantidad.getEditor()).getTextField().setForeground(Color.BLACK);
         ((JSpinner.DefaultEditor) spCantidad.getEditor()).getTextField().setBackground(new Color(189, 189, 189));
     }
@@ -192,6 +192,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
         btnRegistrar.setBorder(null);
+        btnRegistrar.setBorderPainted(false);
         btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -207,6 +208,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
         btnLimpiar.setBorder(null);
+        btnLimpiar.setBorderPainted(false);
         btnLimpiar.setContentAreaFilled(false);
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -217,6 +219,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
         btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
         btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -405,47 +408,39 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         String idpr = String.valueOf(IdProducto);
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el producto con ID " + idpr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        if (IdProducto > 0) {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el producto con ID " + idpr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (conn != null) {
-                try {
-                    String query = "DELETE FROM Producto WHERE IDProducto = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, idpr);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (conn != null) {
+                    try {
+                        String query = "DELETE FROM Producto WHERE IDProducto = ?";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, idpr);
 
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
-                    int columEliminadas = ps.executeUpdate();
-                    System.out.println("Filas afectadas: " + columEliminadas);
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                        int columEliminadas = ps.executeUpdate();
+                        System.out.println("Filas afectadas: " + columEliminadas);
 
-                    ps.close();
+                        ps.close();
+                        limpiar();
 
-                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
-                    tabla.setRowCount(0);
-                    txtBuscar.setText("");
-                    txtProducto.setText("");
-                    txtPrecioUnitario.setText("");
-                    txtTipo.setText("");
-                    spCantidad.setValue(0);
-                    btnRegistrar.setEnabled(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("No se pudo conectar a la base de datos.");
                 }
             } else {
-                System.out.println("No se pudo conectar a la base de datos.");
+                System.out.println("Eliminación cancelada.");
             }
         } else {
-            System.out.println("Eliminación cancelada.");
+            JOptionPane.showMessageDialog(null, "Primero selecciona un elemento de la tabla de buscar.");
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
-        spCantidad.setValue(0);
-        txtPrecioUnitario.setText("");
-        txtProducto.setText("");
-        txtTipo.setText("");
-
-        btnRegistrar.setEnabled(true);
+        limpiar();
     }//GEN-LAST:event_btnLimpiarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
@@ -455,63 +450,59 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         String tipo = txtTipo.getText();
         String proveedor = (String) JCB_Proovedores.getSelectedItem();
 
-        if (producto.isEmpty() || precioUnitario.isEmpty() || tipo.isEmpty() || proveedor.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
-            return;
-        }
+        if (IdProducto > 0) {
+            if (producto.isEmpty() || precioUnitario.isEmpty() || tipo.isEmpty() || proveedor.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, llena todos los campos.");
+                return;
+            }
 
-        float precio, cantidad;
+            float precio, cantidad;
 
-        try {
-            precio = Float.parseFloat(precioUnitario);
-            cantidad = ((Number) spCantidad.getValue()).floatValue();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Precio unitario inválido. Ingresa un número válido.");
-            return;
-        }
+            try {
+                precio = Float.parseFloat(precioUnitario);
+                cantidad = ((Number) spCantidad.getValue()).floatValue();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Precio unitario inválido. Ingresa un número válido.");
+                return;
+            }
 
-        if (cantidad < 1) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingresa una cantidad valida.");
-            return;
-        }
+            if (cantidad < 1) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingresa una cantidad valida.");
+                return;
+            }
 
-        int idProveedor = obtenerIdProveedor(proveedor);
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el producto con ID " + idpr + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
+            int idProveedor = obtenerIdProveedor(proveedor);
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el producto con ID " + idpr + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (conn != null) {
-                try {
-                    String query = "UPDATE Producto SET Nombre = ?, Tipo = ?, Cantidad_Disponible = ?, Precio = ?, IDGerente = ? WHERE IDProducto = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, producto);
-                    ps.setString(2, tipo);
-                    ps.setFloat(3, cantidad);
-                    ps.setFloat(4, precio);
-                    ps.setInt(5, idProveedor);
-                    ps.setInt(6, IdProducto);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (conn != null) {
+                    try {
+                        String query = "UPDATE Producto SET Nombre = ?, Tipo = ?, Cantidad_Disponible = ?, Precio = ?, IDGerente = ? WHERE IDProducto = ?";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, producto);
+                        ps.setString(2, tipo);
+                        ps.setFloat(3, cantidad);
+                        ps.setFloat(4, precio);
+                        ps.setInt(5, idProveedor);
+                        ps.setInt(6, IdProducto);
 
-                    JOptionPane.showMessageDialog(null, "Se ha actualiado el registro correctamente");
-                    int columEliminadas = ps.executeUpdate();
-                    System.out.println("Filas afectadas: " + columEliminadas);
+                        JOptionPane.showMessageDialog(null, "Se ha actualiado el registro correctamente");
+                        int columEliminadas = ps.executeUpdate();
+                        System.out.println("Filas afectadas: " + columEliminadas);
 
-                    ps.close();
-
-                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
-                    tabla.setRowCount(0);
-                    txtBuscar.setText("");
-                    txtProducto.setText("");
-                    txtPrecioUnitario.setText("");
-                    txtTipo.setText("");
-                    spCantidad.setValue(0);
-                    btnRegistrar.setEnabled(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                        ps.close();
+                        limpiar();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("No se pudo conectar a la base de datos.");
                 }
             } else {
-                System.out.println("No se pudo conectar a la base de datos.");
+                System.out.println("Actualización cancelada.");
             }
         } else {
-            System.out.println("Actualización cancelada.");
+            JOptionPane.showMessageDialog(null, "Primero selecciona un elemento de la tabla de buscar.");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -562,14 +553,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
 
                     ps.close();
 
-                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
-                    tabla.setRowCount(0);
-                    txtBuscar.setText("");
-                    txtProducto.setText("");
-                    txtPrecioUnitario.setText("");
-                    txtTipo.setText("");
-                    spCantidad.setValue(0);
-                    btnRegistrar.setEnabled(true);
+                    limpiar();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -713,6 +697,17 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         }
 
         return encontrado;
+    }
+
+    private void limpiar() {
+        DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
+        tabla.setRowCount(0);
+        txtBuscar.setText("");
+        txtProducto.setText("");
+        txtPrecioUnitario.setText("");
+        txtTipo.setText("");
+        spCantidad.setValue(0);
+        btnRegistrar.setEnabled(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

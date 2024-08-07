@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Conexion {
     private Connection conex = null;
-    private final String url = "jdbc:mysql://192.168.182.146:3306/papeleria";
+    private final String url = "jdbc:mysql://192.168.1.105:3306/papeleria";
     private final String usuario = "papeleria";
     private final String contrasena = "papeleria";
 

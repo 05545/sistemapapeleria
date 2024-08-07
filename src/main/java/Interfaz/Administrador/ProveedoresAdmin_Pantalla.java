@@ -198,6 +198,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
         btnLimpiar.setBorder(null);
+        btnLimpiar.setBorderPainted(false);
         btnLimpiar.setContentAreaFilled(false);
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -208,6 +209,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
         btnRegistrar.setBorder(null);
+        btnRegistrar.setBorderPainted(false);
         btnRegistrar.setContentAreaFilled(false);
         btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -223,6 +225,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
         btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
         btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -233,6 +236,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
         btnEliminar.setBorder(null);
+        btnEliminar.setBorderPainted(false);
         btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -477,29 +481,34 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el proveedor con ID " + idProveedor + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        System.out.println("ID del proveedor: " + idProveedor);
+        if (idProveedor < 1) {
+            JOptionPane.showMessageDialog(null, "Primero selecciona algún campo de la tabla de búsqueda.");
+        } else {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el proveedor con ID " + idProveedor + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (conn != null) {
-                try {
-                    String query = "DELETE FROM Proveedor WHERE IDGerente = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setInt(1, idProveedor);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (conn != null) {
+                    try {
+                        String query = "DELETE FROM Proveedor WHERE IDGerente = ?";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setInt(1, idProveedor);
 
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
-                    int columEliminadas = ps.executeUpdate();
-                    System.out.println("Filas afectadas: " + columEliminadas);
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                        int columEliminadas = ps.executeUpdate();
+                        System.out.println("Filas afectadas: " + columEliminadas);
 
-                    ps.close();
-                    limpiar();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                        ps.close();
+                        limpiar();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("No se pudo conectar a la base de datos.");
                 }
             } else {
-                System.out.println("No se pudo conectar a la base de datos.");
+                System.out.println("Eliminación cancelada.");
             }
-        } else {
-            System.out.println("Eliminación cancelada.");
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -518,50 +527,54 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
 
-        int CP = 0;
+        if (idProveedor < 1) {
+            JOptionPane.showMessageDialog(null, "Primero selecciona algún campo de la tabla de búsqueda.");
+        } else {
+            int CP = 0;
 
-        try {
-            CP = Integer.parseInt(txtCodigoPostal.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números");
-            return;
-        }
+            try {
+                CP = Integer.parseInt(txtCodigoPostal.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Código Postal inválido. Ingresa solo números");
+                return;
+            }
 
-        if (nombreProveedor.isEmpty() || calle.isEmpty() || numero.isEmpty() || colonia.isEmpty() || codigoPostal.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+            if (nombreProveedor.isEmpty() || calle.isEmpty() || numero.isEmpty() || colonia.isEmpty() || codigoPostal.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el proveedor con ID " + idProveedor + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas actualizar el proveedor con ID " + idProveedor + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (conn != null) {
-                try {
-                    String query = "UPDATE Proveedor SET Proveedor = ?, Calle = ?, Numero = ?, Colonia = ?, CP = ?, Correo = ?, Telefono = ? WHERE IDGerente = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, nombreProveedor);
-                    ps.setString(2, calle);
-                    ps.setString(3, numero);
-                    ps.setString(4, colonia);
-                    ps.setInt(5, CP);
-                    ps.setString(6, correo);
-                    ps.setString(7, telefono);
-                    ps.setInt(8, idProveedor);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (conn != null) {
+                    try {
+                        String query = "UPDATE Proveedor SET Proveedor = ?, Calle = ?, Numero = ?, Colonia = ?, CP = ?, Correo = ?, Telefono = ? WHERE IDGerente = ?";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, nombreProveedor);
+                        ps.setString(2, calle);
+                        ps.setString(3, numero);
+                        ps.setString(4, colonia);
+                        ps.setInt(5, CP);
+                        ps.setString(6, correo);
+                        ps.setString(7, telefono);
+                        ps.setInt(8, idProveedor);
 
-                    JOptionPane.showMessageDialog(null, "Se ha actualiado el registro correctamente");
-                    int columEliminadas = ps.executeUpdate();
-                    System.out.println("Filas afectadas: " + columEliminadas);
+                        JOptionPane.showMessageDialog(null, "Se ha actualiado el registro correctamente");
+                        int columEliminadas = ps.executeUpdate();
+                        System.out.println("Filas afectadas: " + columEliminadas);
 
-                    ps.close();
-                    limpiar();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                        ps.close();
+                        limpiar();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("No se pudo conectar a la base de datos.");
                 }
             } else {
-                System.out.println("No se pudo conectar a la base de datos.");
+                System.out.println("Actualización cancelada.");
             }
-        } else {
-            System.out.println("Actualización cancelada.");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -573,7 +586,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         String codigoPostal = txtCodigoPostal.getText().trim();
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
-        
+
         int CP = 0;
 
         if (nombreProveedor.isEmpty() || calle.isEmpty() || numero.isEmpty() || colonia.isEmpty() || codigoPostal.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {

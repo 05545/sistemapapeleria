@@ -319,7 +319,7 @@ private void cerrarConexion() {
 if (confirmacion == JOptionPane.YES_OPTION) {
     for (int i = 0; i < indice; i++) {
         // Registra en la base de datos
-        int IDProducto = obtenerID("IDProducto", "producto", "Nombre", productos[i]);
+        int IDProducto = obtenerID("IDProducto", "Producto", "Nombre", productos[i]);
         Vender(productos[i], cantidades[i]);
         int IDventa = ID_UltimaVenta();
         //Registra la tabla venta_producto
@@ -488,7 +488,7 @@ if (confirmacion == JOptionPane.YES_OPTION) {
                     datos[0] = resultSet.getString("IDProducto");
                     datos[1] = resultSet.getString("Nombre");
                     datos[2] = resultSet.getString("Tipo");
-                    datos[3] = resultSet.getString("cantidad_disponible");
+                    datos[3] = resultSet.getString("Cantidad_Disponible");
                     datos[4] = resultSet.getString("Precio");
                     model.addRow(datos);
                 }

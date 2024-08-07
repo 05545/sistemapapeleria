@@ -27,31 +27,31 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
         NombreAdmin.setText(usuario);
-        
+
         cargarVendedoresMas();
         productosMas();
         productosMenos();
-        
+
         //Propiedades de la tabla vendedores con más ventas
-        tbVendedoresVentas.getColumnModel().getColumn(0).setPreferredWidth(10);  
-        tbVendedoresVentas.getColumnModel().getColumn(1).setPreferredWidth(70); 
-        tbVendedoresVentas.getColumnModel().getColumn(2).setPreferredWidth(50); 
-        tbVendedoresVentas.setDefaultEditor(Object.class, null); 
-        tbVendedoresVentas.getTableHeader().setResizingAllowed(false); 
-        
+        tbVendedoresVentas.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tbVendedoresVentas.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tbVendedoresVentas.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tbVendedoresVentas.setDefaultEditor(Object.class, null);
+        tbVendedoresVentas.getTableHeader().setResizingAllowed(false);
+
         //Propiedades de la tabla productos más vendidos
-        tbProductosMas.getColumnModel().getColumn(0).setPreferredWidth(10);  
-        tbProductosMas.getColumnModel().getColumn(1).setPreferredWidth(100); 
-        tbProductosMas.getColumnModel().getColumn(2).setPreferredWidth(20); 
-        tbProductosMas.setDefaultEditor(Object.class, null); 
-        tbProductosMas.getTableHeader().setResizingAllowed(false); 
-        
+        tbProductosMas.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tbProductosMas.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tbProductosMas.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tbProductosMas.setDefaultEditor(Object.class, null);
+        tbProductosMas.getTableHeader().setResizingAllowed(false);
+
         //Propiedades de la tabla productos menos vendidos
-        tbProductosMenos.getColumnModel().getColumn(0).setPreferredWidth(10);  
-        tbProductosMenos.getColumnModel().getColumn(1).setPreferredWidth(100); 
-        tbProductosMenos.getColumnModel().getColumn(2).setPreferredWidth(20); 
-        tbProductosMenos.setDefaultEditor(Object.class, null); 
-        tbProductosMenos.getTableHeader().setResizingAllowed(false); 
+        tbProductosMenos.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tbProductosMenos.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tbProductosMenos.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tbProductosMenos.setDefaultEditor(Object.class, null);
+        tbProductosMenos.getTableHeader().setResizingAllowed(false);
     }
 
     private void cerrarConexion() {
@@ -114,8 +114,11 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tbVendedoresVentas);
         if (tbVendedoresVentas.getColumnModel().getColumnCount() > 0) {
             tbVendedoresVentas.getColumnModel().getColumn(0).setResizable(false);
+            tbVendedoresVentas.getColumnModel().getColumn(0).setPreferredWidth(5);
             tbVendedoresVentas.getColumnModel().getColumn(1).setResizable(false);
+            tbVendedoresVentas.getColumnModel().getColumn(1).setPreferredWidth(120);
             tbVendedoresVentas.getColumnModel().getColumn(2).setResizable(false);
+            tbVendedoresVentas.getColumnModel().getColumn(2).setPreferredWidth(30);
         }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 350, 190));

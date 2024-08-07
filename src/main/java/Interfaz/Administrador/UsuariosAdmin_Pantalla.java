@@ -167,7 +167,11 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 150, 30));
-        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 190, 63));
+
+        NombreAdmin.setFont(new java.awt.Font("Bitstream Charter", 1, 14)); // NOI18N
+        NombreAdmin.setForeground(new java.awt.Color(51, 51, 51));
+        NombreAdmin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(NombreAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 40, 280, 20));
 
         btnBuscar.setBorder(null);
         btnBuscar.setContentAreaFilled(false);
@@ -180,6 +184,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
         btnRegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistroUsuario.png"))); // NOI18N
         btnRegistrarUsuario.setBorder(null);
+        btnRegistrarUsuario.setBorderPainted(false);
         btnRegistrarUsuario.setContentAreaFilled(false);
         btnRegistrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -235,6 +240,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEliminar.png"))); // NOI18N
         btnEliminar.setBorder(null);
+        btnEliminar.setBorderPainted(false);
         btnEliminar.setContentAreaFilled(false);
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -245,6 +251,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
         btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
         btnEditar.setContentAreaFilled(false);
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -388,31 +395,35 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         String idtr = String.valueOf(IDUsuario);
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el usuario con ID " + idtr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        if (IDUsuario < 1) {
+            JOptionPane.showMessageDialog(null, "Primero selecciona una columna de la tabla.");
+        } else {
+            int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el usuario con ID " + idtr + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
 
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            if (conn != null) {
-                try {
-                    String query = "DELETE FROM Trabajador WHERE IDVendedor = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, idtr);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                if (conn != null) {
+                    try {
+                        String query = "DELETE FROM Trabajador WHERE IDVendedor = ?";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, idtr);
 
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
-                    int columEliminadas = ps.executeUpdate();
-                    System.out.println("Filas afectadas: " + columEliminadas);
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el registro correctamente");
+                        int columEliminadas = ps.executeUpdate();
+                        System.out.println("Filas afectadas: " + columEliminadas);
 
-                    ps.close();
+                        ps.close();
 
-                    DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
-                    tabla.setRowCount(0);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                        DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
+                        tabla.setRowCount(0);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("No se pudo conectar a la base de datos.");
                 }
             } else {
-                System.out.println("No se pudo conectar a la base de datos.");
+                System.out.println("Eliminación cancelada.");
             }
-        } else {
-            System.out.println("Eliminación cancelada.");
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -425,7 +436,7 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
 
             this.setVisible(false);
             this.dispose();
-            
+
             ru.setVisible(true);
             ru.setLocationRelativeTo(null);
         }
@@ -449,7 +460,8 @@ public class UsuariosAdmin_Pantalla extends javax.swing.JFrame {
                     String[] rowData = {
                         rs.getString("IDVendedor"),
                         rs.getString("Nombre"),
-                        rs.getString("Rol"),};
+                        rs.getString("Rol"),
+                    };
                     tabla.addRow(rowData);
                 }
 

@@ -44,7 +44,7 @@ public class Cliente {
 
     public static void main(String[] args) {
         Cliente cliente = new Cliente();
-        cliente.iniConexion("192.168.182.146", 12345); // Conectar al servidor en 192.168.1.105//12345
+        cliente.iniConexion("192.168.1.105", 12345); // Conectar al servidor en 192.168.1.105//12345
         String response = cliente.enviar("Hola, servidor. Nuevo cliente conectado.");
         System.out.println(response);
         cliente.detenerConexion();

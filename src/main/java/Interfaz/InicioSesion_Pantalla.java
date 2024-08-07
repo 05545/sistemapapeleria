@@ -18,6 +18,8 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
         initComponents();
         iniciarConexion();
         iniciarCliente();
+        
+        this.setLocationRelativeTo(null);
     }
 
     public void iniciarConexion() {
