@@ -1,8 +1,7 @@
 package Interfaz.ventas;
 
+import Interfaz.InicioSesion_Pantalla;
 import Logic.Conexion;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,14 +19,15 @@ public class Tablero_Ventas extends javax.swing.JFrame {
     public Tablero_Ventas(Conexion conexion, Connection conn, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
+
         this.conn = conn;
         this.con = conexion;
         this.nomUsuario = nomUsuario;
+
         consultarNombre();
 
-                MostraDVentas();
-                MostraBS();
-        // this.setExtendedState(JFrame.MAXIMIZED_BOTH); (No usar porque los tamaños de imagen y de pantalla en cada disp. son diferentes)
+        MostraDVentas();
+        MostraBS();
     }
 
     private void consultarNombre() {
@@ -98,20 +98,16 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         JL_NomUser = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        JL_VentasRe = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbVentasReciente = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbproductoStock = new javax.swing.JTable();
-        JL_TableroVendedor = new javax.swing.JLabel();
-        JL_Logo = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        btnCerrasesion1 = new javax.swing.JButton();
+        JL_TableroVendedor = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -131,20 +127,17 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 102, 102));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Tablero");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 92, -1));
+        JL_NomUser.setFont(new java.awt.Font("Bitstream Charter", 1, 14)); // NOI18N
+        JL_NomUser.setForeground(new java.awt.Color(51, 51, 51));
+        JL_NomUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 40, 250, 20));
 
-        JL_VentasRe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_VentasRe.setText("Ventas Reciente");
-        getContentPane().add(JL_VentasRe, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 190, -1));
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setForeground(new java.awt.Color(51, 51, 51));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Producto con poco Stock");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 90, -1, -1));
-
+        tbVentasReciente.setBackground(new java.awt.Color(255, 255, 255));
+        tbVentasReciente.setForeground(new java.awt.Color(51, 51, 51));
         tbVentasReciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -167,8 +160,13 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbVentasReciente);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 340, 400));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 370, 390));
 
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setForeground(new java.awt.Color(51, 51, 51));
+
+        tbproductoStock.setBackground(new java.awt.Color(255, 255, 255));
+        tbproductoStock.setForeground(new java.awt.Color(51, 51, 51));
         tbproductoStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -182,48 +180,66 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tbproductoStock);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, 340, 390));
-        getContentPane().add(JL_TableroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
-        JL_TableroVendedor.getAccessibleContext().setAccessibleName("JL_fondoTablero");
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 410, 390));
 
-        JL_Logo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Logo.setText("Papeleria SUMI");
-        getContentPane().add(JL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, -1));
-
-        btnTablero.setText("Tablero");
+        btnTablero.setBorder(null);
+        btnTablero.setBorderPainted(false);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTableroActionPerformed(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 100, 40));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setBorderPainted(false);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 100, 30));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 130, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setBorderPainted(false);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 100, 40));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 130, 30));
 
-        btnCuenta.setText("Cuenta");
+        btnCuenta.setBorder(null);
+        btnCuenta.setBorderPainted(false);
+        btnCuenta.setContentAreaFilled(false);
         btnCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCuentaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 100, 40));
+        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 130, 30));
 
-        jLabel3.setText("Cerra sesion");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 650, 80, 30));
+        btnCerrasesion1.setBorder(null);
+        btnCerrasesion1.setBorderPainted(false);
+        btnCerrasesion1.setContentAreaFilled(false);
+        btnCerrasesion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrasesion1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerrasesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 160, 30));
+
+        JL_TableroVendedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesVendedor/Pantalla_Tablero_Vendedor.png"))); // NOI18N
+        JL_TableroVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JL_TableroVendedorMouseClicked(evt);
+            }
+        });
+        getContentPane().add(JL_TableroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+        JL_TableroVendedor.getAccessibleContext().setAccessibleName("JL_fondoTablero");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -268,7 +284,31 @@ public class Tablero_Ventas extends javax.swing.JFrame {
         CV.setVisible(true);
         CV.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCuentaActionPerformed
+
+    private void btnCerrasesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesion1ActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
+
+            this.setVisible(false);
+            this.dispose();
+            cerrarConexion();
+
+            iniSesion.setVisible(true);
+        }
+    }//GEN-LAST:event_btnCerrasesion1ActionPerformed
+
+    private void JL_TableroVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JL_TableroVendedorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JL_TableroVendedorMouseClicked
 //Muestra los datos de las ventas 
+
+    private void cerrarConexion() {
+        if (con != null) {
+            con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
+        }
+    }
 
     public void MostraDVentas() {
         DefaultTableModel model = new DefaultTableModel();
@@ -374,17 +414,13 @@ public class Tablero_Ventas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JL_Logo;
     private javax.swing.JLabel JL_NomUser;
     private javax.swing.JLabel JL_TableroVendedor;
-    private javax.swing.JLabel JL_VentasRe;
+    private javax.swing.JButton btnCerrasesion1;
     private javax.swing.JButton btnCuenta;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnVentas;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

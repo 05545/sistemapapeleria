@@ -37,15 +37,14 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
         tbProductoStock.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Cantidad"
         tbProductoStock.setDefaultEditor(Object.class, null); // Inhabilitar la edición
         tbProductoStock.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
-        
+
         //Tabla de las ventas recientes
         tbVentasRecientes.getColumnModel().getColumn(0).setPreferredWidth(40);  // Ancho para la columna "ID"
         tbVentasRecientes.getColumnModel().getColumn(1).setPreferredWidth(200); // Ancho para la columna "Nombre"
         tbVentasRecientes.getColumnModel().getColumn(2).setPreferredWidth(40); // Ancho para la columna "Subtotal"
         tbVentasRecientes.setDefaultEditor(Object.class, null); // Inhabilitar la edición
         tbVentasRecientes.getTableHeader().setResizingAllowed(false); // Inhabilitar el redimensionamiento
-        
-        
+
     }
 
     private void cerrarConexion() {
@@ -266,13 +265,17 @@ public class InicioAdmin_Pantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
+        int confirm = JOptionPane.showConfirmDialog( this, "¿Estás seguro de que deseas salir?", "Confirmar salida",JOptionPane.YES_NO_OPTION);
 
-        this.setVisible(false);
-        this.dispose();
-        cerrarConexion();
+        if (confirm == JOptionPane.YES_OPTION) {
+            InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
 
-        iniSesion.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
+            cerrarConexion();
+
+            iniSesion.setVisible(true);
+        }
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void tbVentasRecientesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbVentasRecientesAncestorAdded

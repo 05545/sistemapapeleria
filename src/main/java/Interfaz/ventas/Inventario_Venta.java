@@ -1,6 +1,8 @@
 package Interfaz.ventas;
 
+import Interfaz.InicioSesion_Pantalla;
 import Logic.*;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 
 public class Inventario_Venta extends javax.swing.JFrame {
@@ -21,51 +24,50 @@ public class Inventario_Venta extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+
         this.con = conexion;
         this.conn = connection;
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
+
+        JL_NomUser.setText(usuario);
+
         Mostra();
-        rellenarC("Proveedor", "proveedor", cbProveedor);
+        rellenarC("Proveedor", "Proveedor", cbProveedor);
+
+        ((JSpinner.DefaultEditor) spcantidad.getEditor()).getTextField().setForeground(Color.BLACK);
+        ((JSpinner.DefaultEditor) spcantidad.getEditor()).getTextField().setBackground(new Color(189, 189, 189));
     }
 
-     private void cerrarConexion() {
+    private void cerrarConexion() {
         if (con != null) {
-        con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
+            con.cerrarConexion(); // Llamar a cerrarConexion de la instancia de Conexion
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         JL_NomUser = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         txtproducto = new javax.swing.JTextField();
-        JL_cantidad = new javax.swing.JLabel();
         spcantidad = new javax.swing.JSpinner();
-        JL_precioUnitario = new javax.swing.JLabel();
         txtprecioUnitario = new javax.swing.JTextField();
         btnregistra = new javax.swing.JButton();
-        btnlimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbbusqueda = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
+        btnlimpiar = new javax.swing.JButton();
         txttipo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         txtconsulta = new javax.swing.JTextField();
         btneditar = new javax.swing.JButton();
-        JL_producto1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        JL_Logo = new javax.swing.JLabel();
         btnTablero = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         btnCerrasesion = new javax.swing.JButton();
         cbProveedor = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JF_Inventario");
@@ -73,53 +75,47 @@ public class Inventario_Venta extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 170, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Registro de producto");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
-
+        txtproducto.setBackground(new java.awt.Color(189, 189, 189));
+        txtproducto.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtproducto.setForeground(new java.awt.Color(51, 51, 51));
+        txtproducto.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtproducto.setBorder(null);
         txtproducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtproductoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 340, 40));
+        getContentPane().add(txtproducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 330, 30));
+        getContentPane().add(spcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 323, 110, 30));
 
-        JL_cantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_cantidad.setText("Cantidad");
-        getContentPane().add(JL_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, -1, -1));
-        getContentPane().add(spcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 100, 40));
-
-        JL_precioUnitario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_precioUnitario.setText("Precio Unitario");
-        getContentPane().add(JL_precioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, -1, 30));
-
+        txtprecioUnitario.setBackground(new java.awt.Color(189, 189, 189));
+        txtprecioUnitario.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtprecioUnitario.setForeground(new java.awt.Color(51, 51, 51));
+        txtprecioUnitario.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtprecioUnitario.setBorder(null);
         txtprecioUnitario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtprecioUnitarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtprecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 130, 30));
+        getContentPane().add(txtprecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 323, 120, 30));
 
-        btnregistra.setText("Registrar");
+        btnregistra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
+        btnregistra.setBorder(null);
+        btnregistra.setBorderPainted(false);
+        btnregistra.setContentAreaFilled(false);
         btnregistra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnregistraActionPerformed(evt);
             }
         });
-        getContentPane().add(btnregistra, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 150, 50));
+        getContentPane().add(btnregistra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 510, 200, 60));
 
-        btnlimpiar.setText("Limpiar");
-        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnlimpiarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 150, 50));
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setForeground(new java.awt.Color(51, 51, 51));
 
+        tbbusqueda.setBackground(new java.awt.Color(255, 255, 255));
+        tbbusqueda.setForeground(new java.awt.Color(51, 51, 51));
         tbbusqueda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -139,6 +135,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbbusqueda.setRowHeight(40);
         tbbusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbbusquedaMouseClicked(evt);
@@ -146,43 +143,56 @@ public class Inventario_Venta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbbusqueda);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 400, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 220, 390, 250));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Tipo");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 330, 70, -1));
-        getContentPane().add(txttipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 180, 40));
+        btnlimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnLimpiar.png"))); // NOI18N
+        btnlimpiar.setBorder(null);
+        btnlimpiar.setBorderPainted(false);
+        btnlimpiar.setContentAreaFilled(false);
+        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 510, 190, 60));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Consulta de producto");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
-        getContentPane().add(txtconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 300, 30));
+        txttipo.setBackground(new java.awt.Color(189, 189, 189));
+        txttipo.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txttipo.setForeground(new java.awt.Color(51, 51, 51));
+        txttipo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txttipo.setBorder(null);
+        getContentPane().add(txttipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, 110, 40));
 
-        btneditar.setText("Editar");
+        txtconsulta.setBackground(new java.awt.Color(214, 214, 214));
+        txtconsulta.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        txtconsulta.setForeground(new java.awt.Color(51, 51, 51));
+        txtconsulta.setBorder(null);
+        getContentPane().add(txtconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 180, 340, 30));
+
+        btneditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnEditar.png"))); // NOI18N
+        btneditar.setBorder(null);
+        btneditar.setBorderPainted(false);
+        btneditar.setContentAreaFilled(false);
         btneditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 420, 120, 40));
+        getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 514, 190, 60));
 
-        JL_producto1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_producto1.setText("Producto");
-        getContentPane().add(JL_producto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 160, -1));
-
-        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(null);
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.setContentAreaFilled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 120, 80, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 180, 40, 30));
 
-        JL_Logo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        JL_Logo.setText("Papeleria SUMI");
-        getContentPane().add(JL_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, -1));
-
-        btnTablero.setText("Tablero");
+        btnTablero.setBorder(null);
+        btnTablero.setBorderPainted(false);
+        btnTablero.setContentAreaFilled(false);
         btnTablero.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTableroMouseClicked(evt);
@@ -193,51 +203,64 @@ public class Inventario_Venta extends javax.swing.JFrame {
                 btnTableroActionPerformed(evt);
             }
         });
-        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 100, 40));
+        getContentPane().add(btnTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 130, 30));
 
-        btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        btnVentas.setBorderPainted(false);
+        btnVentas.setContentAreaFilled(false);
         btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 100, 30));
+        getContentPane().add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 130, 30));
 
-        btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        btnInventario.setBorderPainted(false);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 100, 40));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 130, 30));
 
-        btnCuenta.setText("Cuenta");
+        btnCuenta.setBorder(null);
+        btnCuenta.setBorderPainted(false);
+        btnCuenta.setContentAreaFilled(false);
         btnCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCuentaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 100, 40));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 800));
-        jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
+        getContentPane().add(btnCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 130, 30));
 
-        btnCerrasesion.setText("Cerra Sesion");
+        btnCerrasesion.setBorder(null);
+        btnCerrasesion.setBorderPainted(false);
+        btnCerrasesion.setContentAreaFilled(false);
         btnCerrasesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrasesionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, 110, 30));
+        getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 170, 30));
 
+        cbProveedor.setBackground(new java.awt.Color(189, 189, 189));
+        cbProveedor.setBorder(null);
         cbProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbProveedorActionPerformed(evt);
             }
         });
-        getContentPane().add(cbProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, 160, 40));
+        getContentPane().add(cbProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 430, 120, 30));
 
-        jLabel3.setText("Proveedor");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, -1, -1));
+        jLabel6.setBackground(new java.awt.Color(189, 189, 189));
+        jLabel6.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesVendedor/Pantalla_Inventario_Vendedor.png"))); // NOI18N
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+        jLabel6.getAccessibleContext().setAccessibleName("JL_fondoInventario");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -344,7 +367,17 @@ public class Inventario_Venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTableroMouseClicked
 
     private void btnCerrasesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesionActionPerformed
-        cerrarConexion();
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
+
+            this.setVisible(false);
+            this.dispose();
+            cerrarConexion();
+
+            iniSesion.setVisible(true);
+        }
     }//GEN-LAST:event_btnCerrasesionActionPerformed
 
     private void cbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProveedorActionPerformed
@@ -474,169 +507,167 @@ public class Inventario_Venta extends javax.swing.JFrame {
     }
 
 //Metodo para registra
-  public void Registra() {
-    String Nombre = txtproducto.getText();
-    String Tipo = txttipo.getText();
-    double precio = 0.0;
-    int cantidad = 0;
-    //Seleccionar el proveedor 
-    String Provedor="";
-   String claseString = (String) cbProveedor.getSelectedItem();
+    public void Registra() {
+        String Nombre = txtproducto.getText();
+        String Tipo = txttipo.getText();
+        double precio = 0.0;
+        int cantidad = 0;
+        //Seleccionar el proveedor 
+        String Provedor = "";
+        String claseString = (String) cbProveedor.getSelectedItem();
         if (claseString != null && !claseString.isEmpty()) {
             Provedor = claseString;
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un valor de clase de envio.");
             return;
         }
-        
-    int IdProveedor = obtenerID("IDGerente", "proveedor", "Proveedor", Provedor);
 
-    try {
-        precio = Double.parseDouble(txtprecioUnitario.getText());
-        cantidad = Integer.parseInt(spcantidad.getValue().toString());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-        return; // Salir del método si hay un error en la conversión
-    }
+        int IdProveedor = obtenerID("IDGerente", "Proveedor", "Proveedor", Provedor);
 
-    PreparedStatement existsStatement = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet existsResult = null;
-
-    try {
-        if (conn != null) {
-            // Verificar si el producto ya existe
-            String existsQuery = "SELECT COUNT(*) FROM Producto WHERE Nombre = ?";
-            existsStatement = conn.prepareStatement(existsQuery);
-            existsStatement.setString(1, Nombre);
-            existsResult = existsStatement.executeQuery();
-            
-            if (existsResult.next() && existsResult.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(null, "El Producto ya existe.");
-                return; // Salir del método si el producto ya existe
-            }
-
-            // Insertar nuevo producto
-            String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
-            preparedStatement = conn.prepareStatement(insertQuery);
-            preparedStatement.setString(1, Nombre);
-            preparedStatement.setString(2, Tipo);
-            preparedStatement.setInt(3, cantidad);
-            preparedStatement.setDouble(4, precio);
-            preparedStatement.setInt(5, IdProveedor);
-            preparedStatement.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
-    } finally {
         try {
-            if (existsResult != null) existsResult.close();
-            if (existsStatement != null) existsStatement.close();
-            if (preparedStatement != null) preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            precio = Double.parseDouble(txtprecioUnitario.getText());
+            cantidad = Integer.parseInt(spcantidad.getValue().toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+            return; // Salir del método si hay un error en la conversión
         }
-        System.out.println("Tarea terminada");
-    }
-}
 
-//Metodo para eliminar
-  /**
-    public void Eliminar(String tabla, String nomCampo, String nomEliminar) {
+        PreparedStatement existsStatement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet existsResult = null;
+
         try {
-            String Delete = "DELETE FROM " + tabla + " WHERE " + nomCampo + " = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(Delete);
-            preparedStatement.setString(1, nomEliminar);
-            int rowCount = preparedStatement.executeUpdate();
+            if (conn != null) {
+                // Verificar si el producto ya existe
+                String existsQuery = "SELECT COUNT(*) FROM Producto WHERE Nombre = ?";
+                existsStatement = conn.prepareStatement(existsQuery);
+                existsStatement.setString(1, Nombre);
+                existsResult = existsStatement.executeQuery();
 
-            if (rowCount > 0) {
-                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
+                if (existsResult.next() && existsResult.getInt(1) > 0) {
+                    JOptionPane.showMessageDialog(null, "El Producto ya existe.");
+                    return; // Salir del método si el producto ya existe
+                }
+
+                // Insertar nuevo producto
+                String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
+                preparedStatement = conn.prepareStatement(insertQuery);
+                preparedStatement.setString(1, Nombre);
+                preparedStatement.setString(2, Tipo);
+                preparedStatement.setInt(3, cantidad);
+                preparedStatement.setDouble(4, precio);
+                preparedStatement.setInt(5, IdProveedor);
+                preparedStatement.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró ningún registro a eliminar");
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
             }
-            preparedStatement.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
         } finally {
-            System.out.println("Termino ejecucion");
-        }
-    }
-    
-    **/
-
-  
- //Actualizar datos
-public void Actualizar() {
-    String Nombre = txtproducto.getText();
-    String Tipo = txttipo.getText();
-    double precio = 0.0;
-    int cantidad = 0;
-    int ID_Producto = obtenerID("IDProducto", "producto", "Nombre", Nombre);
-
-    // Validar ID_Producto
-    if (ID_Producto == 0) {
-        JOptionPane.showMessageDialog(this, "No se encontró el producto.");
-        return; // Salir del método si no se encontró el producto
-    }
-
-    try {
-        precio = Double.parseDouble(txtprecioUnitario.getText());
-        cantidad = Integer.parseInt(spcantidad.getValue().toString());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-        return; // Salir del método si hay un error en la conversión
-    }
-
-    PreparedStatement ps = null;
-
-    try {
-        if (conn != null) {
-            String Actualizar = "UPDATE producto SET nombre = ?, tipo = ?, cantidad_disponible = ?, precio = ? WHERE idproducto = ?";
-            ps = conn.prepareStatement(Actualizar);
-            ps.setString(1, Nombre);
-            ps.setString(2, Tipo);
-            ps.setInt(3, cantidad);
-            ps.setDouble(4, precio);
-            ps.setInt(5, ID_Producto);
-
-            int filasActualizadas = ps.executeUpdate();
-            if (filasActualizadas > 0) {
-                JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
-        ex.printStackTrace();
-    } finally {
-        System.out.println("Fin de la ejecución");
-        if (ps != null) {
             try {
-                ps.close();
+                if (existsResult != null) {
+                    existsResult.close();
+                }
+                if (existsStatement != null) {
+                    existsStatement.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            System.out.println("Tarea terminada");
         }
     }
-}
 
- private int obtenerID(String ProductoID, String Tabla, String CampoT, String Producto_Buscar) {
+//Metodo para eliminar
+    /**
+     * public void Eliminar(String tabla, String nomCampo, String nomEliminar) {
+     * try { String Delete = "DELETE FROM " + tabla + " WHERE " + nomCampo + " =
+     * ?"; PreparedStatement preparedStatement = conn.prepareStatement(Delete);
+     * preparedStatement.setString(1, nomEliminar); int rowCount =
+     * preparedStatement.executeUpdate();
+     *
+     * if (rowCount > 0) { JOptionPane.showMessageDialog(null, "Registro
+     * eliminado exitosamente"); } else { JOptionPane.showMessageDialog(null,
+     * "No se encontró ningún registro a eliminar"); }
+     * preparedStatement.close();
+     *
+     * } catch (SQLException ex) { ex.printStackTrace(); } finally {
+     * System.out.println("Termino ejecucion"); } }
+     *
+     *
+     */
+    //Actualizar datos
+    public void Actualizar() {
+        String Nombre = txtproducto.getText();
+        String Tipo = txttipo.getText();
+        double precio = 0.0;
+        int cantidad = 0;
+        int ID_Producto = obtenerID("IDProducto", "Producto", "Nombre", Nombre);
+
+        // Validar ID_Producto
+        if (ID_Producto == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontró el producto.");
+            return; // Salir del método si no se encontró el producto
+        }
+
+        try {
+            precio = Double.parseDouble(txtprecioUnitario.getText());
+            cantidad = Integer.parseInt(spcantidad.getValue().toString());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+            return; // Salir del método si hay un error en la conversión
+        }
+
+        PreparedStatement ps = null;
+
+        try {
+            if (conn != null) {
+                String Actualizar = "UPDATE producto SET nombre = ?, tipo = ?, cantidad_disponible = ?, precio = ? WHERE idproducto = ?";
+                ps = conn.prepareStatement(Actualizar);
+                ps.setString(1, Nombre);
+                ps.setString(2, Tipo);
+                ps.setInt(3, cantidad);
+                ps.setDouble(4, precio);
+                ps.setInt(5, ID_Producto);
+
+                int filasActualizadas = ps.executeUpdate();
+                if (filasActualizadas > 0) {
+                    JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontraron datos para actualizar");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            System.out.println("Fin de la ejecución");
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private int obtenerID(String ProductoID, String Tabla, String CampoT, String Producto_Buscar) {
         String id = "";
         int idPro = 0;
 
         if (conn != null) {
             try {
                 Statement stmt = conn.createStatement();
-                String sql = "SELECT "+ProductoID+" FROM "+Tabla+" WHERE "+CampoT+" = '" + Producto_Buscar + "'";
+                String sql = "SELECT " + ProductoID + " FROM " + Tabla + " WHERE " + CampoT + " = '" + Producto_Buscar + "'";
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if (rs.next()) {
@@ -663,7 +694,7 @@ public void Actualizar() {
         return idPro;
     }
 
-  public void rellenarC(String tabla, String valor, JComboBox<String> combo) {
+    public void rellenarC(String tabla, String valor, JComboBox<String> combo) {
         Statement st = null;
         ResultSet rs = null;
 
@@ -695,11 +726,7 @@ public void Actualizar() {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JL_Logo;
     private javax.swing.JLabel JL_NomUser;
-    private javax.swing.JLabel JL_cantidad;
-    private javax.swing.JLabel JL_precioUnitario;
-    private javax.swing.JLabel JL_producto1;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrasesion;
     private javax.swing.JButton btnCuenta;
@@ -710,11 +737,6 @@ public void Actualizar() {
     private javax.swing.JButton btnlimpiar;
     private javax.swing.JButton btnregistra;
     private javax.swing.JComboBox<String> cbProveedor;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spcantidad;

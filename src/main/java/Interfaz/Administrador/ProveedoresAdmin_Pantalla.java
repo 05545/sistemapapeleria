@@ -335,13 +335,17 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
+        int confirm = JOptionPane.showConfirmDialog( this, "¿Estás seguro de que deseas salir?", "Confirmar salida",JOptionPane.YES_NO_OPTION);
 
-        this.setVisible(false);
-        this.dispose();
-        cerrarConexion();
+        if (confirm == JOptionPane.YES_OPTION) {
+            InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
 
-        iniSesion.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
+            cerrarConexion();
+
+            iniSesion.setVisible(true);
+        }
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void txtNombreProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProveedorActionPerformed
@@ -595,7 +599,6 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         }
 
         try {
-            // Verifica que el código postal contiene solo dígitos
             if (codigoPostal.matches("\\d+")) {
                 CP = Integer.parseInt(codigoPostal);
                 System.out.println("" + CP);
@@ -607,7 +610,15 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas ingresar el proveedor con ID " + idProveedor + "?", "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
+        if (comprobarProveedor(nombreProveedor)) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Ya hay un registro con ese nombre. ¿Estás seguro de continuar con el registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "Se ha cancelado el registro.");
+                return;
+            }
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas ingresar el proveedor?", "Confirmar inserción", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             if (conn != null) {
@@ -622,7 +633,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
                     ps.setString(6, correo);
                     ps.setString(7, telefono);
 
-                    JOptionPane.showMessageDialog(null, "Se ha actualiado el registro correctamente");
+                    JOptionPane.showMessageDialog(null, "Se ha insertado el registro correctamente");
                     int columEliminadas = ps.executeUpdate();
                     System.out.println("Filas afectadas: " + columEliminadas);
 
@@ -676,7 +687,7 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         }
     }
 
-    public void limpiar() {
+    private void limpiar() {
         DefaultTableModel tabla = (DefaultTableModel) tbResultados.getModel();
         tabla.setRowCount(0);
         txtNombreProveedor.setText("");
@@ -687,6 +698,26 @@ public class ProveedoresAdmin_Pantalla extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
         txtBuscar.setText("");
+    }
+
+    private boolean comprobarProveedor(String nomProveedor) {
+        if (conn != null) {
+            try {
+                String query = "SELECT 1 FROM Proveedor WHERE Proveedor = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, nomProveedor);
+                ResultSet rs = ps.executeQuery();
+
+                boolean existe = rs.next(); 
+                rs.close();
+                ps.close();
+
+                return existe;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_FondoProovedoresAdmin;

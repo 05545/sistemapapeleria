@@ -298,13 +298,17 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
 
-        this.setVisible(false);
-        this.dispose();
-        cerrarConexion();
+        if (confirm == JOptionPane.YES_OPTION) {
+            InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
 
-        iniSesion.setVisible(true);
+            this.setVisible(false);
+            this.dispose();
+            cerrarConexion();
+
+            iniSesion.setVisible(true);
+        }
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnTableroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTableroMouseClicked
@@ -405,7 +409,7 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConsultarMouseClicked
 
-    public void cargarVendedoresMas() {
+    private void cargarVendedoresMas() {
 
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("ID");
@@ -416,7 +420,7 @@ public class VentasAdmin_Pantalla extends javax.swing.JFrame {
 
         if (conn != null) {
             try {
-                String query = "SELECT IDVendedor, CONCAT(Nombre,' ', AP,' ', AM) AS Nombre, TotalVendido FROM TrabajadorMasDineroVendido";
+                String query = "SELECT IDVendedor, CONCAT(Nombre,' ', AP,' ', AM) AS Nombre, TotalVendido FROM masvendido";
                 PreparedStatement ps = conn.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
 
