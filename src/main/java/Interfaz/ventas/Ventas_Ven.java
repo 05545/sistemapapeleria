@@ -270,7 +270,7 @@ private void cerrarConexion() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnprocesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprocesarActionPerformed
-        // Obtener el producto seleccionado
+      // Obtener el producto seleccionado
         String producto = (String) txtproducto.getSelectedItem();
         productos[indice] = producto;
 
@@ -315,22 +315,39 @@ private void cerrarConexion() {
         "Confirmar compra con un total de " + String.format("%.2f", total) + "?",
         "Confirmación de Compra",
         JOptionPane.YES_NO_OPTION);
+Consultas consul = new Consultas();
 
 if (confirmacion == JOptionPane.YES_OPTION) {
     for (int i = 0; i < indice; i++) {
-        // Registra en la base de datos
-        int IDProducto = obtenerID("IDProducto", "Producto", "Nombre", productos[i]);
+        // Obtener ID del producto
+        int IDProducto = obtenerID("IDProducto", "producto", "Nombre", productos[i]);
+        
+        // Obtener ID del usuario
+        int ID_Usuario = obtenerID("IDVendedor", "trabajador", "Usuario", nomUsuario);
+        System.out.println("Id del trabajador"+ID_Usuario);
+        
+        // Registrar venta del producto
         Vender(productos[i], cantidades[i]);
+            
+        // Obtener el ID de la última venta
         int IDventa = ID_UltimaVenta();
-        //Registra la tabla venta_producto
-        RegistraV_T(IDProducto, IDventa);
+        
+        // Registrar la venta del producto
+        RegistraV_P(IDProducto, IDventa);
+        
+    //Obtenemos total de cada producto
+        double totalVenta = consul.calcularTotalVenta(new String[]{productos[i]}, new int[]{cantidades[i]}); 
+        //Registramos en venta_trabajador
+        RegistraV_T(totalVenta, ID_Usuario, IDventa);
     }
+    
     // Reiniciar las variables
     ReiniciarVariables();
     Limpiar();
 } else {
     System.out.println("Sigue comprando.");
 }
+
     }//GEN-LAST:event_btnCobraActionPerformed
 
     private void txtConsulatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConsulatActionPerformed
@@ -682,7 +699,7 @@ if (confirmacion == JOptionPane.YES_OPTION) {
 }
 
     
-   public void RegistraV_T(int ID_producto, int ID_Venta) {
+    public void RegistraV_P(int ID_producto, int ID_Venta) {
     PreparedStatement ps = null;
 
     try {
@@ -704,6 +721,41 @@ if (confirmacion == JOptionPane.YES_OPTION) {
     } catch (SQLException ex) {
         ex.printStackTrace();
         System.out.println("Fallo al registrar la venta.");
+    } finally {
+        if (ps != null) {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+
+   public void RegistraV_T(double p_total, int ID_Trabajador, int ID_Venta) {
+    PreparedStatement ps = null;
+
+    try {
+        if (conn != null) {
+            String consulta = "CALL RegistrarVentaTrabajador(?, ?, ?)";
+            ps = conn.prepareStatement(consulta);
+            ps.setDouble(1, p_total);
+            ps.setInt(2, ID_Trabajador);
+            ps.setInt(3, ID_Venta);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Venta registrada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo registrar la venta.");
+            }
+        } else {
+            System.out.println("No se pudo conectar a la base de datos.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println("Fallo al registrar la venta: " + ex.getMessage());
     } finally {
         if (ps != null) {
             try {

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +26,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
         this.usuario = usuario;
         this.nomUsuario = nomUsuario;
         Mostra();
+        rellenarC("Proveedor", "proveedor", cbProveedor);
     }
 
      private void cerrarConexion() {
@@ -52,7 +54,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         txttipo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtconsulta = new javax.swing.JTextField();
-        btneliminar = new javax.swing.JButton();
         btneditar = new javax.swing.JButton();
         JL_producto1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
@@ -63,6 +64,8 @@ public class Inventario_Venta extends javax.swing.JFrame {
         btnCuenta = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         btnCerrasesion = new javax.swing.JButton();
+        cbProveedor = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JF_Inventario");
@@ -143,7 +146,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbbusqueda);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 350, 170));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 400, 180));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Tipo");
@@ -155,21 +158,13 @@ public class Inventario_Venta extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
         getContentPane().add(txtconsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 300, 30));
 
-        btneliminar.setText("Eliminar");
-        btneliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btneliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 410, 120, 40));
-
         btneditar.setText("Editar");
         btneditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 490, 120, 40));
+        getContentPane().add(btneditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 420, 120, 40));
 
         JL_producto1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         JL_producto1.setText("Producto");
@@ -234,6 +229,16 @@ public class Inventario_Venta extends javax.swing.JFrame {
         });
         getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 640, 110, 30));
 
+        cbProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProveedorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, 160, 40));
+
+        jLabel3.setText("Proveedor");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,6 +252,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
 
     private void btnregistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistraActionPerformed
         Registra();
+        Mostra();
     }//GEN-LAST:event_btnregistraActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -260,14 +266,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         btnregistra.setEnabled(true);
         Mostra();
     }//GEN-LAST:event_btnlimpiarActionPerformed
-
-    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-        String eliminar = txtproducto.getText();
-        btnregistra.setEnabled(true);
-        Eliminar("producto", "nombre", eliminar);
-
-        Limpiar();
-    }//GEN-LAST:event_btneliminarActionPerformed
 
     private void btneditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneditarActionPerformed
         Actualizar();
@@ -348,6 +346,10 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private void btnCerrasesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrasesionActionPerformed
         cerrarConexion();
     }//GEN-LAST:event_btnCerrasesionActionPerformed
+
+    private void cbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbProveedorActionPerformed
 
     //Metodo para limpiar
     public void Limpiar() {
@@ -472,55 +474,79 @@ public class Inventario_Venta extends javax.swing.JFrame {
     }
 
 //Metodo para registra
-    public void Registra() {
-        String Nombre = txtproducto.getText();
-        String Tipo = txttipo.getText();
-        double precio = 0.0;
-        int cantidad = 0;
-        int IdUsuario=obtenerID("IDVendedor", "trabajador", "Nombre", nomUsuario);
+  public void Registra() {
+    String Nombre = txtproducto.getText();
+    String Tipo = txttipo.getText();
+    double precio = 0.0;
+    int cantidad = 0;
+    //Seleccionar el proveedor 
+    String Provedor="";
+   String claseString = (String) cbProveedor.getSelectedItem();
+        if (claseString != null && !claseString.isEmpty()) {
+            Provedor = claseString;
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona un valor de clase de envio.");
+            return;
+        }
         
-        try {
-            precio = Double.parseDouble(txtprecioUnitario.getText());
-            cantidad = Integer.parseInt(spcantidad.getValue().toString());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
-            return; // Salir del método si hay un error en la conversión
-        }
+    int IdProveedor = obtenerID("IDGerente", "proveedor", "Proveedor", Provedor);
 
-        try {
-            if (conn != null) {
-                String existsQuery = "SELECT COUNT(*) FROM Producto WHERE Nombre = ?";
-                try (PreparedStatement existsStatement = conn.prepareStatement(existsQuery)) {
-                    existsStatement.setString(1, Nombre);
-                    ResultSet existsResult = existsStatement.executeQuery();
-                    if (existsResult.next() && existsResult.getInt(1) > 0) {
-                        JOptionPane.showMessageDialog(null, "El Producto ya existe.");
-                        return; // Salir del método si el producto ya existe
-                    }
-                }
-
-                String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
-                try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
-                    preparedStatement.setString(1, Nombre);
-                    preparedStatement.setString(2, Tipo);
-                    preparedStatement.setInt(3, cantidad);
-                    preparedStatement.setDouble(4, precio);
-                    preparedStatement.setInt(5, IdUsuario);
-                    preparedStatement.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
-        } finally {
-            System.out.println("Tarea terminada");
-        }
+    try {
+        precio = Double.parseDouble(txtprecioUnitario.getText());
+        cantidad = Integer.parseInt(spcantidad.getValue().toString());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Solo se aceptan números enteros y decimales");
+        return; // Salir del método si hay un error en la conversión
     }
 
+    PreparedStatement existsStatement = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet existsResult = null;
+
+    try {
+        if (conn != null) {
+            // Verificar si el producto ya existe
+            String existsQuery = "SELECT COUNT(*) FROM Producto WHERE Nombre = ?";
+            existsStatement = conn.prepareStatement(existsQuery);
+            existsStatement.setString(1, Nombre);
+            existsResult = existsStatement.executeQuery();
+            
+            if (existsResult.next() && existsResult.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(null, "El Producto ya existe.");
+                return; // Salir del método si el producto ya existe
+            }
+
+            // Insertar nuevo producto
+            String insertQuery = "CALL registrarProducto(?, ?, ?, ?, ?)";
+            preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setString(1, Nombre);
+            preparedStatement.setString(2, Tipo);
+            preparedStatement.setInt(3, cantidad);
+            preparedStatement.setDouble(4, precio);
+            preparedStatement.setInt(5, IdProveedor);
+            preparedStatement.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Registro guardado exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al guardar el registro.");
+    } finally {
+        try {
+            if (existsResult != null) existsResult.close();
+            if (existsStatement != null) existsStatement.close();
+            if (preparedStatement != null) preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Tarea terminada");
+    }
+}
+
 //Metodo para eliminar
+  /**
     public void Eliminar(String tabla, String nomCampo, String nomEliminar) {
         try {
             String Delete = "DELETE FROM " + tabla + " WHERE " + nomCampo + " = ?";
@@ -541,7 +567,10 @@ public class Inventario_Venta extends javax.swing.JFrame {
             System.out.println("Termino ejecucion");
         }
     }
+    
+    **/
 
+  
  //Actualizar datos
 public void Actualizar() {
     String Nombre = txtproducto.getText();
@@ -634,6 +663,37 @@ public void Actualizar() {
         return idPro;
     }
 
+  public void rellenarC(String tabla, String valor, JComboBox<String> combo) {
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+            if (conn != null) {
+                String consulta = "SELECT " + valor + " FROM " + tabla;
+                st = conn.createStatement();
+                rs = st.executeQuery(consulta);
+                while (rs.next()) {
+                    combo.addItem(rs.getString(valor));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos: " + ex.getMessage());
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage());
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_Logo;
     private javax.swing.JLabel JL_NomUser;
@@ -647,11 +707,12 @@ public void Actualizar() {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnVentas;
     private javax.swing.JButton btneditar;
-    private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnlimpiar;
     private javax.swing.JButton btnregistra;
+    private javax.swing.JComboBox<String> cbProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
