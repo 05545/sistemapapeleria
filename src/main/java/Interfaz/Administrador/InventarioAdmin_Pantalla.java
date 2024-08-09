@@ -30,6 +30,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         NombreAdmin.setText(usuario);
 
         cargarProveedores();
+        cargarTipos();
 
         //Propiedades de la tabla busqueda
         tbResultados.getColumnModel().getColumn(0).setPreferredWidth(10);  // Ancho para la columna "ID"
@@ -66,7 +67,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         txtProducto = new javax.swing.JTextField();
         spCantidad = new javax.swing.JSpinner();
         txtPrecioUnitario = new javax.swing.JTextField();
-        txtTipo = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -74,6 +74,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbResultados = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
+        cbTipo = new javax.swing.JComboBox<>();
         JCB_Proovedores = new javax.swing.JComboBox<>();
         NombreAdmin = new javax.swing.JLabel();
         JL_FondoInventarioAdmin = new javax.swing.JLabel();
@@ -183,13 +184,6 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         });
         getContentPane().add(txtPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 332, 140, 30));
 
-        txtTipo.setBackground(new java.awt.Color(189, 189, 189));
-        txtTipo.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
-        txtTipo.setForeground(new java.awt.Color(0, 0, 0));
-        txtTipo.setBorder(null);
-        getContentPane().add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 425, 110, 33));
-        txtTipo.getAccessibleContext().setAccessibleName("");
-
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btns/btnRegistrar.png"))); // NOI18N
         btnRegistrar.setBorder(null);
         btnRegistrar.setBorderPainted(false);
@@ -287,6 +281,12 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         txtBuscar.setBorder(null);
         getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 190, 300, 40));
 
+        cbTipo.setBackground(new java.awt.Color(189, 189, 189));
+        cbTipo.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
+        cbTipo.setForeground(new java.awt.Color(0, 0, 0));
+        cbTipo.setBorder(null);
+        getContentPane().add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 110, 30));
+
         JCB_Proovedores.setBackground(new java.awt.Color(189, 189, 189));
         JCB_Proovedores.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
         JCB_Proovedores.setForeground(new java.awt.Color(0, 0, 0));
@@ -305,7 +305,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        int confirm = JOptionPane.showConfirmDialog( this, "¿Estás seguro de que deseas salir?", "Confirmar salida",JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
@@ -337,7 +337,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         if (fila >= 0) {
             try {
                 this.txtProducto.setText(this.tbResultados.getValueAt(fila, 1).toString());
-                this.txtTipo.setText(this.tbResultados.getValueAt(fila, 2).toString());
+                this.cbTipo.setSelectedItem(this.tbResultados.getValueAt(fila, 2).toString());
                 this.txtPrecioUnitario.setText(this.tbResultados.getValueAt(fila, 4).toString());
 
                 IdProducto = Integer.parseInt(this.tbResultados.getValueAt(fila, 0).toString());
@@ -451,7 +451,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         String idpr = String.valueOf(IdProducto);
         String producto = txtProducto.getText();
         String precioUnitario = txtPrecioUnitario.getText();
-        String tipo = txtTipo.getText();
+        String tipo = cbTipo.getSelectedItem().toString();
         String proveedor = (String) JCB_Proovedores.getSelectedItem();
 
         if (IdProducto > 0) {
@@ -514,7 +514,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         String idpr = String.valueOf(IdProducto);
         String producto = txtProducto.getText();
         String precioUnitario = txtPrecioUnitario.getText();
-        String tipo = txtTipo.getText();
+        String tipo = cbTipo.getSelectedItem().toString();
         String proveedor = (String) JCB_Proovedores.getSelectedItem();
 
         if (producto.isEmpty() || precioUnitario.isEmpty() || tipo.isEmpty() || proveedor.isEmpty()) {
@@ -674,6 +674,35 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         }
     }
 
+    private void cargarTipos() {
+        if (conn != null) {
+            try {
+                String query = "SHOW COLUMNS FROM Producto LIKE 'Tipo'";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    String enumValues = rs.getString("Type");
+                    String[] valores = enumValues.substring(enumValues.indexOf("(") + 1, enumValues.indexOf(")")).split(",");
+
+                    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+                    for (String valor : valores) {
+                        modelo.addElement(valor.replace("'", ""));
+                    }
+
+                    cbTipo.setModel(modelo);
+                }
+
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    }
+
     private boolean comprobarProveedor(int id, String nombre) {
         boolean encontrado = false;
 
@@ -709,7 +738,7 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
         txtBuscar.setText("");
         txtProducto.setText("");
         txtPrecioUnitario.setText("");
-        txtTipo.setText("");
+        cbTipo.setSelectedIndex(1);
         spCantidad.setValue(0);
         btnRegistrar.setEnabled(true);
     }
@@ -730,13 +759,13 @@ public class InventarioAdmin_Pantalla extends javax.swing.JFrame {
     private javax.swing.JButton btnTablero;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
+    private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spCantidad;
     private javax.swing.JTable tbResultados;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtPrecioUnitario;
     private javax.swing.JTextField txtProducto;
-    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }
 

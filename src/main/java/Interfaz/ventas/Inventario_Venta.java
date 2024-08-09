@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -34,6 +35,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
 
         Mostra();
         rellenarC("Proveedor", "Proveedor", cbProveedor);
+        cargarTipo();
 
         ((JSpinner.DefaultEditor) spcantidad.getEditor()).getTextField().setForeground(Color.BLACK);
         ((JSpinner.DefaultEditor) spcantidad.getEditor()).getTextField().setBackground(new Color(189, 189, 189));
@@ -57,7 +59,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbbusqueda = new javax.swing.JTable();
         btnlimpiar = new javax.swing.JButton();
-        txttipo = new javax.swing.JTextField();
         txtconsulta = new javax.swing.JTextField();
         btneditar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -66,6 +67,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
         btnInventario = new javax.swing.JButton();
         btnCuenta = new javax.swing.JButton();
         btnCerrasesion = new javax.swing.JButton();
+        cbTipo = new javax.swing.JComboBox<>();
         cbProveedor = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
 
@@ -73,7 +75,11 @@ public class Inventario_Venta extends javax.swing.JFrame {
         setTitle("JF_Inventario");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1005, 20, 220, 40));
+
+        JL_NomUser.setFont(new java.awt.Font("Bitstream Charter", 1, 14)); // NOI18N
+        JL_NomUser.setForeground(new java.awt.Color(51, 51, 51));
+        JL_NomUser.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(JL_NomUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 40, 220, 20));
 
         txtproducto.setBackground(new java.awt.Color(189, 189, 189));
         txtproducto.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
@@ -155,13 +161,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 510, 190, 60));
-
-        txttipo.setBackground(new java.awt.Color(189, 189, 189));
-        txttipo.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
-        txttipo.setForeground(new java.awt.Color(51, 51, 51));
-        txttipo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txttipo.setBorder(null);
-        getContentPane().add(txttipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 420, 110, 40));
 
         txtconsulta.setBackground(new java.awt.Color(214, 214, 214));
         txtconsulta.setFont(new java.awt.Font("C059", 1, 14)); // NOI18N
@@ -245,6 +244,15 @@ public class Inventario_Venta extends javax.swing.JFrame {
         });
         getContentPane().add(btnCerrasesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 640, 170, 30));
 
+        cbTipo.setBackground(new java.awt.Color(189, 189, 189));
+        cbTipo.setBorder(null);
+        cbTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 426, 120, 30));
+
         cbProveedor.setBackground(new java.awt.Color(189, 189, 189));
         cbProveedor.setBorder(null);
         cbProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +317,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
 
         this.txtproducto.setText(producto);
         this.txtprecioUnitario.setText(precioUnitario);
-        this.txttipo.setText(tipo);
+        this.cbTipo.setSelectedItem(tipo);
 
         int id = 0;
         try {
@@ -384,12 +392,16 @@ public class Inventario_Venta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbProveedorActionPerformed
 
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoActionPerformed
+
     //Metodo para limpiar
     public void Limpiar() {
         txtconsulta.setText("");
         txtprecioUnitario.setText("");
         txtproducto.setText("");
-        txttipo.setText("");
+        cbTipo.setSelectedIndex(1);
         spcantidad.setValue(0);
     }
 
@@ -509,12 +521,15 @@ public class Inventario_Venta extends javax.swing.JFrame {
 //Metodo para registra
     public void Registra() {
         String Nombre = txtproducto.getText();
-        String Tipo = txttipo.getText();
+        String Tipo = cbTipo.getSelectedItem().toString();
+
         double precio = 0.0;
         int cantidad = 0;
+
         //Seleccionar el proveedor 
         String Provedor = "";
         String claseString = (String) cbProveedor.getSelectedItem();
+
         if (claseString != null && !claseString.isEmpty()) {
             Provedor = claseString;
         } else {
@@ -605,7 +620,8 @@ public class Inventario_Venta extends javax.swing.JFrame {
     //Actualizar datos
     public void Actualizar() {
         String Nombre = txtproducto.getText();
-        String Tipo = txttipo.getText();
+        String Tipo = cbTipo.getSelectedItem().toString();
+
         double precio = 0.0;
         int cantidad = 0;
         int ID_Producto = obtenerID("IDProducto", "Producto", "Nombre", Nombre);
@@ -725,6 +741,35 @@ public class Inventario_Venta extends javax.swing.JFrame {
             }
         }
     }
+
+    private void cargarTipo() {
+        if (conn != null) {
+            try {
+                String query = "SHOW COLUMNS FROM Producto LIKE 'Tipo'";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    String enumValues = rs.getString("Type");
+                    String[] valores = enumValues.substring(enumValues.indexOf("(") + 1, enumValues.indexOf(")")).split(",");
+
+                    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+                    for (String valor : valores) {
+                        modelo.addElement(valor.replace("'", ""));
+                    }
+
+                    cbTipo.setModel(modelo);
+                }
+
+                rs.close();
+                ps.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JL_NomUser;
     private javax.swing.JButton btnBuscar;
@@ -737,6 +782,7 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private javax.swing.JButton btnlimpiar;
     private javax.swing.JButton btnregistra;
     private javax.swing.JComboBox<String> cbProveedor;
+    private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spcantidad;
@@ -744,7 +790,6 @@ public class Inventario_Venta extends javax.swing.JFrame {
     private javax.swing.JTextField txtconsulta;
     private javax.swing.JTextField txtprecioUnitario;
     private javax.swing.JTextField txtproducto;
-    private javax.swing.JTextField txttipo;
     // End of variables declaration//GEN-END:variables
 }
 

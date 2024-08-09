@@ -311,53 +311,35 @@ public class Tablero_Ventas extends javax.swing.JFrame {
     }
 
     public void MostraDVentas() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Nombre");
-        model.addColumn("Precio Unitario");
-        model.addColumn("SubTotal");
-        model.addColumn("Cantidad");
-        tbVentasReciente.setModel(model);
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("ID");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Subtotal");
 
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        tbVentasReciente.setModel(tabla);
 
-        try {
-            if (conn != null) {
-                String Consulta = "SELECT * FROM Venta";
-                preparedStatement = conn.prepareStatement(Consulta);
-                resultSet = preparedStatement.executeQuery();
+        if (conn != null) {
+            try {
+                String query = "SELECT IDVenta, Nombre, Subtotal FROM Venta ORDER BY IDVenta DESC LIMIT 10";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
 
-                while (resultSet.next()) {
-                    Object[] datos = new Object[5];
-                    datos[0] = resultSet.getInt("IDVenta");
-                    datos[1] = resultSet.getString("Nombre");
-                    datos[2] = resultSet.getDouble("Precio_Unitario");
-                    datos[3] = resultSet.getDouble("Subtotal");
-                    datos[4] = resultSet.getInt("CantidadP"); // Cambié "Cantidad" a "CantidadP"
-                    model.addRow(datos);
+                while (rs.next()) {
+                    String[] rowData = {
+                        rs.getString("IDVenta"),
+                        rs.getString("Nombre"),
+                        rs.getString("Subtotal"),};
+                    tabla.addRow(rowData);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se conectó a la base de datos");
+
+                rs.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("Termino ejecucion");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
         }
     }
 

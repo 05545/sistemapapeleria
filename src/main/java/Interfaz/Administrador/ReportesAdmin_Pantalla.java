@@ -2,6 +2,7 @@ package Interfaz.Administrador;
 
 import Logic.*;
 import Interfaz.*;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -11,7 +12,16 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,12 +31,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,9 +50,14 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     String usuario = "";
     String nomUsuario;
 
+    int[] cantidadTipo = new int[5];
+    int indice = 0;
+    String[] nombresCategorias = {"Escolar", "Libros", "Tecnología", "Papel", "Oficina"};
+
     public ReportesAdmin_Pantalla(Conexion conexion, Connection connection, String usuario, String nomUsuario) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         this.conexion = conexion;
         this.conn = connection;
@@ -282,7 +300,7 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        int confirm = JOptionPane.showConfirmDialog( this, "¿Estás seguro de que deseas salir?", "Confirmar salida",JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             InicioSesion_Pantalla iniSesion = new InicioSesion_Pantalla();
@@ -300,223 +318,15 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún tipo de reporte");
         } else {
             if (JCB_ReporteInventario.isSelected()) {
-                Document RInventario = new Document();
-
-                try {
-                    String ruta = System.getProperty("user.home");
-
-                    LocalDateTime ahora = LocalDateTime.now();
-                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-                    String fechaHora = ahora.format(formato);
-
-                    String nombreArchivo = ruta + "/Documents/Reportes/ReporteInventario_" + fechaHora + ".pdf";
-
-                    PdfWriter.getInstance(RInventario, new FileOutputStream(nombreArchivo));
-
-                    Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
-                    img.scaleToFit(80, 80);
-                    img.setAlignment(Chunk.ALIGN_LEFT);
-
-                    Paragraph parrafo = new Paragraph();
-                    parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-                    parrafo.add("Formato creado por PAPELERIA SUMI\n");
-                    parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
-                    parrafo.add("Registro de inventario actual\n\n");
-
-                    RInventario.open();
-                    RInventario.add(img);
-                    RInventario.add(parrafo);
-
-                    PdfPTable Tabla = new PdfPTable(6);
-                    Tabla.addCell("ID");
-                    Tabla.addCell("Nombre");
-                    Tabla.addCell("Categoría");
-                    Tabla.addCell("Cantidad disponible");
-                    Tabla.addCell("Precio");
-                    Tabla.addCell("Proveedor");
-
-                    try {
-                        if (conn != null) {
-                            try {
-                                Statement stmt = conn.createStatement();
-                                String sql = "SELECT Pr.IDProducto, Pr.Nombre, Pr.Tipo, Pr.Cantidad_Disponible, Pr.Precio, P.Proveedor FROM Producto Pr JOIN Proveedor P ON Pr.IDGerente = P.IDGerente";
-                                ResultSet rs = stmt.executeQuery(sql);
-
-                                if (rs.next()) {
-                                    do {
-                                        Tabla.addCell(rs.getString(1));
-                                        Tabla.addCell(rs.getString(2));
-                                        Tabla.addCell(rs.getString(3));
-                                        Tabla.addCell(rs.getString(4));
-                                        Tabla.addCell(rs.getString(5));
-                                        Tabla.addCell(rs.getString(6));
-                                    } while (rs.next());
-                                    RInventario.add(Tabla);
-                                }
-                                rs.close();
-                                stmt.close();
-                            } catch (SQLException e) {
-                                System.out.println("Error al ejecutar la consulta.");
-                                e.printStackTrace();
-                            }
-                        }
-                        registrarReporteGenerado("ReporteInventario_" + fechaHora + ".pdf", "Inventario", fechaHora);
-                    } catch (DocumentException e) {
-                        System.out.println("Hay un error en el documento." + e);
-                    }
-                    RInventario.close();
-                    JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
-                } catch (DocumentException | FileNotFoundException e) {
-                    System.out.println("Hay un error en el documento." + e);
-                } catch (IOException e) {
-                    System.out.println("Error en la imagen" + e);
-                }
+                reporteInventario();
             }
 
             if (JCB_ReporteVentas.isSelected()) {
-                Document RVentas = new Document();
-
-                try {
-                    String ruta = System.getProperty("user.home");
-
-                    LocalDateTime ahora = LocalDateTime.now();
-                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-                    String fechaHora = ahora.format(formato);
-
-                    String nombreArchivo = ruta + "/Documents/Reportes/ReporteVentas_" + fechaHora + ".pdf";
-
-                    PdfWriter.getInstance(RVentas, new FileOutputStream(nombreArchivo));
-
-                    Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
-                    img.scaleToFit(80, 80);
-                    img.setAlignment(Chunk.ALIGN_LEFT);
-
-                    Paragraph parrafo = new Paragraph();
-                    parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-                    parrafo.add("Formato creado por PAPELERIA SUMI\n");
-                    parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
-                    parrafo.add("Registro de ventas actual\n\n");
-
-                    RVentas.open();
-                    RVentas.add(img);
-                    RVentas.add(parrafo);
-
-                    PdfPTable Tabla = new PdfPTable(4);
-                    Tabla.addCell("ID");
-                    Tabla.addCell("Nombre");
-                    Tabla.addCell("Precio Unitario");
-                    Tabla.addCell("Subtotal");
-
-                    try {
-                        if (conn != null) {
-                            try {
-                                Statement stmt = conn.createStatement();
-                                String sql = "SELECT * FROM Venta";
-                                ResultSet rs = stmt.executeQuery(sql);
-
-                                if (rs.next()) {
-                                    do {
-                                        Tabla.addCell(rs.getString(1));
-                                        Tabla.addCell(rs.getString(2));
-                                        Tabla.addCell(rs.getString(3));
-                                        Tabla.addCell(rs.getString(4));
-                                    } while (rs.next());
-                                    RVentas.add(Tabla);
-                                }
-                                rs.close();
-                                stmt.close();
-                            } catch (SQLException e) {
-                                System.out.println("Error al ejecutar la consulta.");
-                                e.printStackTrace();
-                            }
-                        }
-                        registrarReporteGenerado("ReporteVentas_" + fechaHora + ".pdf", "Ventas", fechaHora);
-                    } catch (DocumentException e) {
-                        System.out.println("Hay un error en el documento." + e);
-                    }
-                    RVentas.close();
-                    JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
-                } catch (DocumentException | FileNotFoundException e) {
-                    System.out.println("Hay un error en el documento." + e);
-                } catch (IOException e) {
-                    System.out.println("Error en la imagen" + e);
-                }
+                reporteVentas();
             }
 
             if (JCB_ReporteUsuarios.isSelected()) {
-                Document RUsuarios = new Document();
-
-                try {
-                    String ruta = System.getProperty("user.home");
-
-                    LocalDateTime ahora = LocalDateTime.now();
-                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-                    String fechaHora = ahora.format(formato);
-
-                    String nombreArchivo = ruta + "/Documents/Reportes/ReporteUsuarios_" + fechaHora + ".pdf";
-
-                    PdfWriter.getInstance(RUsuarios, new FileOutputStream(nombreArchivo));
-
-                    Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
-                    img.scaleToFit(80, 80);
-                    img.setAlignment(Chunk.ALIGN_LEFT);
-
-                    Paragraph parrafo = new Paragraph();
-                    parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-                    parrafo.add("Formato creado por PAPELERIA SUMI\n");
-                    parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
-                    parrafo.add("Registro de inventario actual\n\n");
-
-                    RUsuarios.open();
-                    RUsuarios.add(img);
-                    RUsuarios.add(parrafo);
-
-                    PdfPTable Tabla = new PdfPTable(7);
-                    Tabla.addCell("ID");
-                    Tabla.addCell("Nombre");
-                    Tabla.addCell("Apellido paterno");
-                    Tabla.addCell("Apellido materno");
-                    Tabla.addCell("Correo");
-                    Tabla.addCell("Telefono");
-                    Tabla.addCell("Rol");
-
-                    try {
-                        if (conn != null) {
-                            try {
-                                Statement stmt = conn.createStatement();
-                                String sql = "SELECT T.IDVendedor, T.Nombre, T.AP, T.AM, T.Correo, T.Telefono, R.Rol FROM Trabajador T JOIN Rol R WHERE R.IdRol = T.IdRol";
-                                ResultSet rs = stmt.executeQuery(sql);
-
-                                if (rs.next()) {
-                                    do {
-                                        Tabla.addCell(rs.getString(1));
-                                        Tabla.addCell(rs.getString(2));
-                                        Tabla.addCell(rs.getString(3));
-                                        Tabla.addCell(rs.getString(4));
-                                        Tabla.addCell(rs.getString(5));
-                                        Tabla.addCell(rs.getString(6));
-                                        Tabla.addCell(rs.getString(7));
-                                    } while (rs.next());
-                                    RUsuarios.add(Tabla);
-                                }
-                                rs.close();
-                                stmt.close();
-                            } catch (SQLException e) {
-                                System.out.println("Error al ejecutar la consulta.");
-                                e.printStackTrace();
-                            }
-                        }
-                        registrarReporteGenerado("ReporteUsuarios_" + fechaHora + ".pdf", "Usuarios", fechaHora);
-                    } catch (DocumentException e) {
-                        System.out.println("Hay un error en el documento." + e);
-                    }
-                    RUsuarios.close();
-                    JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
-                } catch (DocumentException | FileNotFoundException e) {
-                    System.out.println("Hay un error en el documento." + e);
-                } catch (IOException e) {
-                    System.out.println("Error en la imagen" + e);
-                }
+                reporteUsuarios();
             }
         }
     }//GEN-LAST:event_btnGenerarMouseClicked
@@ -614,6 +424,428 @@ public class ReportesAdmin_Pantalla extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
+    private void reporteInventario() {
+        Document RInventario = new Document();
+
+        try {
+            String ruta = System.getProperty("user.home");
+
+            LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String fechaHora = ahora.format(formato);
+
+            String nombreArchivo = ruta + "/Documents/Reportes/ReporteInventario_" + fechaHora + ".pdf";
+
+            PdfWriter.getInstance(RInventario, new FileOutputStream(nombreArchivo));
+
+            Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
+            img.scaleToFit(80, 80);
+            img.setAlignment(Image.LEFT);
+
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setWidths(new int[]{1, 3});
+
+            PdfPCell cell = new PdfPCell(img);
+            cell.setBorder(PdfPCell.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(cell);
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
+            parrafo.add("\n\nFormato creado por PAPELERIA SUMI\n");
+            parrafo.add("Registro de inventario actual\n\n");
+
+            Paragraph titulo = new Paragraph();
+            titulo.setAlignment(Paragraph.ALIGN_CENTER);
+            titulo.setFont(FontFactory.getFont("Arial", 16, Font.BOLD, BaseColor.BLACK));
+            titulo.add("Reporte de inventario\n");
+            titulo.add("Fecha: " + ahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + "\n\n");
+
+            Paragraph descripcion = new Paragraph();
+            descripcion.setAlignment(Paragraph.ALIGN_LEFT);
+            descripcion.setFont(FontFactory.getFont("Arial", 12, Font.NORMAL, BaseColor.BLACK));
+            descripcion.add("Este reporte proporciona información de los productos disponibles en el sistema actualmente. Incluye datos sobre la disponibilidad de cada uno.\n\n");
+
+            PdfPCell textCell = new PdfPCell(parrafo);
+            textCell.setBorder(PdfPCell.NO_BORDER);
+            textCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(textCell);
+
+            RInventario.open();
+            RInventario.add(table);
+
+            LineSeparator ls = new LineSeparator();
+            ls.setOffset(-10);
+            RInventario.add(new Chunk(ls));
+
+            RInventario.add(new Paragraph("\n"));
+            RInventario.add(titulo);
+            RInventario.add(descripcion);
+            RInventario.add(new Paragraph("\n"));
+            RInventario.add(new Chunk(ls));
+            RInventario.add(new Paragraph("\n"));
+
+            PdfPTable Tabla = new PdfPTable(6);
+            Tabla.addCell("ID");
+            Tabla.addCell("Nombre");
+            Tabla.addCell("Categoría");
+            Tabla.addCell("Cantidad disponible");
+            Tabla.addCell("Precio");
+            Tabla.addCell("Proveedor");
+
+            try {
+                if (conn != null) {
+                    try {
+                        Statement stmt = conn.createStatement();
+                        String sql = "SELECT Pr.IDProducto, Pr.Nombre, Pr.Tipo, Pr.Cantidad_Disponible, Pr.Precio, P.Proveedor FROM Producto Pr JOIN Proveedor P ON Pr.IDGerente = P.IDGerente";
+                        ResultSet rs = stmt.executeQuery(sql);
+
+                        if (rs.next()) {
+                            do {
+                                Tabla.addCell(rs.getString(1));
+                                Tabla.addCell(rs.getString(2));
+                                Tabla.addCell(rs.getString(3));
+                                Tabla.addCell(rs.getString(4));
+                                Tabla.addCell(rs.getString(5));
+                                Tabla.addCell(rs.getString(6));
+                            } while (rs.next());
+                            RInventario.add(Tabla);
+                        }
+                        rs.close();
+                        stmt.close();
+                    } catch (SQLException e) {
+                        System.out.println("Error al ejecutar la consulta.");
+                        e.printStackTrace();
+                    }
+                }
+                registrarReporteGenerado("ReporteInventario_" + fechaHora + ".pdf", "Inventario", fechaHora);
+            } catch (DocumentException e) {
+                System.out.println("Hay un error en el documento." + e);
+            }
+            RInventario.close();
+            JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
+        } catch (DocumentException | FileNotFoundException e) {
+            System.out.println("Hay un error en el documento." + e);
+        } catch (IOException e) {
+            System.out.println("Error en la imagen" + e);
+        }
+    }
+
+    private void reporteVentas() {
+        generarGrafico();
+
+        Document RVentas = new Document();
+
+        try {
+            String ruta = System.getProperty("user.home");
+            String rutaImgGrafico = ruta + "/Documents/Reportes/imgGrafico.png";
+
+            LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String fechaHora = ahora.format(formato);
+
+            String nombreArchivo = ruta + "/Documents/Reportes/ReporteVentas_" + fechaHora + ".pdf";
+
+            PdfWriter.getInstance(RVentas, new FileOutputStream(nombreArchivo));
+
+            Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
+            img.scaleToFit(80, 80);
+            img.setAlignment(Image.LEFT);
+
+            Image imgGrafico = Image.getInstance(rutaImgGrafico);
+            imgGrafico.scaleToFit(300, 200);
+            imgGrafico.setAlignment(Image.ALIGN_CENTER);
+
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setWidths(new int[]{1, 3});
+
+            PdfPCell cell = new PdfPCell(img);
+            cell.setBorder(PdfPCell.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(cell);
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
+            parrafo.add("\n\nFormato creado por PAPELERIA SUMI\n");
+            parrafo.add("Registro de ventas actual\n\n");
+
+            Paragraph titulo = new Paragraph();
+            titulo.setAlignment(Paragraph.ALIGN_CENTER);
+            titulo.setFont(FontFactory.getFont("Arial", 16, Font.BOLD, BaseColor.BLACK));
+            titulo.add("Reporte de ventas\n");
+            titulo.add("Fecha: " + ahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + "\n\n");
+
+            Paragraph descripcion = new Paragraph();
+            descripcion.setAlignment(Paragraph.ALIGN_LEFT);
+            descripcion.setFont(FontFactory.getFont("Arial", 12, Font.NORMAL, BaseColor.BLACK));
+            descripcion.add("Este reporte le proporciona la información completa de las productos vendidos. Se incluye una gráfica de las ventas seleccionando las categorías de productos más vendidas y un desglose de las transacciones.\n\n");
+
+            Paragraph parrafoGrafica = new Paragraph();
+            parrafoGrafica.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafoGrafica.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
+            parrafoGrafica.add("\nGráfica representativa del porcentaje de ventas de cada categoría.\n");
+
+            Paragraph totalesParagraph = new Paragraph();
+            totalesParagraph.setAlignment(Paragraph.ALIGN_LEFT);
+            totalesParagraph.setFont(FontFactory.getFont("Arial", 12, Font.NORMAL, BaseColor.BLACK));
+            totalesParagraph.add("\nTotales por categoría:\n");
+
+            for (int i = 0; i < cantidadTipo.length; i++) {
+                if (i < nombresCategorias.length) {
+                    totalesParagraph.add(nombresCategorias[i] + ": " + cantidadTipo[i] + "\n");
+                }
+            }
+
+            PdfPCell textCell = new PdfPCell(parrafo);
+            textCell.setBorder(PdfPCell.NO_BORDER);
+            textCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(textCell);
+
+            RVentas.open();
+            RVentas.add(table);
+
+            LineSeparator ls = new LineSeparator();
+            ls.setOffset(-10);
+            RVentas.add(new Chunk(ls));
+
+            RVentas.add(new Paragraph("\n"));
+            RVentas.add(titulo);
+            RVentas.add(descripcion);
+            RVentas.add(parrafoGrafica);
+            RVentas.add(imgGrafico);
+            RVentas.add(new Paragraph("\n"));
+
+            RVentas.add(totalesParagraph);
+
+            LineSeparator ls1 = new LineSeparator();
+            ls1.setOffset(-10);
+            RVentas.add(new Chunk(ls1));
+            RVentas.add(new Paragraph("\n\n"));
+
+            PdfPTable Tabla = new PdfPTable(4);
+            Tabla.addCell("ID");
+            Tabla.addCell("Nombre");
+            Tabla.addCell("Precio Unitario");
+            Tabla.addCell("Subtotal");
+
+            try {
+                if (conn != null) {
+                    try {
+                        Statement stmt = conn.createStatement();
+                        String sql = "SELECT * FROM Venta";
+                        ResultSet rs = stmt.executeQuery(sql);
+
+                        if (rs.next()) {
+                            do {
+                                Tabla.addCell(rs.getString(1));
+                                Tabla.addCell(rs.getString(2));
+                                Tabla.addCell(rs.getString(3));
+                                Tabla.addCell(rs.getString(4));
+                            } while (rs.next());
+                            RVentas.add(Tabla);
+                        }
+                        rs.close();
+                        stmt.close();
+                    } catch (SQLException e) {
+                        System.out.println("Error al ejecutar la consulta.");
+                        e.printStackTrace();
+                    }
+                }
+                registrarReporteGenerado("ReporteVentas_" + fechaHora + ".pdf", "Ventas", fechaHora);
+            } catch (DocumentException e) {
+                System.out.println("Hay un error en el documento." + e);
+            }
+            RVentas.close();
+            JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
+            
+            File fileGrafico = new File(rutaImgGrafico);
+            if (fileGrafico.exists()) {
+                if (fileGrafico.delete()) {
+                    System.out.println("Imagen de gráfico eliminada con éxito.");
+                } else {
+                    System.out.println("No se pudo eliminar la imagen del gráfico.");
+                }
+            } else {
+                System.out.println("La imagen del gráfico no existe.");
+            }
+        } catch (DocumentException | FileNotFoundException e) {
+            System.out.println("Hay un error en el documento." + e);
+        } catch (IOException e) {
+            System.out.println("Error en la imagen" + e);
+        }
+    }
+
+    private void reporteUsuarios() {
+        Document RUsuarios = new Document();
+
+        try {
+            String ruta = System.getProperty("user.home");
+
+            LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String fechaHora = ahora.format(formato);
+
+            String nombreArchivo = ruta + "/Documents/Reportes/ReporteUsuarios_" + fechaHora + ".pdf";
+
+            PdfWriter.getInstance(RUsuarios, new FileOutputStream(nombreArchivo));
+
+            Image img = Image.getInstance("src/main/java/imagenes/Logo_Papeleria.png");
+            img.scaleToFit(80, 80);
+            img.setAlignment(Image.LEFT);
+
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setWidths(new int[]{1, 3});
+
+            PdfPCell cell = new PdfPCell(img);
+            cell.setBorder(PdfPCell.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(cell);
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.setFont(FontFactory.getFont("Arial", 12, Font.BOLDITALIC, BaseColor.BLACK));
+            parrafo.add("\n\nFormato creado por PAPELERIA SUMI\n");
+            parrafo.add("Registro de usuarios actual\n\n");
+
+            Paragraph titulo = new Paragraph();
+            titulo.setAlignment(Paragraph.ALIGN_CENTER);
+            titulo.setFont(FontFactory.getFont("Arial", 16, Font.BOLD, BaseColor.BLACK));
+            titulo.add("Reporte de usuarios registrados\n");
+            titulo.add("Fecha: " + ahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + "\n\n");
+
+            Paragraph descripcion = new Paragraph();
+            descripcion.setAlignment(Paragraph.ALIGN_LEFT);
+            descripcion.setFont(FontFactory.getFont("Arial", 12, Font.NORMAL, BaseColor.BLACK));
+            descripcion.add("Este reporte le proporciona información parcial de los usuarios registrados. Se excluye la totalidad de la información por privacidad.\n\n");
+
+            PdfPCell textCell = new PdfPCell(parrafo);
+            textCell.setBorder(PdfPCell.NO_BORDER);
+            textCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(textCell);
+
+            RUsuarios.open();
+            RUsuarios.add(table);
+
+            LineSeparator ls = new LineSeparator();
+            ls.setOffset(-10);
+            RUsuarios.add(new Chunk(ls));
+
+            RUsuarios.add(new Paragraph("\n"));
+            RUsuarios.add(titulo);
+            RUsuarios.add(descripcion);
+            RUsuarios.add(new Chunk(ls));
+            RUsuarios.add(new Paragraph("\n"));
+
+            PdfPTable Tabla = new PdfPTable(7);
+            Tabla.addCell("ID");
+            Tabla.addCell("Nombre");
+            Tabla.addCell("Apellido paterno");
+            Tabla.addCell("Apellido materno");
+            Tabla.addCell("Correo");
+            Tabla.addCell("Telefono");
+            Tabla.addCell("Rol");
+
+            try {
+                if (conn != null) {
+                    try {
+                        Statement stmt = conn.createStatement();
+                        String sql = "SELECT T.IDVendedor, T.Nombre, T.AP, T.AM, T.Correo, T.Telefono, R.Rol FROM Trabajador T JOIN Rol R WHERE R.IdRol = T.IdRol";
+                        ResultSet rs = stmt.executeQuery(sql);
+
+                        if (rs.next()) {
+                            do {
+                                Tabla.addCell(rs.getString(1));
+                                Tabla.addCell(rs.getString(2));
+                                Tabla.addCell(rs.getString(3));
+                                Tabla.addCell(rs.getString(4));
+                                Tabla.addCell(rs.getString(5));
+                                Tabla.addCell(rs.getString(6));
+                                Tabla.addCell(rs.getString(7));
+                            } while (rs.next());
+                            RUsuarios.add(Tabla);
+                        }
+                        rs.close();
+                        stmt.close();
+                    } catch (SQLException e) {
+                        System.out.println("Error al ejecutar la consulta.");
+                        e.printStackTrace();
+                    }
+                }
+                registrarReporteGenerado("ReporteUsuarios_" + fechaHora + ".pdf", "Usuarios", fechaHora);
+            } catch (DocumentException e) {
+                System.out.println("Hay un error en el documento." + e);
+            }
+            RUsuarios.close();
+            JOptionPane.showMessageDialog(null, "El documento se ha exportado correctamente");
+        } catch (DocumentException | FileNotFoundException e) {
+            System.out.println("Hay un error en el documento." + e);
+        } catch (IOException e) {
+            System.out.println("Error en la imagen" + e);
+        }
+    }
+
+    private void generarGrafico() {
+        String rutaIni = System.getProperty("user.home");
+        String nombreArchivo = rutaIni + "/Documents/Reportes/imgGrafico.png";
+
+        indice = 0;
+
+        //DefaultCategoryDataset datosGrafic = new DefaultCategoryDataset();
+        DefaultPieDataset datosGrafic = new DefaultPieDataset();
+
+        if (conn != null) {
+            try {
+                Statement st = conn.createStatement();
+                String sql = "SELECT p.Tipo AS Tipo_Producto, SUM(v.CantidadP) AS Total_Vendidos FROM Producto p JOIN Venta_Producto vp ON p.IDProducto = vp.IDProducto JOIN Venta v ON vp.IDVenta = v.IDVenta GROUP BY p.Tipo";
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()) {
+                    String tipo = rs.getString("Tipo_Producto");
+                    int totalVendidos = rs.getInt("Total_Vendidos");
+                    datosGrafic.setValue(tipo, totalVendidos);
+                    cantidadTipo[indice++] = totalVendidos;
+                }
+                rs.close();
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            JFreeChart grafo = ChartFactory.createPieChart(
+                    "Distribución de tipos de productos vendidos",
+                    datosGrafic,
+                    true,
+                    true,
+                    false
+            );
+
+            /*JFreeChart chart = ChartFactory.createBarChart(
+                    "Tipos de Productos Vendidos",
+                    "Tipo de Producto",
+                    "Cantidad Vendida",
+                    datosGrafic,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    true,
+                    false
+            );*/
+            try {
+                int ancho = 600;
+                int alto = 400;
+                File imagen = new File(nombreArchivo);
+                ChartUtilities.saveChartAsPNG(imagen, grafo, ancho, alto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox JCB_ReporteInventario;

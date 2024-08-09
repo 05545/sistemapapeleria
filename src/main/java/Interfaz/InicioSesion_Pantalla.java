@@ -34,7 +34,7 @@ public class InicioSesion_Pantalla extends javax.swing.JFrame {
     public void iniciarCliente() {
         // Iniciar conexión con el servidor
         cliente = new Cliente();
-        cliente.iniConexion("192.168.1.105", 12345); // Conectar al servidor en localhost:6666
+        cliente.iniConexion("192.168.1.106", 12345); // Conectar al servidor en localhost:6666
     }
 
     @SuppressWarnings("unchecked")
